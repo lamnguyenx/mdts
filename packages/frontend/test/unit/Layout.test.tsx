@@ -12,6 +12,7 @@ const mockUseIsMobile = jest.fn();
 type AppHeaderMockProps = {
   handleFileSelect: (path: string) => void;
   onSettingsClick: () => void;
+  onFuzzySearchClick: () => void;
   onToggleFileTree: () => void;
   onToggleOutline: () => void;
 };
@@ -134,6 +135,7 @@ describe('Layout', () => {
   const renderLayout = (
     initialState = {},
     onSettingsClick = jest.fn(),
+    onFuzzySearchClick = jest.fn(),
   ) => {
     const store = createMockStore(initialState);
     store.dispatch = jest.fn();
@@ -142,11 +144,12 @@ describe('Layout', () => {
       ...render(
         <Provider store={store}>
           <MemoryRouter>
-            <Layout onSettingsClick={onSettingsClick} />
+            <Layout onSettingsClick={onSettingsClick} onFuzzySearchClick={onFuzzySearchClick} />
           </MemoryRouter>
         </Provider>
       ),
       onSettingsClick,
+      onFuzzySearchClick,
       store,
     };
   };
@@ -242,7 +245,7 @@ describe('Layout', () => {
     rerender(
       <Provider store={store}>
         <MemoryRouter>
-          <Layout onSettingsClick={jest.fn()} />
+          <Layout onSettingsClick={jest.fn()} onFuzzySearchClick={jest.fn()} />
         </MemoryRouter>
       </Provider>
     );
@@ -251,7 +254,7 @@ describe('Layout', () => {
     rerender(
       <Provider store={store}>
         <MemoryRouter>
-          <Layout onSettingsClick={jest.fn()} />
+          <Layout onSettingsClick={jest.fn()} onFuzzySearchClick={jest.fn()} />
         </MemoryRouter>
       </Provider>
     );

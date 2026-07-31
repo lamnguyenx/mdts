@@ -15,7 +15,7 @@ describe('AppHeader', () => {
   test('renders correctly', () => {
     const { asFragment } = render(
       <Provider store={store}>
-        <AppHeader handleFileSelect={jest.fn()} onSettingsClick={jest.fn()} />
+        <AppHeader handleFileSelect={jest.fn()} onSettingsClick={jest.fn()} onFuzzySearchClick={jest.fn()} />
       </Provider>
     );
     expect(asFragment()).toMatchSnapshot();
@@ -25,7 +25,7 @@ describe('AppHeader', () => {
     const handleFileSelectMock = jest.fn();
     render(
       <Provider store={store}>
-        <AppHeader handleFileSelect={handleFileSelectMock} onSettingsClick={jest.fn()} />
+        <AppHeader handleFileSelect={handleFileSelectMock} onSettingsClick={jest.fn()} onFuzzySearchClick={jest.fn()} />
       </Provider>
     );
     fireEvent.click(screen.getByText('mdts'));

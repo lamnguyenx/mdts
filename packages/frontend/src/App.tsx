@@ -2,6 +2,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import FuzzySearchDialog from './components/FuzzySearch/FuzzySearchDialog';
 import SettingsDialog from './components/SettingsDialog/SettingsDialog';
 import { useTheme } from './hooks/useTheme';
 import { useWebSocket } from './hooks/useWebSocket';
@@ -22,6 +23,7 @@ const App: React.FC = () => {
   const theme = useTheme();
 
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] = useState(false);
+  const [isFuzzySearchOpen, setIsFuzzySearchOpen] = useState(false);
 
   const handleSettingsClick = useCallback(() => {
     setIsSettingsDialogOpen(true);
@@ -29,6 +31,26 @@ const App: React.FC = () => {
 
   const handleCloseSettingsDialog = useCallback(() => {
     setIsSettingsDialogOpen(false);
+  }, []);
+
+  const handleFuzzySearchClick = useCallback(() => {
+    setIsFuzzySearchOpen(true);
+  }, []);
+
+  const handleCloseFuzzySearch = useCallback(() => {
+    setIsFuzzySearchOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsFuzzySearchOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   useWebSocket(currentPath);
@@ -61,8 +83,9 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout onSettingsClick={handleSettingsClick} />
+      <Layout onSettingsClick={handleSettingsClick} onFuzzySearchClick={handleFuzzySearchClick} />
       <SettingsDialog open={isSettingsDialogOpen} onClose={handleCloseSettingsDialog} />
+      <FuzzySearchDialog open={isFuzzySearchOpen} onClose={handleCloseFuzzySearch} />
     </ThemeProvider>
   );
 };

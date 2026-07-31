@@ -59,6 +59,11 @@ export const createMockStore = (
       theme: 'default',
       enableBreaks: false,
     },
+    plantUML: {
+      svgCache: {},
+      loading: {},
+      errors: {},
+    },
   };
 
   const state: RootState = {
@@ -91,6 +96,10 @@ export const createMockStore = (
     config: {
       ...defaultState.config,
       ...(initialState.config || {}),
+    },
+    plantUML: {
+      ...defaultState.plantUML,
+      ...(initialState.plantUML || {}),
     },
   };
 

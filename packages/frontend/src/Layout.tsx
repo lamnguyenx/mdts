@@ -12,9 +12,10 @@ import { RootState } from './store/store';
 
 interface LayoutProps {
   onSettingsClick: () => void;
+  onFuzzySearchClick: () => void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ onSettingsClick }) => {
+const Layout: React.FC<LayoutProps> = ({ onSettingsClick, onFuzzySearchClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -78,6 +79,7 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick }) => {
       <AppHeader
         handleFileSelect={handleFileSelect}
         onSettingsClick={onSettingsClick}
+        onFuzzySearchClick={onFuzzySearchClick}
         onToggleFileTree={handleToggleFileTree}
         onToggleOutline={handleToggleOutline}
       />

@@ -28,7 +28,7 @@ jest.mock('../../src/hooks/useWebSocket', () => ({
 
 jest.mock('../../src/Layout', () => ({
   __esModule: true,
-  default: ({ onSettingsClick }: { onSettingsClick: () => void }) => (
+  default: ({ onSettingsClick }: { onSettingsClick: () => void; onFuzzySearchClick: () => void }) => (
     <button type="button" onClick={onSettingsClick}>
       open settings
     </button>
@@ -45,6 +45,11 @@ jest.mock('../../src/components/SettingsDialog/SettingsDialog', () => ({
       </button>
     </div>
   ),
+}));
+
+jest.mock('../../src/components/FuzzySearch/FuzzySearchDialog', () => ({
+  __esModule: true,
+  default: () => null,
 }));
 
 jest.mock('../../src/store/slices/configSlice', () => ({

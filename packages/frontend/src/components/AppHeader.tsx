@@ -1,5 +1,6 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
 import SegmentIcon from '@mui/icons-material/Segment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { AppBar, Box, IconButton, Link, Toolbar, Tooltip } from '@mui/material';
@@ -11,6 +12,7 @@ import Logo from './Logo';
 interface AppHeaderProps {
   handleFileSelect: (path: string) => void;
   onSettingsClick: () => void;
+  onFuzzySearchClick: () => void;
   onToggleFileTree?: () => void;
   onToggleOutline?: () => void;
 }
@@ -18,10 +20,13 @@ interface AppHeaderProps {
 const AppHeader: React.FC<AppHeaderProps> = ({
   handleFileSelect,
   onSettingsClick,
+  onFuzzySearchClick,
   onToggleFileTree,
   onToggleOutline,
 }) => {
   const isMobile = useIsMobile();
+  const isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const shortcutKey = isMac ? '⌘K' : 'Ctrl+K';
   const handleFileSelectClick = useCallback(() => {
     handleFileSelect('');
   }, [handleFileSelect]);
@@ -70,6 +75,11 @@ const AppHeader: React.FC<AppHeaderProps> = ({
         <Tooltip title="Settings">
           <IconButton sx={{ mr: isMobile ? 0 : 2 }} onClick={onSettingsClick} color="inherit">
             <SettingsIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title={`Search files (${shortcutKey})`}>
+          <IconButton sx={{ mr: isMobile ? 0 : 2 }} onClick={onFuzzySearchClick} color="inherit">
+            <SearchIcon />
           </IconButton>
         </Tooltip>
         {!isMobile && (
