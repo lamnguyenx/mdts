@@ -38,8 +38,8 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     }
 
     const encoded = encode(diagram);
-    const plantumlServerUrl = 'https://www.plantuml.com/plantuml';
-    const svgUrl = `${plantumlServerUrl}/svg/${encoded}`;
+    const plantumlServerUrl = process.env.PLANTUML_SERVER ?? 'https://www.plantuml.com/plantuml';
+    const svgUrl = `${plantumlServerUrl.replace(/\/+$/, '')}/svg/${encoded}`;
 
     const response = await fetch(svgUrl);
     if (!response.ok) {

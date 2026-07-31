@@ -143,7 +143,7 @@ class Car {
 ```
 ````
 
-Supports both `plantuml` and `puml` language identifiers. Diagrams are rendered using the official PlantUML server.
+Supports both `plantuml` and `puml` language identifiers. Diagrams are rendered locally by default. Set the `PLANTUML_SERVER` environment variable (e.g. `PLANTUML_SERVER=http://localhost:9274`) to render through your own PlantUML server instead.
 
 ### 🧮 Math Formulas (KaTeX)
 

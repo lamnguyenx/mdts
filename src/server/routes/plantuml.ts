@@ -3,6 +3,8 @@ import { logger } from '../../utils/logger';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const plantuml = require('node-plantuml-back');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { encode } = require('plantuml-encoder');
 
 type PlantumlModule = {
   generate: (options: { format: string }) => {
@@ -35,9 +37,26 @@ const createSvgGenerator = (plantumlModule: PlantumlModule) => async (diagram: s
   return svg;
 };
 
-export const plantumlRouter = (plantumlModule: PlantumlModule = plantuml): Router => {
+const createServerSvgGenerator = (serverUrl: string) => async (diagram: string) => {
+  const encoded = encode(diagram);
+  const svgUrl = `${serverUrl.replace(/\/+$/, '')}/svg/${encoded}`;
+
+  const response = await fetch(svgUrl);
+  if (!response.ok) {
+    throw new Error(`PlantUML server responded with ${response.status}`);
+  }
+
+  return response.text();
+};
+
+export const plantumlRouter = (
+  plantumlModule: PlantumlModule = plantuml,
+  plantumlServerUrl: string = process.env.PLANTUML_SERVER ?? '',
+): Router => {
   const router = Router();
-  const generateSvg = createSvgGenerator(plantumlModule);
+  const generateSvg = plantumlServerUrl
+    ? createServerSvgGenerator(plantumlServerUrl)
+    : createSvgGenerator(plantumlModule);
 
   router.post('/svg', async (req, res) => {
     const { diagram } = req.body;

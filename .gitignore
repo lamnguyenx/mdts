@@ -114,6 +114,7 @@ build/Release
 node_modules
 
 # Compiled TypeScript files
+dist
 netlify/functions/*.js
 netlify/functions/demo-data.ts
 scripts/*.js
@@ -121,3 +122,9 @@ scripts/*.js
 .DS_Store
 .envrc
 .claude
+# Created by https://www.toptal.com/developers/gitignore/api/nodejs
+# Edit at https://www.toptal.com/developers/gitignore?templates=nodejs
+
+#!! ERROR: nodejs is undefined. Use list command to see defined gitignore types !!#
+
+# End of https://www.toptal.com/developers/gitignore/api/nodejs

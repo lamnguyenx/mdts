@@ -75,6 +75,7 @@
     "github-slugger": "^2.0.0",
     "glob": "^13.0.1",
     "markdown-it": "^14.1.0",
+    "mdts": "./",
     "node-plantuml-back": "^1.1.4",
     "open": "^11.0.0",
     "plantuml": "^0.0.2",
