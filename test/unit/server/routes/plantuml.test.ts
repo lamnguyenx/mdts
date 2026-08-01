@@ -129,12 +129,36 @@ describe('plantuml.ts', () => {
         .send({ diagram });
 
       expect(fetchMock).toHaveBeenCalledWith(
-        `${serverUrl.replace(/\/+$/, '')}/svg/${encode(diagram)}`
+        `${serverUrl.replace(/\/+$/, '')}/svg/${encode(
+          '@startuml\n!pragma svgInteractive true\nA --> B\n@enduml'
+        )}`
       );
       expect(response.statusCode).toBe(200);
       expect(response.headers['content-type']).toContain('image/svg+xml');
       expect(response.body.toString()).toBe('<svg>server-diagram</svg>');
       expect(plantumlModule.generate).not.toHaveBeenCalled();
+    });
+
+    it('should inject the interactive SVG pragma when it is already present', async () => {
+      const diagram = '@startuml\n!pragma svgInteractive true\nA --> B\n@enduml';
+      const fetchMock = jest.fn().mockResolvedValue({
+        ok: true,
+        text: async () => '<svg>server-diagram</svg>',
+      });
+      global.fetch = fetchMock as unknown as typeof fetch;
+
+      app = express();
+      app.use(express.json());
+      app.use('/api/plantuml', plantumlRouter(plantumlModule, serverUrl));
+
+      const response = await request(app)
+        .post('/api/plantuml/svg')
+        .send({ diagram });
+
+      expect(fetchMock).toHaveBeenCalledWith(
+        `${serverUrl.replace(/\/+$/, '')}/svg/${encode(diagram)}`
+      );
+      expect(response.statusCode).toBe(200);
     });
 
     it('should return 500 when the PlantUML server responds with an error', async () => {

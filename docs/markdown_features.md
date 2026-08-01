@@ -145,6 +145,11 @@ class Car {
 
 Supports both `plantuml` and `puml` language identifiers. Diagrams are rendered locally by default. Set the `PLANTUML_SERVER` environment variable (e.g. `PLANTUML_SERVER=http://localhost:9274`) to render through your own PlantUML server instead.
 
+Interactive SVG is supported in the rendered preview:
+
+- When rendering through a PlantUML server, mdts automatically injects the `!pragma svgInteractive true` into the diagram, so diagrams come back as interactive SVG when the server supports it.
+- Interactive behaviors work in the viewer: on class/object/usecase/deployment diagrams, hovering or clicking an element grays out everything not connected to it (double-click highlights the whole connected line); on sequence diagrams, clicking a participant highlights its messages and a floating header can be pinned; `[[...]]` links and `[[url{tooltip} label]]` tooltips work in any diagram type.
+
 ### 🧮 Math Formulas (KaTeX)
 
 Render beautiful mathematical expressions using LaTeX syntax with KaTeX.

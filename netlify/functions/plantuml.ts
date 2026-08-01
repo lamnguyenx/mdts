@@ -37,7 +37,14 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       };
     }
 
-    const encoded = encode(diagram);
+    const ensureInteractiveSvgPragma = (source: string): string => {
+      if (/!pragma\s+svgInteractive/i.test(source)) {
+        return source;
+      }
+      return source.replace(/@startuml/i, (match) => `${match}\n!pragma svgInteractive true`);
+    };
+
+    const encoded = encode(ensureInteractiveSvgPragma(diagram));
     const plantumlServerUrl = process.env.PLANTUML_SERVER ?? 'https://www.plantuml.com/plantuml';
     const svgUrl = `${plantumlServerUrl.replace(/\/+$/, '')}/svg/${encoded}`;
 

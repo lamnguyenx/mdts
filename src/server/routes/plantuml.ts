@@ -37,8 +37,15 @@ const createSvgGenerator = (plantumlModule: PlantumlModule) => async (diagram: s
   return svg;
 };
 
+const ensureInteractiveSvgPragma = (diagram: string): string => {
+  if (/!pragma\s+svgInteractive/i.test(diagram)) {
+    return diagram;
+  }
+  return diagram.replace(/@startuml/i, (match) => `${match}\n!pragma svgInteractive true`);
+};
+
 const createServerSvgGenerator = (serverUrl: string) => async (diagram: string) => {
-  const encoded = encode(diagram);
+  const encoded = encode(ensureInteractiveSvgPragma(diagram));
   const svgUrl = `${serverUrl.replace(/\/+$/, '')}/svg/${encoded}`;
 
   const response = await fetch(svgUrl);
