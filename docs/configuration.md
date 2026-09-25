@@ -91,7 +91,7 @@ Choose the overall color scheme:
 
 Available themes:
 - `default`, `aurora`, `autumn`, `cafe`, `deepsea`, `forest`
-- `glacier`, `inkblue`, `inkstone`, `lavender`, `moss`
+- `glacier`, `highcontrast`, `inkblue`, `inkstone`, `lavender`, `moss`
 - `nightfox`, `ocean`, `rosequartz`, `sakura`, `sandstone`
 - `solarized`, `storm`, `sunset`, `tropical`, `wisteria`
 

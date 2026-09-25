@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "mdts",
+      "name": "@lamnguyenx/mdts2",
       "dependencies": {
         "chalk": "^6.0.0",
         "chokidar": "^4.0.3",
@@ -12,7 +12,6 @@
         "github-slugger": "^2.0.0",
         "glob": "^13.0.1",
         "markdown-it": "^14.1.0",
-        "mdts": "./",
         "node-plantuml-back": "^1.1.4",
         "open": "^11.0.0",
         "plantuml": "^0.0.2",
@@ -22,6 +21,7 @@
       },
       "devDependencies": {
         "@eslint/js": "^10.0.1",
+        "@lamnguyenx/mdts2": "./",
         "@stylistic/eslint-plugin": "^5.2.3",
         "@types/aws-lambda": "^8.10.152",
         "@types/commander": "^2.12.0",
@@ -352,6 +352,8 @@
     "@kwsites/file-exists": ["@kwsites/file-exists@1.1.1", "", { "dependencies": { "debug": "^4.1.1" } }, ""],
 
     "@kwsites/promise-deferred": ["@kwsites/promise-deferred@1.1.1", "", {}, ""],
+
+    "@lamnguyenx/mdts2": ["@lamnguyenx/mdts2@root:", { "bin": { "mdts2": "bin/mdts" } }],
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@0.2.12", "", { "dependencies": { "@emnapi/core": "^1.4.3", "@emnapi/runtime": "^1.4.3", "@tybys/wasm-util": "^0.10.0" } }, "sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ=="],
 
@@ -1246,8 +1248,6 @@
     "math-intrinsics": ["math-intrinsics@1.1.0", "", {}, ""],
 
     "md5.js": ["md5.js@1.3.5", "", { "dependencies": { "hash-base": "^3.0.0", "inherits": "^2.0.1", "safe-buffer": "^5.1.2" } }, "sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg=="],
-
-    "mdts": ["mdts@root:", { "bin": "bin/mdts" }],
 
     "mdurl": ["mdurl@2.0.0", "", {}, ""],
 

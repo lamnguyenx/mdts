@@ -111,6 +111,20 @@ export const themes: AppTheme[] = [
     },
   },
   {
+    id: 'highcontrast',
+    name: 'High Contrast',
+    light: {
+      primary: '#000000',
+      background: '#ffffff',
+      paper: '#e8e8e8',
+    },
+    dark: {
+      primary: '#00e5ff',
+      background: '#000000',
+      paper: '#0d0d0d',
+    },
+  },
+  {
     id: 'inkblue',
     name: 'Ink Blue',
     light: {
