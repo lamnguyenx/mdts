@@ -6,24 +6,27 @@ import { EXCLUDED_DIRECTORIES } from '../../constants';
 import { ServerContext } from '../context';
 import { logger } from '../../utils/logger';
 import { isUnreadableDirectoryError } from '../../utils/errors';
-import { resolveGlobPatterns } from '../../utils/glob';
 
 type FileTreeItem = { path: string, status: string, isDirectory?: boolean } | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
 
 const toPosixPath = (p: string): string => p.split(path.sep).join('/');
 
-export const fileTreeRouter = (context: ServerContext): Router => {
-  const { directory } = context;
+export const fileTreeRouter = (fallbackContext?: ServerContext): Router => {
   const router = Router();
-  const git: SimpleGit = simpleGit({ baseDir: directory });
 
   router.get('/', async (req, res) => {
+    const context = (res.locals.folderContext as ServerContext | undefined) ?? fallbackContext;
+
+    if (!context) {
+      return res.status(400).json({ error: 'folder query parameter is required' });
+    }
+
+    const { directory } = context;
+    const git: SimpleGit = simpleGit({ baseDir: directory });
     const isRepo = await git.checkIsRepo();
     const gitStatus = isRepo ? await git.status() : null;
-    const filePatterns = context.globPatterns
-      ? resolveGlobPatterns(directory, context.globPatterns).filePatterns
-      : context.filePatterns;
+    const filePatterns = context.filePatterns;
     const fileTree = filePatterns
       ? buildFileTreeFromPatterns(filePatterns, gitStatus)
       : await getFileTree(directory, '', gitStatus);

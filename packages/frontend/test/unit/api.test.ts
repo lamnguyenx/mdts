@@ -1,4 +1,4 @@
-import { fetchData } from '../../src/api';
+import { fetchData, folderUrl, getCurrentFolder, withFolder } from '../../src/api';
 
 const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
 
@@ -68,5 +68,34 @@ describe('fetchData', () => {
 
     await expect(fetchData('/api/config', 'json')).rejects.toBe(abortError);
     expect(consoleErrorSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe('folder URL helpers', () => {
+  it('reads the folder from the query string', () => {
+    expect(getCurrentFolder('?folder=%2Fworkspace')).toBe('/workspace');
+    expect(getCurrentFolder('')).toBeNull();
+  });
+
+  it('appends the folder to API URLs', () => {
+    expect(withFolder('/api/filetree', '?folder=%2Fworkspace'))
+      .toBe('/api/filetree?folder=%2Fworkspace');
+    expect(withFolder('/api/outline?filePath=a.md', '?folder=%2Fworkspace'))
+      .toBe('/api/outline?filePath=a.md&folder=%2Fworkspace');
+  });
+
+  it('appends the folder before a hash', () => {
+    expect(withFolder('/image.png#preview', '?folder=%2Fworkspace'))
+      .toBe('/image.png?folder=%2Fworkspace#preview');
+  });
+
+  it('leaves URLs unchanged without a folder', () => {
+    expect(withFolder('/api/filetree', '')).toBe('/api/filetree');
+    expect(folderUrl('/docs/readme.md', '')).toBe('/docs/readme.md');
+  });
+
+  it('builds navigation URLs that keep the folder', () => {
+    expect(folderUrl('/docs/readme.md', '?folder=%2Fworkspace'))
+      .toBe('/docs/readme.md?folder=%2Fworkspace');
   });
 });

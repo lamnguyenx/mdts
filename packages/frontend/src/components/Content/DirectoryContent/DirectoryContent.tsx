@@ -17,10 +17,13 @@ interface DirectoryContentProps {
 const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDirectorySelect }) => {
   const { currentPath } = useSelector((state: RootState) => state.history);
   const { contentMode } = useSelector((state: RootState) => state.appSetting);
-  const { fileTree: fullFileTree, loading, error } = useSelector((state: RootState) => state.fileTree);
+  const { fileTree: fullFileTree, loading, error, mountedDirectoryPath } = useSelector(
+    (state: RootState) => state.fileTree,
+  );
   const isMobile = useIsMobile();
 
-  const fileTree = selectFilteredFileTree(fullFileTree, currentPath);
+  const fileTree = selectFilteredFileTree(fullFileTree, currentPath ?? '');
+  const displayPath = currentPath || mountedDirectoryPath;
 
   const handleItemClick = useCallback((itemPath: string, isDirectory: boolean) => {
     if (isDirectory) {
@@ -52,7 +55,7 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
         <FolderOutlined sx={{ mr: 2 }} color="primary" fontSize={isMobile ? 'medium' : 'large'} />
         <Typography variant={isMobile ? 'h5' : 'h4'} gutterBottom sx={{ mb: 0, wordBreak: 'break-word' }}>
-          {currentPath}
+          {displayPath}
         </Typography>
       </Box>
       <Divider sx={{ paddingLeft: '24px', marginLeft: isMobile ? '-16px' : '-32px', marginRight: isMobile ? '-16px' : '-32px', borderBottom: 1, borderColor: 'divider' }} />

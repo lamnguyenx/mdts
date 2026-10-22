@@ -9,6 +9,7 @@ import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import MarkdownCode from './MarkdownCode';
+import MarkdownImage from './MarkdownImage';
 import MarkdownLink from './MarkdownLink';
 
 import 'rehype-github-alerts/styling/css/index.css';
@@ -34,6 +35,9 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFi
         components={{
           a: ({ href, children }) =>
             <MarkdownLink href={href} selectedFilePath={selectedFilePath}>{children}</MarkdownLink>,
+          img: (props) => (
+            <MarkdownImage {...props} selectedFilePath={selectedFilePath} />
+          ),
           code: ({ inline, className, children, ...props }) => (
             <MarkdownCode inline={inline} className={className} {...props}>
               {children}

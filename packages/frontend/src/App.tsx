@@ -1,9 +1,11 @@
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { Box, CircularProgress, CssBaseline, ThemeProvider } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import Dashboard from './components/Dashboard/Dashboard';
 import FuzzySearchDialog from './components/FuzzySearch/FuzzySearchDialog';
 import SettingsDialog from './components/SettingsDialog/SettingsDialog';
+import { useFolder } from './hooks/useFolder';
 import { useTheme } from './hooks/useTheme';
 import { useWebSocket } from './hooks/useWebSocket';
 import Layout from './Layout';
@@ -13,9 +15,32 @@ import { fetchFileTree } from './store/slices/fileTreeSlice';
 import { updateHistoryFromLocation } from './store/slices/historySlice';
 import { AppDispatch, RootState } from './store/store';
 
-const App: React.FC = () => {
+type AppMode = 'loading' | 'workspace' | 'dashboard' | 'legacy';
+
+interface ServerInfo {
+  daemon: boolean;
+  defaultFolder: string | null;
+  home: string;
+}
+
+const LoadingScreen: React.FC = () => (
+  <Box
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '100vh',
+      bgcolor: 'background.default',
+    }}
+  >
+    <CircularProgress />
+  </Box>
+);
+
+const Workspace: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
+  const folder = useFolder();
 
   const { currentPath } = useSelector((state: RootState) => state.history);
   const { darkMode, contentMode } = useSelector((state: RootState) => state.appSetting);
@@ -53,7 +78,7 @@ const App: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  useWebSocket(currentPath);
+  useWebSocket(currentPath, folder);
 
   useEffect(() => {
     dispatch(fetchFileTree());
@@ -88,6 +113,56 @@ const App: React.FC = () => {
       <FuzzySearchDialog open={isFuzzySearchOpen} onClose={handleCloseFuzzySearch} />
     </ThemeProvider>
   );
+};
+
+const App: React.FC = () => {
+  const folder = useFolder();
+  const [mode, setMode] = useState<AppMode>(folder ? 'workspace' : 'loading');
+
+  useEffect(() => {
+    if (folder) {
+      setMode('workspace');
+      return;
+    }
+
+    let cancelled = false;
+    setMode('loading');
+
+    const detectServer = async (): Promise<void> => {
+      try {
+        const response = await fetch('/api/folders/info');
+        if (!response.ok) {
+          if (!cancelled) setMode('legacy');
+          return;
+        }
+
+        const info = await response.json() as ServerInfo;
+        const isMdtsServer = Boolean(
+          info &&
+          typeof info === 'object' &&
+          !Array.isArray(info) &&
+          typeof info.daemon === 'boolean',
+        );
+        if (!cancelled) setMode(isMdtsServer ? 'dashboard' : 'legacy');
+      } catch {
+        if (!cancelled) {
+          // The static demo (or an older server) has no folder API. Keep the
+          // original single-folder/welcome behaviour in that case.
+          setMode('legacy');
+        }
+      }
+    };
+
+    detectServer();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [folder]);
+
+  if (mode === 'loading') return <LoadingScreen />;
+  if (mode === 'dashboard') return <Dashboard />;
+  return <Workspace />;
 };
 
 export default App;

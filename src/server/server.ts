@@ -1,24 +1,35 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import * as fs from 'fs';
 import path from 'path';
 import { logger } from '../utils/logger';
-import { ServerContext } from './context';
+import { ServerContext, ServerOptions } from './context';
 import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
 import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
 import { diffRouter, diffPrevRouter } from './routes/diff';
 import { plantumlRouter } from './routes/plantuml';
+import { folderRouter } from './routes/folders';
+import { FolderService } from './folders';
 
 const MAX_PORT_RETRIES = 10;
 
+const getFolderParam = (req: Request): string | undefined =>
+  typeof req.query.folder === 'string' ? req.query.folder : undefined;
+
+const isInsideDirectory = (directory: string, filePath: string): boolean => {
+  const relative = path.relative(directory, filePath);
+  return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
+};
+
 export const serve = (
-  context: ServerContext,
+  options: ServerOptions,
   port: number,
   host: string,
   autoPort: boolean = false,
 ): Promise<{ server: import('http').Server; port: number }> => {
-  const app = createApp(context);
+  const folders = new FolderService(options);
+  const app = createApp(options, __dirname, folders);
 
   type ServeResult = { server: import('http').Server; port: number };
   const tryListen = (currentPort: number, retries: number): Promise<ServeResult> => {
@@ -26,15 +37,19 @@ export const serve = (
       const server = app.listen(currentPort, host);
 
       server.once('listening', () => {
-        logger.log('Server', `📁 Mounted directory: ${context.directory}`);
-        if (context.filePatterns) {
-          logger.log('Server', `📄 Watching ${context.filePatterns.length} files from glob patterns`);
+        if (options.defaultDirectory) {
+          logger.log('Server', `📁 Default folder: ${folders.defaultDirectory}`);
+        } else {
+          logger.log('Server', '📂 Dashboard mode: choose a folder in your browser');
+        }
+        if (options.globPatterns && options.globPatterns.length > 0) {
+          logger.log('Server', `📄 Filtering with ${options.globPatterns.length} glob pattern(s)`);
         }
         if (currentPort !== port) {
           logger.log('Server', `⚠️  Port ${port} was in use, using ${currentPort} instead`);
         }
         logger.log('Server', `🚀 Server listening at http://${host}:${currentPort}`);
-        setupWatcher(context, server, currentPort);
+        setupWatcher(options, server, currentPort, folders);
         resolve({ server, port: currentPort });
       });
 
@@ -53,24 +68,42 @@ export const serve = (
 };
 
 export const createApp = (
-  context: ServerContext,
+  options: ServerOptions = {},
   currentLocation: string = __dirname,
+  folders: FolderService = new FolderService(options),
 ): express.Express => {
-  const { directory } = context;
   const app = express();
+  const publicRoot = path.join(currentLocation, './public');
+  const frontendRoot = path.join(currentLocation, '../frontend');
 
   // JSON middleware - must be before routes that need it
   app.use(express.json());
 
   // Mount library static files
-  app.use(express.static(path.join(currentLocation, './public')));
-  app.use(express.static(path.join(currentLocation, '../frontend')));
+  app.use(express.static(publicRoot));
+  app.use(express.static(frontendRoot));
+
+  const scoped = (req: Request, res: Response, next: NextFunction): void => {
+    const resolution = folders.resolve(getFolderParam(req));
+
+    if (!resolution.context) {
+      res.status(resolution.error?.status ?? 400).json({
+        error: resolution.error?.message ?? 'Invalid folder',
+      });
+      return;
+    }
+
+    res.locals.folderContext = resolution.context;
+    folders.recordRecent(resolution.context.directory);
+    next();
+  };
 
   // Define API
-  app.use('/api/filetree', fileTreeRouter(context));
-  app.use('/api/outline', outlineRouter(directory));
-  app.use('/api/diff-prev', diffPrevRouter(context));
-  app.use('/api/diff', diffRouter(context));
+  app.use('/api/folders', folderRouter(folders));
+  app.use('/api/filetree', scoped, fileTreeRouter());
+  app.use('/api/outline', scoped, outlineRouter());
+  app.use('/api/diff-prev', scoped, diffPrevRouter());
+  app.use('/api/diff', scoped, diffRouter());
   app.use('/api/plantuml', plantumlRouter());
   app.get('/api/config', (req, res) => {
     res.json(getConfig());
@@ -87,21 +120,22 @@ export const createApp = (
 
   app.get('/api/markdown/mdts-welcome-markdown.md', (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
-    res.sendFile('welcome.md', { root: path.join(currentLocation, './public') });
+    res.sendFile('welcome.md', { root: publicRoot });
   });
 
-  app.use('/api/markdown', (req, res, next) => {
+  app.use('/api/markdown', scoped, (req, res) => {
+    const context = res.locals.folderContext as ServerContext;
     // Decode the URI component to handle encoded characters in the path
     const decodedPath = decodeURIComponent(req.path);
     // Normalize the path to resolve '..' and '.' segments
     const normalizedPath = path.normalize(decodedPath);
 
     // Construct the full file path
-    const filePath = path.join(directory, normalizedPath);
+    const filePath = path.join(context.directory, normalizedPath);
 
     // Security check: Ensure the resolved path is within the designated directory
     // This prevents path traversal attacks (e.g., accessing files outside 'directory')
-    if (!filePath.startsWith(directory)) {
+    if (!isInsideDirectory(context.directory, filePath)) {
       logger.error(`🚫 Attempted path traversal: ${filePath}`);
       return res.status(403).send('Forbidden');
     }
@@ -116,14 +150,36 @@ export const createApp = (
       logger.error(`🚫 File not found: ${filePath}`);
       return res.status(404).send('File not found');
     }
-    next();
-  });
-  // Default express.static ignores dot-segments, so /.hidden/file.md would
-  // fall through to the SPA catch-all and return index.html as "markdown".
-  app.use('/api/markdown', express.static(directory, { dotfiles: 'allow' }));
 
-  // Catch-all route to serve index.html for any other requests
+    const relativePath = path.relative(context.directory, filePath);
+    res.sendFile(relativePath, { root: context.directory, dotfiles: 'allow' }, (err) => {
+      if (!err) return;
+      if (res.headersSent) return;
+      if ('code' in err && err.code === 'ENOENT') {
+        res.status(404).send('File not found');
+      } else {
+        logger.error(`🚫 Error serving markdown ${filePath}:`, err);
+        res.status(500).send('Internal Server Error');
+      }
+    });
+  });
+
+  // Catch-all route to serve index.html for the app, or assets from the
+  // currently selected folder.
   app.get('*splat', async (req, res) => {
+    const folderParam = getFolderParam(req);
+    const resolution = folders.resolve(folderParam);
+
+    if (!resolution.context) {
+      if (folderParam) {
+        return res
+          .status(resolution.error?.status ?? 404)
+          .send(resolution.error?.message ?? 'Folder not found');
+      }
+      return res.sendFile('index.html', { root: frontendRoot });
+    }
+
+    const { directory } = resolution.context;
     const filePath = path.join(directory, req.path);
     let isDirectory = false;
     try {
@@ -138,7 +194,7 @@ export const createApp = (
       req.path.toLowerCase().endsWith('.md') ||
       req.path.toLowerCase().endsWith('.markdown')
     ) {
-      return res.sendFile('index.html', { root: path.join(currentLocation, '../frontend') });
+      return res.sendFile('index.html', { root: frontendRoot });
     } else {
       return res.sendFile(req.path, { root: directory }, (err) => {
         if (err) {
@@ -156,4 +212,3 @@ export const createApp = (
 
   return app;
 };
-

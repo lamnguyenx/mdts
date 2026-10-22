@@ -12,14 +12,19 @@ const isRootCommitError = (error: unknown): boolean => {
   return /(unknown revision|bad revision|ambiguous argument)/i.test(message);
 };
 
-export const diffRouter = (context: ServerContext): Router => {
-  const { directory } = context;
+export const diffRouter = (fallbackContext?: ServerContext): Router => {
   const router = Router();
-  const git: SimpleGit = simpleGit({ baseDir: directory });
 
   // GET /api/diff/:path - current working tree diff
   router.get('/*splat', async (req, res) => {
+    const context = (res.locals.folderContext as ServerContext | undefined) ?? fallbackContext;
+
+    if (!context) {
+      return res.status(400).json({ error: 'folder query parameter is required' });
+    }
+
     const filePath = extractFilePath(req.params);
+    const git: SimpleGit = simpleGit({ baseDir: context.directory });
     try {
       const isRepo = await git.checkIsRepo();
       if (!isRepo) {
@@ -36,14 +41,19 @@ export const diffRouter = (context: ServerContext): Router => {
   return router;
 };
 
-export const diffPrevRouter = (context: ServerContext): Router => {
-  const { directory } = context;
+export const diffPrevRouter = (fallbackContext?: ServerContext): Router => {
   const router = Router();
-  const git: SimpleGit = simpleGit({ baseDir: directory });
 
   // GET /api/diff-prev/:path - diff of the last commit that changed this file
   router.get('/*splat', async (req, res) => {
+    const context = (res.locals.folderContext as ServerContext | undefined) ?? fallbackContext;
+
+    if (!context) {
+      return res.status(400).json({ error: 'folder query parameter is required' });
+    }
+
     const filePath = extractFilePath(req.params);
+    const git: SimpleGit = simpleGit({ baseDir: context.directory });
     try {
       const isRepo = await git.checkIsRepo();
       if (!isRepo) {

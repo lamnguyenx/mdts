@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import MarkdownIt from 'markdown-it';
 import path from 'path';
 import { logger } from '../../utils/logger';
+import { ServerContext } from '../context';
 
 const md = new MarkdownIt();
 
@@ -12,11 +13,17 @@ interface OutlineItem {
   id: string;
 }
 
-export const outlineRouter = (directory: string): Router => {
+export const outlineRouter = (fallbackDirectory?: string): Router => {
   const router = Router();
 
   router.get('/', async (req, res) => {
+    const directory = (res.locals.folderContext as ServerContext | undefined)?.directory
+      ?? fallbackDirectory;
     const filePath = req.query.filePath as string;
+
+    if (!directory) {
+      return res.status(400).send('folder query parameter is required.');
+    }
     if (!filePath) {
       return res.status(400).send('filePath query parameter is required.');
     }

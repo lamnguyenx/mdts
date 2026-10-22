@@ -32,6 +32,9 @@
 
 - ⚡ **Instant Markdown Preview** – Run and view in seconds  
 - 🌐 **Web UI** – Clean, tree-based browser interface with three-panel layout
+- 🗂 **Multi-folder Dashboard** – Start once, then open any folder from your browser
+- 🕘 **Recently Viewed** – Jump back into folders you opened before
+- 🔗 **Shareable Workspace URLs** – Every folder gets a `?folder=/path` URL
 - 🔄 **Live Reload** – Automatically refreshes on file changes  
 - 🧘 **Zero Setup** – No config, no install, no nonsense
 - 🎨 **Custom Themes** – 20+ beautiful application themes and syntax highlighting options
@@ -43,8 +46,32 @@
 npx mdts
 ```
 
-This starts a local server at http://localhost:8521 and opens your browser.
-Your current directory becomes a browsable Markdown tree.
+This starts a long-running server at http://localhost:8521 and opens the **dashboard**.
+Choose **Open a folder** (or pick one from **Recently viewed**) and it opens in its own
+workspace. Every folder is just a URL, so you can open several folders in separate tabs:
+
+```
+http://localhost:8521/?folder=/home/you/project-a
+http://localhost:8521/?folder=/home/you/notes
+```
+
+To skip the dashboard and open a folder immediately:
+
+```bash
+npx mdts ./docs
+```
+
+### Dashboard & workspaces
+
+- **Open a folder** browses the machine running mdts (not the browser machine), so it also
+  works when mdts runs on a remote host.
+- **Recently viewed** is stored in `~/.config/mdts/folders.json` and shared across browsers.
+- Use the dashboard button in the header to switch workspaces or open another folder.
+- Clicking the mdts logo returns to the current folder's root.
+
+For the URL contract, folder API, live-reload isolation, and security notes, see
+[Dashboard & Multi-folder Workspaces](docs/important/dashboard-workspaces.md).
+
 
 ## 💡 Use Cases
 
@@ -67,7 +94,7 @@ npx mdts [directory] [options]
 
 | Option              | Description                                          | Example                        |
 | ------------------- | ---------------------------------------------------- | ------------------------------ |
-| `[directory]`       | Directory to serve (default `.`)                     | `./docs`                       |
+| `[directory]`       | Folder to open directly (omit for the dashboard)     | `./docs`                       |
 | `--glob`, `-g`      | Glob patterns to filter markdown files               | `-g 'docs/*.md' 'specs/*.md'` |
 | `--host`, `-H`      | Host to listen on (default `localhost`)              | `0.0.0.0`                      |
 | `--port`, `-p`      | Port to serve on (default `8521`)                    | `8000`                         |
@@ -79,18 +106,31 @@ npx mdts [directory] [options]
 ### Examples
 
 ```bash
-# Serve current directory (all markdown files)
+# Start the dashboard and choose folders later
 npx mdts
 
-# Serve a specific directory
+# Open a specific directory directly
 npx mdts ./docs
 
-# Filter with glob patterns (only matching files are shown)
+# Filter with glob patterns (patterns apply to every folder you open)
 npx mdts ./project -g 'docs/**/*.md' 'README.md'
 
 # Combine options
 npx mdts ./monorepo -g 'packages/*/README.md' --port 3000 --no-open
 ```
+
+### Running as a daemon
+
+mdts itself keeps running in the foreground (like code-server). Start it once with
+`--no-open`, then leave it under your process manager of choice:
+
+```bash
+# tmux, screen, systemd, launchd, Docker, etc.
+npx mdts --host 0.0.0.0 --port 8521 --no-open
+```
+
+Anyone who can reach the port can browse folders on the host. Only bind to `0.0.0.0`
+on trusted networks.
 
 ## 📚 Documentation
 
@@ -98,6 +138,8 @@ npx mdts ./monorepo -g 'packages/*/README.md' --port 3000 --no-open
 Experience mdts in action with real examples and interactive features.
 
 ### 📖 Documentation
+- [Important Docs](docs/important/README.md)
+- [Dashboard & Multi-folder Workspaces](docs/important/dashboard-workspaces.md)
 - [Use Cases](docs/usecases.md)
 - [Markdown Features](docs/markdown_features.md)  
 - [Frontend Features](docs/frontend_features.md)

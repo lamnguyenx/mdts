@@ -7,7 +7,10 @@ import { AppDispatch } from '../store/store';
 
 type Event = { type: 'reload-content' } | { type: 'reload-tree' };
 
-export const useWebSocket = (currentPath: string | null): void => {
+export const useWebSocket = (
+  currentPath: string | null,
+  folder: string | null = null,
+): void => {
   const dispatch = useDispatch<AppDispatch>();
   const wsRef = useRef<WebSocket | null>(null);
   const currentPathRef = useRef<string | null>(currentPath);
@@ -18,10 +21,9 @@ export const useWebSocket = (currentPath: string | null): void => {
   }, [currentPath]);
 
   useEffect(() => {
-    const ws = new WebSocket(
-      (window.location.protocol === 'https:' ? 'wss://' : 'ws://') +
-        window.location.host
-    );
+    const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    const folderQuery = folder ? `?folder=${encodeURIComponent(folder)}` : '';
+    const ws = new WebSocket(`${protocol}${window.location.host}/${folderQuery}`);
     wsRef.current = ws;
 
     ws.onopen = () => {
@@ -54,7 +56,7 @@ export const useWebSocket = (currentPath: string | null): void => {
     return () => {
       ws.close();
     };
-  }, []); // Empty dependency array to run only once on mount
+  }, [folder, dispatch]);
 
   useEffect(() => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && currentPathRef.current) {

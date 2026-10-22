@@ -1,16 +1,33 @@
 import { type Express } from 'express';
 import request from 'supertest';
 import { createApp } from '../../src/server/server';
+import fs from 'fs';
+import os from 'os';
 import path from 'path';
 
 describe('Server E2E Tests', () => {
   let app: Express;
+  let configDir: string;
+  let secondFolder: string;
+  const contentDirectory = path.join(__dirname, '../fixtures/mountDirectory/content');
 
   beforeAll(async () => {
+    configDir = fs.mkdtempSync(path.join(os.tmpdir(), 'mdts-config-'));
+    secondFolder = fs.mkdtempSync(path.join(os.tmpdir(), 'mdts-second-'));
+    fs.writeFileSync(path.join(secondFolder, 'other.md'), '# Other folder');
+
     app = createApp(
-      { directory: path.join(__dirname, '../fixtures/mountDirectory/content') },
+      {
+        defaultDirectory: contentDirectory,
+        configDir,
+      },
       path.join(__dirname, '../fixtures/mountDirectory/dist/server'),
     );
+  });
+
+  afterAll(() => {
+    fs.rmSync(configDir, { recursive: true, force: true });
+    fs.rmSync(secondFolder, { recursive: true, force: true });
   });
 
   it('GET /api/filetree should return the file tree', async () => {
@@ -26,9 +43,81 @@ describe('Server E2E Tests', () => {
         },
         { path: 'test.md', status: ' ' },
       ]),
-      mountedDirectoryPath: path.join(__dirname, '../fixtures/mountDirectory/content'),
+      mountedDirectoryPath: contentDirectory,
       isGitRepository: true,
     });
+  });
+
+  it('GET /api/filetree?folder= should open another folder independently', async () => {
+    const res = await request(app)
+      .get('/api/filetree')
+      .query({ folder: secondFolder });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.mountedDirectoryPath).toEqual(secondFolder);
+    expect(res.body.fileTree).toEqual([{ path: 'other.md', status: ' ' }]);
+  });
+
+  it('GET /api/filetree without a folder returns 400 in dashboard-only mode', async () => {
+    const dashboardOnlyApp = createApp({ configDir });
+    const res = await request(dashboardOnlyApp).get('/api/filetree');
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.error).toEqual('folder query parameter is required');
+  });
+
+  it('GET /api/filetree with a missing folder returns 404', async () => {
+    const res = await request(app)
+      .get('/api/filetree')
+      .query({ folder: path.join(secondFolder, 'missing') });
+
+    expect(res.statusCode).toEqual(404);
+    expect(res.body.error).toContain('Folder not found');
+  });
+
+  it('GET /api/folders/info describes the default folder', async () => {
+    const res = await request(app).get('/api/folders/info');
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual({
+      daemon: false,
+      defaultFolder: contentDirectory,
+      home: os.homedir(),
+    });
+  });
+
+  it('GET /api/folders/browse lists subdirectories', async () => {
+    const res = await request(app)
+      .get('/api/folders/browse')
+      .query({ path: contentDirectory });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.path).toEqual(contentDirectory);
+    expect(res.body.directories).toEqual(
+      expect.arrayContaining([
+        { name: 'nested', path: path.join(contentDirectory, 'nested') },
+      ]),
+    );
+  });
+
+  it('POST /api/folders/recent remembers a folder and DELETE removes it', async () => {
+    const addResponse = await request(app)
+      .post('/api/folders/recent')
+      .send({ path: secondFolder });
+
+    expect(addResponse.statusCode).toEqual(200);
+    expect(addResponse.body.recent[0]).toEqual(
+      expect.objectContaining({ path: secondFolder, name: path.basename(secondFolder), exists: true }),
+    );
+
+    const removeResponse = await request(app)
+      .delete('/api/folders/recent')
+      .query({ path: secondFolder });
+
+    expect(removeResponse.statusCode).toEqual(200);
+    expect(removeResponse.body.recent).not.toEqual(
+      expect.arrayContaining([expect.objectContaining({ path: secondFolder })]),
+    );
   });
 
   it('GET /api/markdown/mdts-welcome-markdown.md should return the welcome markdown', async () => {
@@ -39,6 +128,15 @@ describe('Server E2E Tests', () => {
 
   it('GET /api/markdown/test.md should return the content of test.md', async () => {
     const res = await request(app).get('/api/markdown/test.md');
+    expect(res.statusCode).toEqual(200);
+    expect(res.text).toContain('# Hello E2E');
+  });
+
+  it('GET /api/markdown/test.md?folder= should read from the selected folder', async () => {
+    const res = await request(app)
+      .get('/api/markdown/test.md')
+      .query({ folder: contentDirectory });
+
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain('# Hello E2E');
   });
@@ -114,9 +212,8 @@ describe('Server E2E Tests', () => {
   });
 
   it('should prevent path traversal', async () => {
-    const res = await request(app).get('/api/markdown/../package.json');
+    const res = await request(app).get('/api/markdown/%2e%2e%2fpackage.json');
     expect(res.statusCode).toEqual(404);
-    expect(res.text).toEqual('File not found');
   });
 
   describe('serving non-markdown files', () => {

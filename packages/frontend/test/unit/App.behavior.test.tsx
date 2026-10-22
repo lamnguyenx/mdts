@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import App from '../../src/App';
@@ -12,6 +12,11 @@ import { useWebSocket } from '../../src/hooks/useWebSocket';
 import { createMockStore } from '../utils';
 
 const mockUseLocation = jest.fn();
+
+jest.mock('../../src/api', () => ({
+  ...jest.requireActual('../../src/api'),
+  fetchData: jest.fn(() => Promise.reject(new Error('folder API is not available'))),
+}));
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -94,10 +99,10 @@ describe('App behavior', () => {
     return store;
   };
 
-  test('opens and closes the settings dialog from layout actions', () => {
+  test('opens and closes the settings dialog from layout actions', async () => {
     renderApp();
 
-    expect(screen.getByTestId('settings-dialog')).toHaveTextContent('closed');
+    expect(await screen.findByTestId('settings-dialog')).toHaveTextContent('closed');
 
     fireEvent.click(screen.getByRole('button', { name: 'open settings' }));
     expect(screen.getByTestId('settings-dialog')).toHaveTextContent('open');
@@ -106,7 +111,7 @@ describe('App behavior', () => {
     expect(screen.getByTestId('settings-dialog')).toHaveTextContent('closed');
   });
 
-  test('dispatches fallback settings when dark mode is invalid', () => {
+  test('dispatches fallback settings when dark mode is invalid', async () => {
     const store = renderApp({
       appSetting: {
         darkMode: 'broken',
@@ -120,7 +125,9 @@ describe('App behavior', () => {
       },
     });
 
-    expect(mockedUseWebSocket).toHaveBeenCalledWith('/docs/readme.md');
+    await waitFor(() => {
+      expect(mockedUseWebSocket).toHaveBeenCalledWith('/docs/readme.md', null);
+    });
     expect(mockedFetchFileTree).toHaveBeenCalledTimes(1);
     expect(mockedFetchConfig).toHaveBeenCalledTimes(1);
     expect(mockedUpdateHistoryFromLocation).toHaveBeenCalledWith('/docs/readme.md');

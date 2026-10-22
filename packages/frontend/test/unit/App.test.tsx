@@ -21,6 +21,7 @@ jest.mock('@mui/x-tree-view', () => ({
 }));
 
 jest.mock('../../src/api', () => ({
+  ...jest.requireActual('../../src/api'),
   fetchData: jest.fn(() => Promise.resolve([])),
 }));
 

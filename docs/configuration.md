@@ -37,6 +37,23 @@ Stored in `~/.config/mdts/config.json`, shared across all browser sessions:
 }
 ```
 
+### Recent Folders
+The dashboard stores recently opened folders in `~/.config/mdts/folders.json`, shared
+across browsers and tabs:
+
+```json
+{
+  "recent": [
+    {
+      "path": "/home/you/project",
+      "openedAt": "2026-10-22T09:19:14.278Z"
+    }
+  ]
+}
+```
+
+You can safely delete this file to reset the dashboard's **Recently viewed** list.
+
 ## Configuration Options
 
 ### Font Settings
@@ -213,9 +230,11 @@ npx mdts --host 0.0.0.0
 ```
 
 ### File Access
-- mdts can only access files within the mounted directory
-- No file write operations are performed
+- mdts can access files within the folders you open
+- In dashboard mode, **Open a folder** can browse any folder readable by the user running mdts
+- No file write operations are performed on your documents
 - Configuration files are stored in user's home directory
+- Only bind to `0.0.0.0` on trusted networks, because anyone who can reach the port can open folders
 
 ### Content Security
 - Inline HTML is processed and rendered

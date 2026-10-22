@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { folderUrl } from '../../../../api';
 
 interface MarkdownLinkProps {
   href?: string;
@@ -9,6 +10,8 @@ interface MarkdownLinkProps {
 
 const MarkdownLink: React.FC<MarkdownLinkProps> = ({ href, children, selectedFilePath }) => {
   const navigate = useNavigate();
+
+  const withFolder = useCallback((path: string) => folderUrl(path), []);
 
   const resolvePath = useCallback((href: string) => {
     if (!selectedFilePath || href.startsWith('http') || href.startsWith('//') || href.startsWith('/')) {
@@ -22,8 +25,8 @@ const MarkdownLink: React.FC<MarkdownLinkProps> = ({ href, children, selectedFil
     if (!href) return;
     const resolvedHref = resolvePath(href);
     e.preventDefault();
-    navigate(resolvedHref);
-  }, [href, resolvePath, navigate]);
+    navigate(withFolder(resolvedHref));
+  }, [href, resolvePath, navigate, withFolder]);
 
   if (!href) {
     return <a data-testid="markdown-link">{children}</a>;
@@ -37,7 +40,7 @@ const MarkdownLink: React.FC<MarkdownLinkProps> = ({ href, children, selectedFil
     return <a data-testid="markdown-link" href={resolvedHref} target="_blank" rel="noopener noreferrer">{children}</a>;
   }
 
-  return <a data-testid="markdown-link" href={resolvedHref} onClick={handleClick}>{children}</a>;
+  return <a data-testid="markdown-link" href={withFolder(resolvedHref)} onClick={handleClick}>{children}</a>;
 };
 
 export default MarkdownLink;

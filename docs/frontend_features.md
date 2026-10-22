@@ -13,13 +13,25 @@ tags:
 
 `mdts` offers a clean and intuitive interface for browsing and reading Markdown documents, with a focus on comfort, performance, and real-time preview.
 
+## 🗂 Dashboard and Workspaces
+
+When `mdts` starts without a directory, the root URL opens a dashboard instead of a
+single mounted folder:
+
+- **Open a folder** opens a server-side folder picker (works for local and remote mdts).
+- **Recently viewed** lists folders stored in `~/.config/mdts/folders.json`.
+- Each folder is a separate workspace URL: `/?folder=/absolute/path`.
+- Multiple folders can be open in different tabs at the same time.
+- The dashboard button in the header returns to the folder picker.
+
 ## 🖥️ 1. Intuitive and Clean Layout
 
 The UI is divided into three panels—file tree, document view, and outline—making navigation effortless.
 
 ### 🧭 Header Bar
 
-- **Logo & Title**: Click to return to the home page.
+- **Logo & Title**: Click to return to the current folder's root.
+- **Dashboard Button**: Open another folder or switch workspaces.
 - **Settings Button**: Opens comprehensive settings dialog for customizing appearance.
 - **GitHub Link**: Quick access to the project repository.
 - **Version Info**: Shows current version with link to changelog.

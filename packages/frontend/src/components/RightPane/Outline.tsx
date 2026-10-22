@@ -8,7 +8,7 @@ import OutlineContent from './OutlineContent/OutlineContent';
 import OutlineHeader from './OutlineHeader';
 
 interface OutlineProps {
-  filePath: string;
+  filePath: string | null;
   onItemClick: (id: string) => void;
   isOpen: boolean;
   onToggle: () => void;

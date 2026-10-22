@@ -1,7 +1,6 @@
 import { CLI } from '../../src/cli';
 import path from 'path';
 import { serve } from '../../src/server/server';
-import { resolveGlobPatterns } from '../../src/utils/glob';
 import { logger } from '../../src/utils/logger';
 
 // Mock fs first, before any other imports that might use it
@@ -24,12 +23,16 @@ const setExistingFiles = (files: string[]) => {
   mockExistingFiles = files;
 };
 
+const encodedDirectory = (directory: string): string => encodeURIComponent(directory);
+const folderUrl = (directory: string, page = ''): string =>
+  `http://localhost:8521${page ? `/${page}` : '/'}?folder=${encodedDirectory(directory)}`;
+
 // Mock the 'open' module
 jest.mock('open', () => ({ default: jest.fn(() => Promise.resolve()) }));
 
 // Mock the 'serve' function to prevent actual server startup
 jest.mock('../../src/server/server', () => ({
-  serve: jest.fn((_context: unknown, port: number) => Promise.resolve({ server: {}, port })),
+  serve: jest.fn((_options: unknown, port: number) => Promise.resolve({ server: {}, port })),
 }));
 
 jest.mock('../../src/utils/logger', () => ({
@@ -39,14 +42,6 @@ jest.mock('../../src/utils/logger', () => ({
     log: jest.fn(),
     error: jest.fn(),
   },
-}));
-
-// Mock resolveGlobPatterns
-jest.mock('../../src/utils/glob', () => ({
-  resolveGlobPatterns: jest.fn((directory: string) => ({
-    directory,
-    filePatterns: ['docs/guide.md'],
-  })),
 }));
 
 describe('cli', () => {
@@ -73,107 +68,135 @@ describe('cli', () => {
     process.argv = originalArgv;
   });
 
-  it('should call open with default port and README.md if it exists', () => {
+  it('starts the dashboard when no directory is given', () => {
+    process.argv = ['node', 'cli.ts'];
+
+    return cli.run()
+      .then(() => {
+        expect(mockServe).toHaveBeenCalledWith(
+          { defaultDirectory: undefined, globPatterns: undefined },
+          8521,
+          'localhost',
+          false,
+        );
+        expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521');
+      });
+  });
+
+  it('opens the current directory when "." is given', () => {
     setExistsSyncResult(true);
     process.argv = ['node', 'cli.ts', '.'];
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', false);
-        expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
+        expect(mockServe).toHaveBeenCalledWith(
+          { defaultDirectory: path.resolve('.'), globPatterns: undefined },
+          8521,
+          'localhost',
+          false,
+        );
+        expect(mockOpen).toHaveBeenCalledWith(folderUrl(path.resolve('.'), 'README.md'));
       });
   });
 
-  it('should call open with default port and empty path if README.md does not exist', () => {
+  it('opens the folder root when README.md and index.md do not exist', () => {
     setExistsSyncResult(false);
     process.argv = ['node', 'cli.ts', '.'];
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', false);
-        expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521');
+        expect(mockOpen).toHaveBeenCalledWith(folderUrl(path.resolve('.')));
       });
   });
 
-  it('should fall back to index.md when README.md does not exist', () => {
+  it('falls back to index.md when README.md does not exist', () => {
     setExistingFiles(['index.md']);
     process.argv = ['node', 'cli.ts', '.'];
 
     return cli.run()
       .then(() => {
-        expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/index.md');
+        expect(mockOpen).toHaveBeenCalledWith(folderUrl(path.resolve('.'), 'index.md'));
       });
   });
 
-  it('should prefer README.md over index.md when both exist', () => {
+  it('prefers README.md over index.md when both exist', () => {
     setExistingFiles(['README.md', 'index.md']);
     process.argv = ['node', 'cli.ts', '.'];
 
     return cli.run()
       .then(() => {
-        expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
+        expect(mockOpen).toHaveBeenCalledWith(folderUrl(path.resolve('.'), 'README.md'));
       });
   });
 
-  it('should call open with specified port', () => {
-    setExistsSyncResult(true);
-    process.argv = ['node', 'cli.ts', '-p', '9000', '.'];
-
-    return cli.run()
-      .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 9000, 'localhost', false);
-        expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
-      });
-  });
-
-  it('should call open with specified directory', () => {
-    setExistsSyncResult(true);
-    process.argv = ['node', 'cli.ts', './my-dir'];
-
-    return cli.run()
-      .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 8521, 'localhost', false);
-        expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
-      });
-  });
-
-  it('should call open with specified directory and port', () => {
+  it('uses the specified port and directory', () => {
     setExistsSyncResult(true);
     process.argv = ['node', 'cli.ts', '-p', '9000', './my-dir'];
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 9000, 'localhost', false);
-        expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
+        expect(mockServe).toHaveBeenCalledWith(
+          { defaultDirectory: path.resolve('./my-dir'), globPatterns: undefined },
+          9000,
+          'localhost',
+          false,
+        );
+        expect(mockOpen).toHaveBeenCalledWith(
+          `http://localhost:9000/README.md?folder=${encodedDirectory(path.resolve('./my-dir'))}`,
+        );
       });
   });
 
-  it('should call serve with autoPort=true when --port auto is specified', () => {
-    setExistsSyncResult(false);
-    process.argv = ['node', 'cli.ts', '-p', 'auto', '.'];
+  it('asks the server for an available port when --port auto is specified', () => {
+    process.argv = ['node', 'cli.ts', '-p', 'auto'];
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', true);
+        expect(mockServe).toHaveBeenCalledWith(
+          { defaultDirectory: undefined, globPatterns: undefined },
+          8521,
+          'localhost',
+          true,
+        );
       });
   });
 
-  it('should log the server URL without opening the browser when --no-open is specified', () => {
-    setExistsSyncResult(false);
-    process.argv = ['node', 'cli.ts', '--no-open', '--host', '0.0.0.0', '.'];
+  it('logs the dashboard URL without opening the browser when --no-open is specified', () => {
+    process.argv = ['node', 'cli.ts', '--no-open', '--host', '0.0.0.0'];
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, '0.0.0.0', false);
-        expect(mockLogger.log).toHaveBeenCalledWith('CLI', '🌐 Server running at http://localhost:8521');
+        expect(mockServe).toHaveBeenCalledWith(
+          { defaultDirectory: undefined, globPatterns: undefined },
+          8521,
+          '0.0.0.0',
+          false,
+        );
+        expect(mockLogger.log).toHaveBeenCalledWith(
+          'CLI',
+          '🌐 Dashboard available at http://localhost:8521',
+        );
         expect(mockOpen).not.toHaveBeenCalled();
       });
   });
 
-  it('should log an error and set exitCode when serve fails', () => {
+  it('logs a folder URL without opening the browser when --no-open is specified', () => {
     setExistsSyncResult(false);
+    process.argv = ['node', 'cli.ts', '--no-open', './docs'];
+
+    return cli.run()
+      .then(() => {
+        expect(mockLogger.log).toHaveBeenCalledWith(
+          'CLI',
+          `🌐 Folder available at http://localhost:8521/?folder=${encodedDirectory(path.resolve('./docs'))}`,
+        );
+        expect(mockOpen).not.toHaveBeenCalled();
+      });
+  });
+
+  it('logs an error and sets exitCode when serve fails', () => {
     mockServe.mockRejectedValueOnce(new Error('boom'));
-    process.argv = ['node', 'cli.ts', '.'];
+    process.argv = ['node', 'cli.ts'];
 
     return cli.run()
       .then(() => {
@@ -183,15 +206,16 @@ describe('cli', () => {
       });
   });
 
-  it('should call resolveGlobPatterns when --glob option is provided', () => {
-    setExistsSyncResult(false);
-    process.argv = ['node', 'cli.ts', './docs', '--glob', '*.md'];
+  it('passes glob patterns through to the server', () => {
+    process.argv = ['node', 'cli.ts', './docs', '--glob', '*.md', 'notes/*.md'];
 
     return cli.run()
       .then(() => {
-        expect(resolveGlobPatterns).toHaveBeenCalledWith(path.resolve('./docs'), ['*.md']);
         expect(mockServe).toHaveBeenCalledWith(
-          { directory: path.resolve('./docs'), filePatterns: ['docs/guide.md'] },
+          {
+            defaultDirectory: path.resolve('./docs'),
+            globPatterns: ['*.md', 'notes/*.md'],
+          },
           8521,
           'localhost',
           false,
@@ -199,28 +223,7 @@ describe('cli', () => {
       });
   });
 
-  it('should pass multiple glob patterns with -g shorthand', () => {
-    setExistsSyncResult(false);
-    process.argv = ['node', 'cli.ts', '.', '-g', '*.md', 'notes/*.md'];
-
-    return cli.run()
-      .then(() => {
-        expect(resolveGlobPatterns).toHaveBeenCalledWith(path.resolve('.'), ['*.md', 'notes/*.md']);
-      });
-  });
-
-  it('should not call resolveGlobPatterns when --glob is not provided', () => {
-    setExistsSyncResult(false);
-    process.argv = ['node', 'cli.ts', '.'];
-
-    return cli.run()
-      .then(() => {
-        expect(resolveGlobPatterns).not.toHaveBeenCalled();
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', false);
-      });
-  });
-
-  it('should resolve open module in requireOpen', async () => {
+  it('resolves the open module in requireOpen', async () => {
     const anotherCli = new CLI();
     const openModule = await import('open');
 

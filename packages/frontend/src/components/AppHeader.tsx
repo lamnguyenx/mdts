@@ -1,3 +1,4 @@
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -15,6 +16,8 @@ interface AppHeaderProps {
   onFuzzySearchClick: () => void;
   onToggleFileTree?: () => void;
   onToggleOutline?: () => void;
+  onDashboardClick?: () => void;
+  currentFolder?: string | null;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
@@ -23,6 +26,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
   onFuzzySearchClick,
   onToggleFileTree,
   onToggleOutline,
+  onDashboardClick,
+  currentFolder,
 }) => {
   const isMobile = useIsMobile();
   const isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -69,6 +74,18 @@ const AppHeader: React.FC<AppHeaderProps> = ({
               aria-label="toggle outline"
             >
               <SegmentIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        {onDashboardClick && (
+          <Tooltip title={currentFolder ? 'Open another folder' : 'Dashboard'}>
+            <IconButton
+              onClick={onDashboardClick}
+              color="inherit"
+              sx={{ mr: isMobile ? 0 : 1 }}
+              aria-label="open dashboard"
+            >
+              <DashboardIcon />
             </IconButton>
           </Tooltip>
         )}

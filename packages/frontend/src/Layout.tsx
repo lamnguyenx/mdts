@@ -1,12 +1,14 @@
 import { Box } from '@mui/material';
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { folderUrl } from './api';
 import AppHeader from './components/AppHeader';
 import Content from './components/Content/Content';
 import FileTree from './components/LeftPane/FileTree';
 import Outline from './components/RightPane/Outline';
 import useIsMobile from './hooks/useIsMobile';
+import { useFolder } from './hooks/useFolder';
 import { toggleFileTree, toggleOutline, } from './store/slices/appSettingSlice';
 import { RootState } from './store/store';
 
@@ -18,6 +20,8 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ onSettingsClick, onFuzzySearchClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const folder = useFolder();
   const isMobile = useIsMobile();
   const { fileTreeOpen, outlineOpen } = useSelector((state: RootState) => state.appSetting);
   const { currentPath, isDirectory } = useSelector((state: RootState) => state.history);
@@ -42,7 +46,11 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick, onFuzzySearchClick }) 
   }, [isMobile]);
 
   const handleFileSelect = useCallback((path: string) => {
-    navigate(`/${path}`);
+    navigate(folderUrl(`/${path}`, location.search));
+  }, [navigate, location.search]);
+
+  const handleDashboardClick = useCallback(() => {
+    navigate('/');
   }, [navigate]);
 
   const handleToggleFileTree = useCallback(() => {
@@ -55,8 +63,8 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick, onFuzzySearchClick }) 
   }, [dispatch, isMobile]);
 
   const handleDirectorySelect = useCallback((path: string) => {
-    navigate(`/${path}`);
-  }, [navigate]);
+    navigate(folderUrl(`/${path}`, location.search));
+  }, [navigate, location.search]);
 
   const handleOutlineItemClick = useCallback((id: string) => {
     setScrollToId(id);
@@ -82,6 +90,8 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick, onFuzzySearchClick }) 
         onFuzzySearchClick={onFuzzySearchClick}
         onToggleFileTree={handleToggleFileTree}
         onToggleOutline={handleToggleOutline}
+        onDashboardClick={folder ? handleDashboardClick : undefined}
+        currentFolder={folder}
       />
       <Box
         component="main"

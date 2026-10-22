@@ -1,402 +1,308 @@
-import { type Express, type NextFunction, type Request, type Response } from 'express';
-import * as fs from 'fs';
+import { type Express } from 'express';
+import fs from 'fs';
+import http from 'http';
+import net from 'net';
+import os from 'os';
+import path from 'path';
+import request from 'supertest';
+import { getConfig, saveConfig } from '../../../src/server/config';
 import { createApp, serve } from '../../../src/server/server';
 import { setupWatcher } from '../../../src/server/watcher';
-import { getConfig, saveConfig } from '../../../src/server/config';
-import { ServerContext } from '../../../src/server/context';
-import { logger } from '../../../src/utils/logger';
 
-jest.mock('express', () => {
-  const mockUse = jest.fn();
-  const mockGet = jest.fn();
-  const mockListen = jest.fn(() => {
-    const mockServer = {
-      close: jest.fn(),
-      once: jest.fn((event: string, handler: (...args: unknown[]) => void) => {
-        if (event === 'listening') {
-          process.nextTick(() => handler());
-        }
-      }),
-    };
-    return mockServer;
-  });
-  const mockPost = jest.fn();
-  const mockExpress = jest.fn(() => ({
-    use: mockUse,
-    get: mockGet,
-    post: mockPost,
-    listen: mockListen,
-  }));
-  mockExpress.static = jest.fn().mockReturnValue(jest.fn());
-  mockExpress.json = jest.fn(() => jest.fn());
-  mockExpress.Router = jest.fn(() => ({
-    json: jest.fn().mockReturnValue(jest.fn()),
-    get: jest.fn(),
-    post: jest.fn(),
-  }));
-  return mockExpress;
-});
-
-// Mock fs.existsSync and fs.statSync
-jest.mock('fs', () => ({
-  ...jest.requireActual('fs'),
-  existsSync: jest.fn(),
-  statSync: jest.fn(),
+jest.mock('../../../src/server/watcher', () => ({
+  setupWatcher: jest.fn(),
 }));
 
-// Mock setupWatcher
-jest.mock('../../../src/server/watcher');
-
-// Mock config functions
 jest.mock('../../../src/server/config', () => ({
   getConfig: jest.fn(),
   saveConfig: jest.fn(),
 }));
 
+const fixtureLocation = path.join(__dirname, '../../fixtures/mountDirectory/dist/server');
+
+const findFreePort = (): Promise<number> => new Promise((resolve, reject) => {
+  const server = net.createServer();
+  server.once('error', reject);
+  server.listen(0, '127.0.0.1', () => {
+    const address = server.address();
+    const port = typeof address === 'object' && address ? address.port : 0;
+    server.close(() => resolve(port));
+  });
+});
+
+const occupyPort = (port: number): Promise<http.Server> => new Promise((resolve, reject) => {
+  const server = net.createServer();
+  server.once('error', reject);
+  server.listen(port, '127.0.0.1', () => resolve(server));
+});
+
 describe('server.ts unit tests', () => {
   let app: Express;
+  let rootDirectory: string;
+  let firstFolder: string;
+  let secondFolder: string;
+  let configDir: string;
+
+  beforeAll(() => {
+    rootDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'mdts-server-'));
+    firstFolder = path.join(rootDirectory, 'first');
+    secondFolder = path.join(rootDirectory, 'second');
+    configDir = path.join(rootDirectory, 'config');
+
+    fs.mkdirSync(path.join(firstFolder, 'nested'), { recursive: true });
+    fs.mkdirSync(secondFolder, { recursive: true });
+    fs.writeFileSync(path.join(firstFolder, 'README.md'), '# First folder');
+    fs.writeFileSync(path.join(firstFolder, 'nested', 'guide.md'), '# Guide');
+    fs.writeFileSync(path.join(secondFolder, 'other.md'), '# Second folder');
+    fs.writeFileSync(path.join(secondFolder, 'image.png'), 'not really a png');
+
+    app = createApp({ defaultDirectory: firstFolder, configDir }, fixtureLocation);
+  });
+
+  afterAll(() => {
+    fs.rmSync(rootDirectory, { recursive: true, force: true });
+  });
 
   beforeEach(() => {
-    // Reset mocks before each test
     jest.clearAllMocks();
-
-    // Setup mock for fs.existsSync and fs.statSync
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.statSync as jest.Mock).mockReturnValue({
-      isDirectory: jest.fn().mockReturnValue(false),
-    });
-
-    app = createApp({ directory: '/mock/directory' });
   });
 
   describe('createApp', () => {
-    it('should create an express app', () => {
-      expect(app).toBeDefined();
+    it('serves the file tree for the default folder', async () => {
+      const res = await request(app).get('/api/filetree');
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.mountedDirectoryPath).toEqual(firstFolder);
+      expect(res.body.fileTree).toEqual(
+        expect.arrayContaining([
+          { path: 'README.md', status: ' ' },
+          { nested: [{ path: 'nested/guide.md', status: ' ' }] },
+        ]),
+      );
     });
 
-    it('should serve static files from public and frontend', () => {
-      expect(app.use).toHaveBeenCalledWith(expect.any(Function)); // for express.static
-      expect(app.use).toHaveBeenCalledWith(expect.any(Function)); // for express.static
+    it('switches folders with the folder query parameter', async () => {
+      const res = await request(app)
+        .get('/api/filetree')
+        .query({ folder: secondFolder });
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.mountedDirectoryPath).toEqual(secondFolder);
+      expect(res.body.fileTree).toEqual([{ path: 'other.md', status: ' ' }]);
     });
 
-    it('should define /api/filetree and /api/outline routes', () => {
-      expect(app.use).toHaveBeenCalledWith('/api/filetree', expect.objectContaining({ get: expect.any(Function) }));
-      expect(app.use).toHaveBeenCalledWith('/api/outline', expect.objectContaining({ get: expect.any(Function) }));
+    it('returns 400 when no folder is configured or requested', async () => {
+      const dashboardApp = createApp({ configDir }, fixtureLocation);
+      const res = await request(dashboardApp).get('/api/filetree');
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toEqual('folder query parameter is required');
     });
 
-    it('should define /api/config GET route', async () => {
+    it('returns 404 when the requested folder does not exist', async () => {
+      const res = await request(app)
+        .get('/api/filetree')
+        .query({ folder: path.join(rootDirectory, 'missing') });
+
+      expect(res.statusCode).toEqual(404);
+      expect(res.body.error).toContain('Folder not found');
+    });
+
+    it('defines GET /api/config', async () => {
       const mockConfig = { fontFamily: 'Test', fontSize: 16 };
       (getConfig as jest.Mock).mockReturnValue(mockConfig);
-      const mockJson = jest.fn();
-      const configGetHandler = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) =>
-          call[0] === '/api/config' && call.length === 2,
-      )[1];
-      configGetHandler({} as Request, { json: mockJson } as unknown as Response);
+
+      const res = await request(app).get('/api/config');
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual(mockConfig);
       expect(getConfig).toHaveBeenCalled();
-      expect(mockJson).toHaveBeenCalledWith(mockConfig);
     });
 
-    it('should define /api/config POST route', async () => {
+    it('defines POST /api/config', async () => {
       const mockBody = { fontFamily: 'NewFont', fontSize: 18 };
-      const mockStatus = jest.fn().mockReturnThis();
-      const mockSend = jest.fn();
-      const configPostCall = (app.post as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) =>
-          call[0] === '/api/config',
-      );
-      const configPostHandler = configPostCall[1];
-      configPostHandler({ body: mockBody } as Request, { status: mockStatus, send: mockSend } as unknown as Response);
+      const res = await request(app).post('/api/config').send(mockBody);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.text).toEqual('Config saved');
       expect(saveConfig).toHaveBeenCalledWith(mockBody);
-      expect(mockStatus).toHaveBeenCalledWith(200);
-      expect(mockSend).toHaveBeenCalledWith('Config saved');
     });
 
-    it('should handle errors in /api/config POST route', async () => {
+    it('handles errors in POST /api/config', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       (saveConfig as jest.Mock).mockImplementation(() => {
         throw new Error('Save failed');
       });
-      const mockBody = { fontFamily: 'NewFont', fontSize: 18 };
-      const mockStatus = jest.fn().mockReturnThis();
-      const mockSend = jest.fn();
-      const configPostCall = (app.post as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) =>
-          call[0] === '/api/config',
+
+      const res = await request(app).post('/api/config').send({ theme: 'x' });
+
+      expect(res.statusCode).toEqual(500);
+      expect(res.text).toEqual('Failed to save config');
+      consoleErrorSpy.mockRestore();
+    });
+
+    it('serves the welcome markdown', async () => {
+      const res = await request(app).get('/api/markdown/mdts-welcome-markdown.md');
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.headers['content-type']).toMatch(/text\/plain/);
+      expect(res.text).toContain('# Welcome to mdts');
+    });
+
+    it('serves markdown from the default folder', async () => {
+      const res = await request(app).get('/api/markdown/README.md');
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.text).toEqual('# First folder');
+    });
+
+    it('serves markdown from the selected folder', async () => {
+      const res = await request(app)
+        .get('/api/markdown/other.md')
+        .query({ folder: secondFolder });
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.text).toEqual('# Second folder');
+    });
+
+    it('prevents path traversal for /api/markdown', async () => {
+      const res = await request(app).get('/api/markdown/%2e%2e%2fpackage.json');
+
+      expect(res.statusCode).toEqual(404);
+      expect(res.text).toEqual('File not found');
+    });
+
+    it('returns 404 for non-existent files in /api/markdown', async () => {
+      const res = await request(app).get('/api/markdown/nonexistent.md');
+
+      expect(res.statusCode).toEqual(404);
+      expect(res.text).toEqual('File not found');
+    });
+
+    it('returns 404 for non-markdown files in /api/markdown', async () => {
+      const res = await request(app).get('/api/markdown/image.png');
+
+      expect(res.statusCode).toEqual(404);
+      expect(res.text).toEqual('File not found');
+    });
+
+    it('serves index.html for markdown paths', async () => {
+      const res = await request(app).get('/some/file.md');
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.text).toContain('<title>mdts - Markdown file viewer</title>');
+    });
+
+    it('serves index.html for directory paths', async () => {
+      const res = await request(app)
+        .get('/nested')
+        .query({ folder: firstFolder });
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.text).toContain('<title>mdts - Markdown file viewer</title>');
+    });
+
+    it('serves non-markdown files from the selected folder', async () => {
+      const res = await request(app)
+        .get('/image.png')
+        .query({ folder: secondFolder });
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.toString()).toEqual('not really a png');
+    });
+
+    it('returns 404 for non-existent non-markdown files', async () => {
+      const res = await request(app)
+        .get('/nonexistent.png')
+        .query({ folder: secondFolder });
+
+      expect(res.statusCode).toEqual(404);
+      expect(res.text).toEqual('File not found');
+    });
+
+    it('serves the dashboard index without a folder', async () => {
+      const dashboardApp = createApp({ configDir }, fixtureLocation);
+      const res = await request(dashboardApp).get('/');
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.text).toContain('<title>mdts - Markdown file viewer</title>');
+    });
+
+    it('exposes folder info, recents and browsing', async () => {
+      const info = await request(app).get('/api/folders/info');
+      expect(info.body).toEqual({
+        daemon: false,
+        defaultFolder: firstFolder,
+        home: os.homedir(),
+      });
+
+      const browse = await request(app)
+        .get('/api/folders/browse')
+        .query({ path: firstFolder });
+      expect(browse.statusCode).toEqual(200);
+      expect(browse.body.directories).toEqual([
+        { name: 'nested', path: path.join(firstFolder, 'nested') },
+      ]);
+
+      const added = await request(app)
+        .post('/api/folders/recent')
+        .send({ path: secondFolder });
+      expect(added.body.recent[0]).toEqual(
+        expect.objectContaining({ path: secondFolder, exists: true }),
       );
-      const configPostHandler = configPostCall[1];
-      configPostHandler({ body: mockBody } as Request, { status: mockStatus, send: mockSend } as unknown as Response);
-      expect(saveConfig).toHaveBeenCalledWith(mockBody);
-      expect(mockStatus).toHaveBeenCalledWith(500);
-      expect(mockSend).toHaveBeenCalledWith('Failed to save config');
-    });
 
-    it('should serve welcome markdown', async () => {
-      const mockSendFile = jest.fn();
-      const welcomeRouteHandler = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) =>
-          call[0] === '/api/markdown/mdts-welcome-markdown.md',
-      )[1];
-      welcomeRouteHandler(
-        {} as Request,
-        { setHeader: jest.fn(), sendFile: mockSendFile } as unknown as Response,
+      const removed = await request(app)
+        .delete('/api/folders/recent')
+        .query({ path: secondFolder });
+      expect(removed.body.recent).not.toEqual(
+        expect.arrayContaining([expect.objectContaining({ path: secondFolder })]),
       );
-      expect(mockSendFile).toHaveBeenCalledWith(
-        expect.stringContaining('welcome.md'),
-        expect.any(Object),
-      );
-    });
-
-    it('should prevent path traversal for /api/markdown', async () => {
-      const mockStatus = jest.fn().mockReturnThis();
-      const mockSend = jest.fn();
-      const mockNext = jest.fn();
-      const req = { path: '../package.json' } as Request;
-      const res = { status: mockStatus, send: mockSend } as unknown as Response;
-
-      const markdownMiddleware = (app.use as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response, next: NextFunction) => void]) =>
-          call[0] === '/api/markdown' && call.length === 2,
-      )[1];
-      await markdownMiddleware(req, res, mockNext);
-
-      expect(mockStatus).toHaveBeenCalledWith(403);
-      expect(mockSend).toHaveBeenCalledWith('Forbidden');
-      expect(mockNext).not.toHaveBeenCalled();
-    });
-
-    it('should return 404 for non-existent files in /api/markdown', async () => {
-      (fs.existsSync as jest.Mock).mockReturnValue(false);
-      const mockStatus = jest.fn().mockReturnThis();
-      const mockSend = jest.fn();
-      const mockNext = jest.fn();
-      const req = { path: 'nonexistent.md' } as Request;
-      const res = { status: mockStatus, send: mockSend } as unknown as Response;
-
-      const markdownMiddleware = (app.use as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response, next: NextFunction) => void]) =>
-          call[0] === '/api/markdown' && call.length === 2,
-      )[1];
-      await markdownMiddleware(req, res, mockNext);
-
-      expect(mockStatus).toHaveBeenCalledWith(404);
-      expect(mockSend).toHaveBeenCalledWith('File not found');
-      expect(mockNext).not.toHaveBeenCalled();
-    });
-
-    it('should return 404 for non-markdown files in /api/markdown', async () => {
-      (fs.existsSync as jest.Mock).mockReturnValue(true);
-      const mockStatus = jest.fn().mockReturnThis();
-      const mockSend = jest.fn();
-      const mockNext = jest.fn();
-      const req = { path: '.git/config' } as Request;
-      const res = { status: mockStatus, send: mockSend } as unknown as Response;
-
-      const markdownMiddleware = (app.use as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response, next: NextFunction) => void]) =>
-          call[0] === '/api/markdown' && call.length === 2,
-      )[1];
-      await markdownMiddleware(req, res, mockNext);
-
-      expect(mockStatus).toHaveBeenCalledWith(404);
-      expect(mockSend).toHaveBeenCalledWith('File not found');
-      expect(mockNext).not.toHaveBeenCalled();
-      expect(fs.existsSync).not.toHaveBeenCalled();
-    });
-
-    it('should call next for existing files in /api/markdown', async () => {
-      (fs.existsSync as jest.Mock).mockReturnValue(true);
-      const mockStatus = jest.fn().mockReturnThis();
-      const mockSend = jest.fn();
-      const mockNext = jest.fn();
-      const req = { path: 'existing.md' } as Request;
-      const res = { status: mockStatus, send: mockSend } as unknown as Response;
-
-      const markdownMiddleware = (app.use as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response, next: NextFunction) => void]) =>
-          call[0] === '/api/markdown' && call.length === 2,
-      )[1];
-      await markdownMiddleware(req, res, mockNext);
-
-      expect(mockStatus).not.toHaveBeenCalled();
-      expect(mockSend).not.toHaveBeenCalled();
-      expect(mockNext).toHaveBeenCalled();
-    });
-
-    it('should serve index.html for markdown paths', async () => {
-      const mockSendFile = jest.fn();
-      const req = { path: 'test.md' } as Request;
-      const res = { sendFile: mockSendFile } as unknown as Response;
-
-      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
-      )[1];
-      await catchAllRoute(req, res);
-
-      expect(mockSendFile).toHaveBeenCalledWith(
-        expect.stringContaining('index.html'),
-        expect.any(Object),
-      );
-    });
-
-    it('should serve index.html for directory paths', async () => {
-      (fs.statSync as jest.Mock).mockReturnValue({
-        isDirectory: jest.fn().mockReturnValue(true),
-      });
-      const mockSendFile = jest.fn();
-      const req = { path: '/some/directory' } as Request;
-      const res = { sendFile: mockSendFile } as unknown as Response;
-
-      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
-      )[1];
-      await catchAllRoute(req, res);
-
-      expect(mockSendFile).toHaveBeenCalledWith(
-        expect.stringContaining('index.html'),
-        expect.any(Object),
-      );
-    });
-
-    it('should serve non-markdown files with root option', async () => {
-      (fs.statSync as jest.Mock).mockImplementation(() => {
-        throw new Error('File not found'); // Simulate file not found for statSync
-      });
-      const mockSendFile = jest.fn((filePath, options, callback) => {
-        callback(null); // Simulate success
-      });
-      const req = { path: 'image.png' } as Request;
-      const res = { sendFile: mockSendFile } as unknown as Response;
-
-      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
-      )[1];
-      await catchAllRoute(req, res);
-
-      expect(mockSendFile).toHaveBeenCalledWith(
-        'image.png',
-        { root: '/mock/directory' },
-        expect.any(Function),
-      );
-    });
-
-    it('should handle error when serving non-markdown files', async () => {
-      (fs.statSync as jest.Mock).mockImplementation(() => {
-        throw new Error('File not found'); // Simulate file not found for statSync
-      });
-      const mockStatus = jest.fn().mockReturnThis();
-      const mockSend = jest.fn();
-      const mockSendFile = jest.fn((filePath, options, callback) => {
-        callback({ code: 'ENOENT' }); // Simulate ENOENT error
-      });
-      const req = { path: 'nonexistent.png' } as Request;
-      const res = {
-        status: mockStatus,
-        send: mockSend,
-        sendFile: mockSendFile,
-      } as unknown as Response;
-
-      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
-      )[1];
-      await catchAllRoute(req, res);
-
-      expect(mockStatus).toHaveBeenCalledWith(404);
-      expect(mockSend).toHaveBeenCalledWith('File not found');
-    });
-
-    it('should handle generic error when serving non-markdown files', async () => {
-      (fs.statSync as jest.Mock).mockImplementation(() => {
-        throw new Error('File not found'); // Simulate file not found for statSync
-      });
-      const mockStatus = jest.fn().mockReturnThis();
-      const mockSend = jest.fn();
-      const mockSendFile = jest.fn((filePath, options, callback) => {
-        callback(new Error('Generic error')); // Simulate generic error
-      });
-      const req = { path: 'error.png' } as Request;
-      const res = {
-        status: mockStatus,
-        send: mockSend,
-        sendFile: mockSendFile,
-      } as unknown as Response;
-
-      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
-      )[1];
-      await catchAllRoute(req, res);
-
-      expect(mockStatus).toHaveBeenCalledWith(500);
-      expect(mockSend).toHaveBeenCalledWith('Internal Server Error');
     });
   });
 
   describe('serve', () => {
-    it('should start a server and setup watcher', async () => {
-      const context: ServerContext = { directory: '/mock/directory' };
-      const { server, port } = await serve(context, 3000, 'localhost');
-      expect(app.listen).toHaveBeenCalledWith(3000, 'localhost');
-      expect(setupWatcher).toHaveBeenCalledWith(context, server, 3000);
-      expect(port).toBe(3000);
+    it('starts a server and sets up the watcher', async () => {
+      const port = await findFreePort();
+      const options = { defaultDirectory: firstFolder, configDir };
+
+      const { server } = await serve(options, port, '127.0.0.1');
+
+      expect(setupWatcher).toHaveBeenCalledWith(options, server, port, expect.anything());
+      await new Promise<void>((resolve) => server.close(() => resolve()));
     });
 
-    it('should log watched file count when file patterns are provided', async () => {
-      const context: ServerContext = {
-        directory: '/mock/directory',
-        filePatterns: ['README.md', 'docs/guide.md'],
-      };
+    it('does not report glob patterns when none are provided', async () => {
+      const port = await findFreePort();
+      const { server } = await serve({ configDir }, port, '127.0.0.1');
 
-      await serve(context, 3000, 'localhost');
+      expect(setupWatcher).toHaveBeenCalled();
+      await new Promise<void>((resolve) => server.close(() => resolve()));
+    });
 
-      expect(logger.log).toHaveBeenCalledWith(
-        'Server',
-        '📄 Watching 2 files from glob patterns',
+    it('rejects on EADDRINUSE when autoPort is false', async () => {
+      const port = await findFreePort();
+      const blocker = await occupyPort(port);
+
+      await expect(serve({ configDir }, port, '127.0.0.1', false))
+        .rejects.toMatchObject({ code: 'EADDRINUSE' });
+
+      await new Promise<void>((resolve) => blocker.close(() => resolve()));
+    });
+
+    it('retries on EADDRINUSE and uses the next port when autoPort is true', async () => {
+      const port = await findFreePort();
+      const blocker = await occupyPort(port);
+
+      const { server, port: actualPort } = await serve(
+        { configDir },
+        port,
+        '127.0.0.1',
+        true,
       );
-    });
 
-    it('should reject on EADDRINUSE when autoPort is false', async () => {
-      const mockListen = app.listen as jest.Mock;
-      mockListen.mockImplementationOnce(() => {
-        const mockServer = {
-          close: jest.fn(),
-          once: jest.fn((event: string, handler: (...args: unknown[]) => void) => {
-            if (event === 'error') {
-              process.nextTick(() => handler({ code: 'EADDRINUSE' }));
-            }
-          }),
-        };
-        return mockServer;
-      });
-
-      const context: ServerContext = { directory: '/mock/directory' };
-      await expect(serve(context, 3000, 'localhost', false)).rejects.toEqual({ code: 'EADDRINUSE' });
-    });
-
-    it('should retry on EADDRINUSE and resolve with next port when autoPort is true', async () => {
-      const mockListen = app.listen as jest.Mock;
-      let callCount = 0;
-      mockListen.mockImplementation(() => {
-        callCount++;
-        const currentCall = callCount;
-        const mockServer = {
-          close: jest.fn(),
-          once: jest.fn((event: string, handler: (...args: unknown[]) => void) => {
-            if (event === 'error' && currentCall === 1) {
-              process.nextTick(() => handler({ code: 'EADDRINUSE' }));
-            } else if (event === 'listening' && currentCall === 2) {
-              process.nextTick(() => handler());
-            }
-          }),
-        };
-        return mockServer;
-      });
-
-      const context: ServerContext = { directory: '/mock/directory' };
-      const { port } = await serve(context, 3000, 'localhost', true);
-
-      expect(mockListen).toHaveBeenCalledTimes(2);
-      expect(mockListen).toHaveBeenNthCalledWith(1, 3000, 'localhost');
-      expect(mockListen).toHaveBeenNthCalledWith(2, 3001, 'localhost');
-      expect(port).toBe(3001);
+      expect(actualPort).toEqual(port + 1);
+      await new Promise<void>((resolve) => server.close(() => resolve()));
+      await new Promise<void>((resolve) => blocker.close(() => resolve()));
     });
   });
 });

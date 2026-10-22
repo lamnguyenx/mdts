@@ -12,7 +12,8 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { folderUrl } from '../../api';
 import { filterAndSort, FuzzyMatchResult } from './fuzzy';
 import { useFileList } from './useFileList';
 
@@ -84,10 +85,8 @@ const ResultItemInner: React.FC<ResultItemProps> = ({
       </ListItemIcon>
       <ListItemText
         primary={highlightPath(path, match.positions)}
-        primaryTypographyProps={{
-          fontSize: '0.875rem',
-          fontFamily: 'monospace',
-          noWrap: true,
+        slotProps={{
+          primary: { noWrap: true, sx: { fontSize: '0.875rem', fontFamily: 'monospace' } },
         }}
       />
     </ListItemButton>
@@ -98,6 +97,7 @@ const ResultItem = React.memo(ResultItemInner);
 
 const FuzzySearchDialog: React.FC<FuzzySearchDialogProps> = ({ open, onClose }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const fileList = useFileList();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -137,9 +137,9 @@ const FuzzySearchDialog: React.FC<FuzzySearchDialogProps> = ({ open, onClose }) 
   const navigateToSelected = useCallback(() => {
     if (results.length > 0 && selectedIndex < results.length) {
       onClose();
-      navigate(`/${results[selectedIndex].path}`);
+      navigate(folderUrl(`/${results[selectedIndex].path}`, location.search ?? ''));
     }
-  }, [results, selectedIndex, navigate, onClose]);
+  }, [results, selectedIndex, navigate, onClose, location.search]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -178,10 +178,10 @@ const FuzzySearchDialog: React.FC<FuzzySearchDialogProps> = ({ open, onClose }) 
     (index: number) => {
       if (results.length > 0 && index < results.length) {
         onClose();
-        navigate(`/${results[index].path}`);
+        navigate(folderUrl(`/${results[index].path}`, location.search ?? ''));
       }
     },
-    [results, navigate, onClose]
+    [results, navigate, onClose, location.search]
   );
 
   const handleResultMouseEnter = useCallback((index: number) => {
