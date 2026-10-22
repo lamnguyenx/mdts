@@ -122,6 +122,9 @@ scripts/*.js
 .DS_Store
 .envrc
 .claude
+
+# Docker/Bun local cache and container state
+exp/
 # Created by https://www.toptal.com/developers/gitignore/api/nodejs
 # Edit at https://www.toptal.com/developers/gitignore?templates=nodejs
 

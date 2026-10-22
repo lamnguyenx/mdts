@@ -17,6 +17,8 @@ must not regress. Keep these documents current when the related system changes.
 
 - [Dashboard & Multi-folder Workspaces](./dashboard-workspaces.md) — dashboard mode,
   `?folder=` workspaces, recent folders, folder-scoped APIs, and live reload.
+- [Docker on Bun](./docker.md) — Compose setup, cache/state mounts, source-copy
+  workflow, healthcheck, and host DNS prerequisites.
 
 ## Related Documentation
 

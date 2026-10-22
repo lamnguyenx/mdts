@@ -1,0 +1,7 @@
+.git
+.github
+node_modules
+packages/frontend/node_modules
+dist
+coverage
+exp

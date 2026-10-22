@@ -1,0 +1,50 @@
+services:
+  mdts:
+    # Based on oven/bun:latest; the Dockerfile only adds git for status/diffs.
+    image: mdts-bun:latest
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: mdts
+    init: true
+    working_dir: /app
+    entrypoint: ["/bin/bash", "/entrypoint.sh"]
+
+    environment:
+      # Keep the dashboard starting in the real host home, while giving mdts a
+      # writable directory for config.json and folders.json.
+      HOME: "${HOME:?HOME must be set}"
+      PORT: "8521"
+      # Persist Bun's package cache in ./exp/bun-cache.
+      BUN_INSTALL_CACHE_DIR: "/cache"
+      BUN_RUNTIME_TRANSPILER_CACHE_PATH: "0"
+
+    ports:
+      # Local-only by default. Use "8521:8521" to expose it on the LAN.
+      - "${MDTS_PORT:-8521}:8521"
+
+    volumes:
+      # Source is read-only; the entrypoint copies it to /app inside the
+      # container so installs/builds never modify the checkout.
+      - .:/src:ro
+      # Bun package cache requested at ./exp/bun-cache.
+      - ./exp/bun-cache:/cache
+      # The rest of $HOME stays read-only; only mdts' config directory is
+      # writable. This requires $HOME/.config to exist on the host.
+      - ./exp/mdts-config:${HOME:?HOME must be set}/.config
+      - ${HOME:?HOME must be set}:${HOME:?HOME must be set}:ro
+      - ./docker/entrypoint.sh:/entrypoint.sh:ro
+
+    restart: unless-stopped
+    stop_grace_period: 5s
+
+    healthcheck:
+      test:
+        - CMD
+        - bun
+        - -e
+        - "fetch('http://127.0.0.1:8521/api/folders/info').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
