@@ -1,6 +1,6 @@
-
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { fetchData } from '../../api';
+import { isStaleRequest } from '../isStaleRequest';
 
 interface ContentState {
   content: string;
@@ -20,11 +20,19 @@ const initialState: ContentState = {
   latestRequestId: null,
 };
 
+const encodePath = (path: string): string =>
+  path.split('/').map(encodeURIComponent).join('/');
+
+const markdownApiUrl = (path: string | null): string => (
+  path
+    ? `/api/markdown/${encodePath(path)}`
+    : '/api/markdown/mdts-welcome-markdown.md'
+);
+
 export const fetchContent = createAsyncThunk(
   'content/fetchContent',
-  async (path: string | null) => {
-    const url = path ? `/api/markdown/${path}` : '/api/markdown/mdts-welcome-markdown.md';
-    const data = await fetchData<string>(url, 'text');
+  async (path: string | null, { signal }) => {
+    const data = await fetchData<string>(markdownApiUrl(path), 'text', signal);
     return data || '';
   }
 );
@@ -51,14 +59,17 @@ const contentSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchContent.fulfilled, (state, action) => {
-        // Ignore responses superseded by a newer request (e.g. when navigating quickly).
-        if (action.meta.requestId !== state.latestRequestId) return;
+        if (isStaleRequest(state, action)) {
+          return;
+        }
         state.loading = false;
         state.content = action.payload;
         state.loadedPath = action.meta.arg;
       })
       .addCase(fetchContent.rejected, (state, action) => {
-        if (action.meta.requestId !== state.latestRequestId) return;
+        if (isStaleRequest(state, action)) {
+          return;
+        }
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch content';
       });
