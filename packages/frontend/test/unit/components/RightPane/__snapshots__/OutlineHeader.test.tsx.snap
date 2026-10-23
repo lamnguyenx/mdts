@@ -3,25 +3,37 @@
 exports[`OutlineHeader renders correctly when closed 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-umcnn2"
+    class=""
+    style="display: flex; justify-content: flex-start; align-items: center; height: 30px; margin-bottom: var(--mantine-spacing-xs); padding-left: 4px; padding-right: 4px;"
   >
     <button
       aria-label="toggle outline"
-      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1myvn3n-MuiButtonBase-root-MuiIconButton-root"
-      tabindex="0"
+      class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+      data-size="sm"
+      data-variant="subtle"
+      style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; margin-left: 12px;"
       type="button"
     >
-      <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-        data-testid="ChevronLeftIcon"
-        focusable="false"
-        viewBox="0 0 24 24"
+      <span
+        class="m_8d3afb97 mantine-ActionIcon-icon"
       >
-        <path
-          d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
-        />
-      </svg>
+        <svg
+          class="tabler-icon tabler-icon-chevron-left"
+          fill="none"
+          height="16"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 6l-6 6l6 6"
+          />
+        </svg>
+      </span>
     </button>
   </div>
 </DocumentFragment>
@@ -30,31 +42,49 @@ exports[`OutlineHeader renders correctly when closed 1`] = `
 exports[`OutlineHeader renders correctly when open 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-mzwsmu"
+    class=""
+    style="display: flex; justify-content: flex-start; align-items: center; height: 30px; margin-bottom: var(--mantine-spacing-xs); padding-left: var(--mantine-spacing-sm); padding-right: var(--mantine-spacing-sm);"
   >
     <button
       aria-label="toggle outline"
-      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1afdov1-MuiButtonBase-root-MuiIconButton-root"
-      tabindex="0"
+      class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+      data-size="sm"
+      data-variant="subtle"
+      style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; margin-left: 0px;"
       type="button"
     >
-      <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-        data-testid="ChevronRightIcon"
-        focusable="false"
-        viewBox="0 0 24 24"
+      <span
+        class="m_8d3afb97 mantine-ActionIcon-icon"
       >
-        <path
-          d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
-        />
-      </svg>
+        <svg
+          class="tabler-icon tabler-icon-chevron-right"
+          fill="none"
+          height="16"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9 6l6 6l-6 6"
+          />
+        </svg>
+      </span>
     </button>
-    <h6
-      class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-onjnbs-MuiTypography-root"
+    <div
+      class="m_4081bf90 mantine-Group-root"
+      style="--group-gap: var(--mantine-spacing-xs); --group-align: center; --group-justify: flex-start; --group-wrap: wrap; margin-left: var(--mantine-spacing-xs);"
     >
-      Outline
-    </h6>
+      <p
+        class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+        style="font-weight: 600;"
+      >
+        Outline
+      </p>
+    </div>
   </div>
 </DocumentFragment>
 `;

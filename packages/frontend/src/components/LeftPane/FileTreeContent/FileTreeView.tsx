@@ -1,10 +1,14 @@
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
-import { useSimpleTreeViewApiRef } from '@mui/x-tree-view/hooks';
-import React, { useEffect } from 'react';
-import { RecursiveTreeItems } from './RecursiveTreeItems';
-import { FileTree } from './types';
+import { Group, Text, Tree, useTree } from '@mantine/core';
+import type { TreeNodeData } from '@mantine/core';
+import { IconFileText, IconFolder } from '@tabler/icons-react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import type { FileTree, FileTreeItem } from './types';
+
+interface FileNodeData extends TreeNodeData {
+  isDirectory?: boolean;
+  children?: FileNodeData[];
+  hasChildren?: boolean;
+}
 
 interface FileTreeViewProps {
   filteredFileTree: FileTree | null;
@@ -12,8 +16,35 @@ interface FileTreeViewProps {
   selectedFilePath: string | null;
   onFileSelect: (path: string) => void;
   onExpandedItemsChange: (event: React.SyntheticEvent, itemIds: string[]) => void;
-  getStatusColor: (status: string) => string;
 }
+
+const toTreeData = (items: FileTree | null, parentPath = ''): FileNodeData[] => {
+  if (!items) return [];
+
+  return items.map((item) => {
+    if ('path' in item) {
+      const fileItem = item as FileTreeItem;
+      return {
+        value: fileItem.path,
+        label: fileItem.path.split('/').pop() ?? fileItem.path,
+        isDirectory: false,
+      };
+    }
+
+    const name = Object.keys(item)[0];
+    const value = parentPath ? `${parentPath}/${name}` : name;
+    const children = item[name];
+    return {
+      value,
+      label: name,
+      isDirectory: true,
+      hasChildren: true,
+      children: Array.isArray(children)
+        ? toTreeData(children as FileTree, value)
+        : [],
+    };
+  });
+};
 
 export const FileTreeView: React.FC<FileTreeViewProps> = ({
   filteredFileTree,
@@ -21,9 +52,64 @@ export const FileTreeView: React.FC<FileTreeViewProps> = ({
   selectedFilePath,
   onFileSelect,
   onExpandedItemsChange,
-  getStatusColor
 }) => {
-  const apiRef = useSimpleTreeViewApiRef();
+  const treeRef = useRef<HTMLUListElement>(null);
+
+  const treeData = useMemo(() => toTreeData(filteredFileTree), [filteredFileTree]);
+  const expandedState = useMemo(
+    () => Object.fromEntries(expandedNodes.map((value) => [value, true])),
+    [expandedNodes],
+  );
+
+  const handleExpandedStateChange = useCallback((state: Record<string, boolean>) => {
+    const values = Object.keys(state).filter((value) => state[value]);
+    const unchanged = values.length === expandedNodes.length
+      && values.every((value) => expandedNodes.includes(value));
+    if (unchanged) return;
+    onExpandedItemsChange({} as React.SyntheticEvent, values);
+  }, [expandedNodes, onExpandedItemsChange]);
+
+  const handleSelectedStateChange = useCallback((values: string[]) => {
+    const value = values[0];
+    if (value) onFileSelect(value);
+  }, [onFileSelect]);
+
+  const renderNode = useCallback((payload: Tree.RenderNodePayload) => {
+    const { node, selected, hasChildren, elementProps } = payload;
+    return (
+      <Group
+        {...elementProps}
+        gap={6}
+        wrap="nowrap"
+        style={{
+          ...elementProps.style,
+          // Longhands only: Mantine indents nested nodes with
+          // `padding-inline-start: var(--label-offset)` from the label class.
+          // A `padding` shorthand here would reset it and flatten the tree.
+          paddingBlock: '1px',
+          paddingInlineEnd: 4,
+          borderRadius: 'var(--mantine-radius-sm)',
+          backgroundColor: selected ? 'var(--mantine-primary-color-light)' : undefined,
+        }}
+      >
+        {hasChildren ? (
+          <IconFolder size={16} color="var(--mantine-primary-color-filled)" style={{ flexShrink: 0 }} />
+        ) : (
+          <IconFileText size={16} style={{ flexShrink: 0 }} />
+        )}
+        <Text size="sm" truncate style={{ flex: 1 }}>
+          {node.label}
+        </Text>
+      </Group>
+    );
+  }, []);
+
+  const tree = useTree({
+    expandedState,
+    onExpandedStateChange: handleExpandedStateChange,
+    selectedState: selectedFilePath ? [selectedFilePath] : [],
+    onSelectedStateChange: handleSelectedStateChange,
+  });
 
   useEffect(() => {
     if (!selectedFilePath) return undefined;
@@ -31,7 +117,8 @@ export const FileTreeView: React.FC<FileTreeViewProps> = ({
     let cancelled = false;
     const tryScroll = () => {
       if (cancelled) return true;
-      const element = apiRef.current?.getItemDOMElement?.(selectedFilePath);
+      const element = Array.from(treeRef.current?.querySelectorAll<HTMLElement>('[data-value]') ?? [])
+        .find((item) => item.dataset.value === selectedFilePath);
       if (element) {
         element.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         return true;
@@ -51,20 +138,20 @@ export const FileTreeView: React.FC<FileTreeViewProps> = ({
       cancelled = true;
       window.clearTimeout(timeoutId);
     };
-  }, [apiRef, selectedFilePath, expandedNodes]);
+  }, [selectedFilePath, expandedNodes]);
 
   return (
-    <SimpleTreeView
-      apiRef={apiRef}
+    <Tree
+      ref={treeRef}
       className="custom-scrollbar"
-      defaultCollapseIcon={<ExpandMoreIcon />}
-      defaultExpandIcon={<ChevronRightIcon />}
-      expandedItems={expandedNodes}
-      selectedItems={selectedFilePath}
-      onExpandedItemsChange={onExpandedItemsChange}
-      sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto', height: 'calc(100vh - 180px)', px: 2, pb: 2 }}
-    >
-      <RecursiveTreeItems tree={filteredFileTree} onFileSelect={onFileSelect} getStatusColor={getStatusColor} />
-    </SimpleTreeView>
+      data={treeData}
+      tree={tree}
+      selectOnClick
+      expandOnClick
+      withLines
+      levelOffset="md"
+      style={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto', height: 'calc(100vh - 148px)', paddingLeft: 'var(--mantine-spacing-sm)', paddingRight: 'var(--mantine-spacing-sm)', paddingBottom: 'var(--mantine-spacing-sm)' }}
+      renderNode={renderNode}
+    />
   );
 };

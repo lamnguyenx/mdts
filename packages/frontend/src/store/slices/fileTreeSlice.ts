@@ -3,7 +3,6 @@ import { fetchData } from '../../api';
 
 export interface FileTreeItem {
   path: string;
-  status: string;
 }
 
 export interface FileTreeState {
@@ -12,7 +11,6 @@ export interface FileTreeState {
   searchQuery: string;
   expandedNodes: string[];
   mountedDirectoryPath: string;
-  isGitRepository: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -23,7 +21,6 @@ const initialState: FileTreeState = {
   searchQuery: '',
   expandedNodes: [],
   mountedDirectoryPath: '',
-  isGitRepository: false,
   loading: true,
   error: null,
 };
@@ -99,7 +96,7 @@ const filterTree = (
         const value = item[key];
 
         const children = Array.isArray(value)
-          ? filterTree(value, searchQuery)
+          ? filterTree(value as (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], searchQuery)
           : [];
 
         return children.length > 0
@@ -115,12 +112,10 @@ export const fetchFileTree = createAsyncThunk(
     const data = await fetchData<{
       fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
       mountedDirectoryPath: string;
-      isGitRepository: boolean;
     }>('/api/filetree', 'json');
     return {
       fileTree: data?.fileTree || [],
       mountedDirectoryPath: data?.mountedDirectoryPath,
-      isGitRepository: data?.isGitRepository ?? false,
     };
   }
 );
@@ -185,10 +180,9 @@ const fileTreeSlice = createSlice({
       .addCase(fetchFileTree.fulfilled, (state, action) => {
         state.loading = false;
         state.fileTree = action.payload.fileTree;
-        state.mountedDirectoryPath = action.payload.mountedDirectoryPath;
-        state.isGitRepository = action.payload.isGitRepository;
+        state.mountedDirectoryPath = action.payload.mountedDirectoryPath || '';
         state.filteredFileTree = filterTree(action.payload.fileTree, state.searchQuery);
-        state.expandedNodes = loadExpandedNodes(action.payload.mountedDirectoryPath);
+        state.expandedNodes = loadExpandedNodes(action.payload.mountedDirectoryPath || '');
       })
       .addCase(fetchFileTree.rejected, (state, action) => {
         state.loading = false;
@@ -207,7 +201,6 @@ export const selectFilteredFileTree = (
       if ('path' in item) {
         result.push({
           path: (item as FileTreeItem).path.split('/').pop() || (item as FileTreeItem).path,
-          status: (item as FileTreeItem).status,
         });
       } else {
         const key = Object.keys(item)[0];
@@ -237,7 +230,11 @@ export const selectFilteredFileTree = (
         if (itemSegments[itemSegments.length - 1] === segment) {
           const children = item[key];
           if (Array.isArray(children)) {
-            return findChildren(children, pathSegments, currentSegmentIndex + 1);
+            return findChildren(
+              children as (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[],
+              pathSegments,
+              currentSegmentIndex + 1,
+            );
           }
         }
       }
@@ -252,7 +249,7 @@ export const selectFilteredFileTree = (
     const result: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] = [];
     children.forEach(item => {
       if ('path' in item) {
-        result.push({ path: (item as FileTreeItem).path.split('/').pop() || (item as FileTreeItem).path, status: (item as FileTreeItem).status });
+        result.push({ path: (item as FileTreeItem).path.split('/').pop() || (item as FileTreeItem).path });
       } else {
         const key = Object.keys(item)[0];
         const newObject: { [key: string]: (FileTreeItem | object)[] } = {};

@@ -24,7 +24,7 @@ describe('OutlineHeader', () => {
     render(
       <OutlineHeader isOpen={true} onToggle={onToggleMock} />
     );
-    fireEvent.click(screen.getByTestId('ChevronRightIcon'));
+    fireEvent.click(screen.getByLabelText('toggle outline'));
     expect(onToggleMock).toHaveBeenCalled();
   });
 });

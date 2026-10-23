@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../../../store/store';
+import type { RootState, AppDispatch } from '../../../../store/store';
 import { generatePlantUMLSvg, selectPlantUMLData } from '../../../../store/slices/plantUMLSlice';
 
 interface PlantUMLProps {
@@ -41,7 +41,7 @@ const PlantUMLRenderer: React.FC<PlantUMLProps> = ({ chart }) => {
 
       document.addEventListener = ((type: string, listener: EventListenerOrEventListenerObject) => {
         if (type === 'DOMContentLoaded' && typeof listener === 'function') {
-          initialisers.push(listener);
+          initialisers.push(listener as () => void);
           return;
         }
         return originalAddEventListener(type, listener);

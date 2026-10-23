@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import ColorSchemeSettingsTab from '../../../../src/components/SettingsDialog/ColorSchemeSettingsTab';
 
@@ -24,33 +24,34 @@ describe('ColorSchemeSettingsTab', () => {
 
     renderComponent(props);
 
-    fireEvent.click(screen.getByRole('button', { name: 'light' }));
-    fireEvent.click(screen.getByRole('button', { name: 'dark' }));
+    fireEvent.click(screen.getByRole('radio', { name: 'Light' }));
+    fireEvent.click(screen.getByRole('radio', { name: 'Dark' }));
 
     expect(props.handleToggleDarkMode).toHaveBeenCalledTimes(1);
     expect(props.handleToggleDarkMode).toHaveBeenCalledWith('light');
   });
 
-  it('calls handleToggleTheme when selecting another theme', async () => {
+  it('calls handleToggleTheme when selecting another theme', () => {
     const props = createProps();
 
     renderComponent(props);
 
-    fireEvent.mouseDown(screen.getAllByRole('combobox')[0]);
-    await waitFor(() => screen.getByRole('option', { name: 'Aurora' }));
+    const themeSelect = screen.getByTestId('theme-select');
+    fireEvent.mouseDown(themeSelect);
+    fireEvent.click(themeSelect);
     fireEvent.click(screen.getByRole('option', { name: 'Aurora' }));
 
     expect(props.handleToggleTheme).toHaveBeenCalledWith('aurora');
   });
 
-  it('calls setSyntaxHighlighterTheme when selecting another syntax theme', async () => {
+  it('calls setSyntaxHighlighterTheme when selecting another syntax theme', () => {
     const props = createProps();
 
     renderComponent(props);
 
-    const select = screen.getByTestId('syntax-highlighter-theme-select');
-    fireEvent.mouseDown(within(select).getByRole('combobox'));
-    await waitFor(() => screen.getByRole('option', { name: 'Atom Dark' }));
+    const syntaxSelect = screen.getByTestId('syntax-highlighter-theme-select');
+    fireEvent.mouseDown(syntaxSelect);
+    fireEvent.click(syntaxSelect);
     fireEvent.click(screen.getByRole('option', { name: 'Atom Dark' }));
 
     expect(props.setSyntaxHighlighterTheme).toHaveBeenCalledWith('atomDark');

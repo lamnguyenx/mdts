@@ -149,10 +149,12 @@ Open http://localhost:8521. To use a different host port:
 MDTS_PORT=9000 docker compose up -d
 ```
 
-The entrypoint copies the checkout into the container before installing and building, so
-the working tree stays clean. The rest of `$HOME` is read-only; `~/.config` is redirected
+The checkout is mounted straight into the container, and the entrypoint watches it:
+backend changes restart the server (`bun --watch`) and frontend changes rebuild the bundle
+and reload open browsers. No image rebuild or container restart is needed for code edits.
+The rest of `$HOME` is read-only; `~/.config` is redirected
 to `./exp/mdts-config` so mdts can save settings and recent folders. Both `./exp/` paths
-are gitignored.
+are gitignored, as are the `node_modules`/`dist` created inside the mount.
 
 To refresh the Bun base image, rebuild with `docker compose build --pull`.
 
@@ -168,6 +170,7 @@ Experience mdts in action with real examples and interactive features.
 - [Important Docs](docs/important/README.md)
 - [Dashboard & Multi-folder Workspaces](docs/important/dashboard-workspaces.md)
 - [Docker on Bun](docs/important/docker.md)
+- [Frontend on Mantine](docs/important/frontend-mantine.md)
 - [Use Cases](docs/usecases.md)
 - [Markdown Features](docs/markdown_features.md)  
 - [Frontend Features](docs/frontend_features.md)
@@ -181,6 +184,11 @@ Experience mdts in action with real examples and interactive features.
 
 Found a bug? Have an idea? Want to send a PR?  
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for details — we'd love to have your help!
+
+Development uses [Bun](https://bun.sh) for dependency management, builds, and
+script running (Jest itself still runs on Node.js 24+):
+`bun install`, `bun run dev`, `bun run test`. The included
+`docker-compose.yml` is a hot-reload dev environment for the checkout itself.
 
 ## Author
 

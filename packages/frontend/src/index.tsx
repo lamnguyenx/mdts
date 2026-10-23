@@ -1,9 +1,12 @@
+import '@mantine/core/styles.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import { RootState, store } from './store/store';
+import { store } from './store/store';
+import type { RootState } from './store/store';
 
 import './index.css';
 

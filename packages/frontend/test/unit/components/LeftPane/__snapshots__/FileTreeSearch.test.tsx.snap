@@ -3,41 +3,90 @@
 exports[`FileTreeSearch renders correctly with a search query 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-0"
-    mb="2"
-    px="2"
+    class=""
+    style="margin-bottom: var(--mantine-spacing-xs); padding-inline: var(--mantine-spacing-sm);"
   >
     <div
-      class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-adornedEnd css-pe16f2-MuiInputBase-root"
+      class="m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"
+      data-size="xs"
     >
-      <input
-        aria-label="search files"
-        class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
-        placeholder="Search files..."
-        type="text"
-        value="test"
-      />
       <div
-        class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-elo8k2-MuiInputAdornment-root"
+        class="m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"
+        data-size="xs"
+        data-variant="default"
+        data-with-left-section="true"
+        data-with-right-section="true"
+        style="--input-height: var(--input-height-xs); --input-fz: var(--mantine-font-size-xs); --input-left-section-width: calc(1.875rem * var(--mantine-scale)); --input-right-section-width: calc(1.875rem * var(--mantine-scale));"
       >
-        <button
-          aria-label="clear search"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeSmall css-1owpdbk-MuiButtonBase-root-MuiIconButton-root"
-          tabindex="0"
-          type="button"
+        <div
+          class="m_82577fc2 mantine-Input-section mantine-TextInput-section"
+          data-position="left"
         >
           <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-kqgmkm-MuiSvgIcon-root"
-            data-testid="ClearIcon"
-            focusable="false"
+            class="tabler-icon tabler-icon-search"
+            fill="none"
+            height="14"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
             viewBox="0 0 24 24"
+            width="14"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"
+            />
+            <path
+              d="M21 21l-6 -6"
             />
           </svg>
-        </button>
+        </div>
+        <input
+          aria-label="search files"
+          class="m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"
+          data-variant="default"
+          id="mantine-_r_6_"
+          placeholder="Search files..."
+          value="test"
+        />
+        <div
+          class="m_82577fc2 mantine-Input-section mantine-TextInput-section"
+          data-position="right"
+        >
+          <button
+            aria-label="clear search"
+            class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+            data-size="xs"
+            data-variant="subtle"
+            style="--ai-size: var(--ai-size-xs); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+            type="button"
+          >
+            <span
+              class="m_8d3afb97 mantine-ActionIcon-icon"
+            >
+              <svg
+                class="tabler-icon tabler-icon-x"
+                fill="none"
+                height="12"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 6l-12 12"
+                />
+                <path
+                  d="M6 6l12 12"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -47,20 +96,53 @@ exports[`FileTreeSearch renders correctly with a search query 1`] = `
 exports[`FileTreeSearch renders correctly with empty search query 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-0"
-    mb="2"
-    px="2"
+    class=""
+    style="margin-bottom: var(--mantine-spacing-xs); padding-inline: var(--mantine-spacing-sm);"
   >
     <div
-      class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"
+      class="m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"
+      data-size="xs"
     >
-      <input
-        aria-label="search files"
-        class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
-        placeholder="Search files..."
-        type="text"
-        value=""
-      />
+      <div
+        class="m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"
+        data-size="xs"
+        data-variant="default"
+        data-with-left-section="true"
+        style="--input-height: var(--input-height-xs); --input-fz: var(--mantine-font-size-xs); --input-left-section-width: calc(1.875rem * var(--mantine-scale)); --input-right-section-width: calc(1.875rem * var(--mantine-scale));"
+      >
+        <div
+          class="m_82577fc2 mantine-Input-section mantine-TextInput-section"
+          data-position="left"
+        >
+          <svg
+            class="tabler-icon tabler-icon-search"
+            fill="none"
+            height="14"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="14"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"
+            />
+            <path
+              d="M21 21l-6 -6"
+            />
+          </svg>
+        </div>
+        <input
+          aria-label="search files"
+          class="m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"
+          data-variant="default"
+          id="mantine-_r_1_"
+          placeholder="Search files..."
+          value=""
+        />
+      </div>
     </div>
   </div>
 </DocumentFragment>

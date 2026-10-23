@@ -33,9 +33,9 @@ describe('fetchData', () => {
   });
 
   it('returns text when responseType is text', async () => {
-    mockFetch.mockResolvedValueOnce(createResponse({ text: 'diff content' }));
+    mockFetch.mockResolvedValueOnce(createResponse({ text: 'markdown content' }));
 
-    await expect(fetchData<string>('/api/diff/test.md', 'text')).resolves.toBe('diff content');
+    await expect(fetchData<string>('/api/markdown/test.md', 'text')).resolves.toBe('markdown content');
   });
 
   it('logs and rethrows http errors', async () => {

@@ -1,10 +1,10 @@
-import { FolderOutlined } from '@mui/icons-material';
-import { Box, CircularProgress, Divider, Typography } from '@mui/material';
+import { Box, Center, Divider, Group, Loader, Title } from '@mantine/core';
+import { IconFolder } from '@tabler/icons-react';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import useIsMobile from '../../../hooks/useIsMobile';
 import { selectFilteredFileTree } from '../../../store/slices/fileTreeSlice';
-import { RootState } from '../../../store/store';
+import type { RootState } from '../../../store/store';
 import ErrorView from '../../ErrorView';
 import BreadCrumb from '../BreadCrumb';
 import { FileTreeList } from './FileTreeList';
@@ -39,32 +39,31 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
 
   return (
     <Box
-      sx={{
-        width: '100%',
-        minHeight: 'calc(100vh - 64px)',
-        m: 0,
-        p: isMobile ? 2 : 4,
-        bgcolor: 'background.paper',
-        ...(contentMode === 'compact' && !isMobile && {
-          width: '800px',
-          margin: '0 auto',
-        })
+      style={{
+        width: contentMode === 'compact' && !isMobile ? 800 : '100%',
+        minHeight: 'calc(100vh - var(--app-header-height))',
+        margin: contentMode === 'compact' && !isMobile ? '0 auto' : 0,
+        padding: isMobile ? 'var(--mantine-spacing-sm)' : 'var(--mantine-spacing-lg)',
+        backgroundColor: 'var(--app-paper)',
       }}
     >
       <BreadCrumb onDirectorySelect={onDirectorySelect} />
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-        <FolderOutlined sx={{ mr: 2 }} color="primary" fontSize={isMobile ? 'medium' : 'large'} />
-        <Typography variant={isMobile ? 'h5' : 'h4'} gutterBottom sx={{ mb: 0, wordBreak: 'break-word' }}>
+      <Group gap="xs" mb="sm" wrap="nowrap" align="center">
+        <IconFolder size={isMobile ? 24 : 32} color="var(--mantine-primary-color-filled)" />
+        <Title
+          order={isMobile ? 5 : 4}
+          style={{ margin: 0, wordBreak: 'break-word' }}
+        >
           {displayPath}
-        </Typography>
-      </Box>
-      <Divider sx={{ paddingLeft: '24px', marginLeft: isMobile ? '-16px' : '-32px', marginRight: isMobile ? '-16px' : '-32px', borderBottom: 1, borderColor: 'divider' }} />
+        </Title>
+      </Group>
+      <Divider mb="md" />
       {loading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-          <CircularProgress />
-        </Box>
+        <Center h={200}>
+          <Loader role="progressbar" />
+        </Center>
       )}
-      <Box mt={4}>
+      <Box mt="md">
         <FileTreeList fileTree={fileTree} handleItemClick={handleItemClick} />
       </Box>
     </Box>

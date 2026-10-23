@@ -1,10 +1,19 @@
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import SegmentIcon from '@mui/icons-material/Segment';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { AppBar, Box, IconButton, Link, Toolbar, Tooltip } from '@mui/material';
+import {
+  ActionIcon,
+  Anchor,
+  Box,
+  Group,
+  Tooltip,
+  UnstyledButton,
+} from '@mantine/core';
+import {
+  IconBrandGithub,
+  IconLayoutDashboard,
+  IconLayoutSidebarRight,
+  IconMenu2,
+  IconSearch,
+  IconSettings,
+} from '@tabler/icons-react';
 import React, { useCallback } from 'react';
 
 import useIsMobile from '../hooks/useIsMobile';
@@ -37,92 +46,123 @@ const AppHeader: React.FC<AppHeaderProps> = ({
   }, [handleFileSelect]);
 
   return (
-    <AppBar
-      position="static"
-      elevation={0}
-      sx={{ bgcolor: 'background.paper', color: 'text.primary', borderBottom: '1px solid ', borderColor: 'divider' }}
+    <Box
+      component="header"
+      h="var(--app-header-height)"
+      px="sm"
+      style={{
+        backgroundColor: 'var(--app-paper)',
+        borderBottom: '1px solid var(--mantine-color-default-border)',
+        flexShrink: 0,
+      }}
     >
-      <Toolbar>
-        {isMobile && onToggleFileTree && (
-          <Tooltip title="Toggle file tree">
-            <IconButton
-              onClick={onToggleFileTree}
-              edge="start"
-              color="inherit"
-              sx={{ mr: 1 }}
-              aria-label="toggle file tree"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-        <Box sx={{ flexGrow: 1 }}>
-          <Tooltip title="Top page">
-            <IconButton disableRipple onClick={handleFileSelectClick} color="inherit">
-              <div style={{ height: '56px', marginTop: '-8px', marginLeft: '-16px' }}>
-                <Logo />
-              </div>
-            </IconButton>
-          </Tooltip>
-        </Box>
-        {isMobile && onToggleOutline && (
-          <Tooltip title="Toggle outline">
-            <IconButton
-              onClick={onToggleOutline}
-              color="inherit"
-              sx={{ mr: 1 }}
-              aria-label="toggle outline"
-            >
-              <SegmentIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-        {onDashboardClick && (
-          <Tooltip title={currentFolder ? 'Open another folder' : 'Dashboard'}>
-            <IconButton
-              onClick={onDashboardClick}
-              color="inherit"
-              sx={{ mr: isMobile ? 0 : 1 }}
-              aria-label="open dashboard"
-            >
-              <DashboardIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-        <Tooltip title="Settings">
-          <IconButton sx={{ mr: isMobile ? 0 : 2 }} onClick={onSettingsClick} color="inherit">
-            <SettingsIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title={`Search files (${shortcutKey})`}>
-          <IconButton sx={{ mr: isMobile ? 0 : 2 }} onClick={onFuzzySearchClick} color="inherit">
-            <SearchIcon />
-          </IconButton>
-        </Tooltip>
-        {!isMobile && (
-          <Tooltip title="GitHub Repository">
-            <IconButton
-              color="inherit"
-              href="https://github.com/unhappychoice/mdts"
-              target="_blank"
-              rel="noopener"
-              sx={{ mr: 2 }}
-            >
-              <GitHubIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-        {!isMobile && (
-          <Box sx={{ fontSize: '0.9rem', pt: '2px', fontFamily: 'monospace' }}>
-            <Tooltip title="Changelog">
-              <Link href="https://github.com/unhappychoice/mdts/blob/main/CHANGELOG.md" target="_blank" rel="noopener">
-                v{process.env.APP_VERSION}
-              </Link>
+      <Group h="100%" justify="space-between" wrap="nowrap">
+        <Group gap={4} wrap="nowrap">
+          {isMobile && onToggleFileTree && (
+            <Tooltip label="Toggle file tree">
+              <ActionIcon
+                onClick={onToggleFileTree}
+                variant="subtle"
+                color="gray"
+                size="md"
+                aria-label="toggle file tree"
+              >
+                <IconMenu2 size={20} />
+              </ActionIcon>
             </Tooltip>
-          </Box>
-        )}
-      </Toolbar>
-    </AppBar>
+          )}
+          <Tooltip label="Top page">
+            <UnstyledButton
+              onClick={handleFileSelectClick}
+              aria-label="Top page"
+              style={{ height: 44, display: 'flex', alignItems: 'center' }}
+            >
+              <Logo />
+            </UnstyledButton>
+          </Tooltip>
+        </Group>
+
+        <Group gap={4} wrap="nowrap">
+          {isMobile && onToggleOutline && (
+            <Tooltip label="Toggle outline">
+              <ActionIcon
+                onClick={onToggleOutline}
+                variant="subtle"
+                color="gray"
+                size="md"
+                aria-label="toggle outline"
+              >
+                <IconLayoutSidebarRight size={20} />
+              </ActionIcon>
+            </Tooltip>
+          )}
+          {onDashboardClick && (
+            <Tooltip label={currentFolder ? 'Open another folder' : 'Dashboard'}>
+              <ActionIcon
+                onClick={onDashboardClick}
+                variant="subtle"
+                color="gray"
+                size="md"
+                aria-label="open dashboard"
+              >
+                <IconLayoutDashboard size={20} />
+              </ActionIcon>
+            </Tooltip>
+          )}
+          <Tooltip label="Settings">
+            <ActionIcon
+              onClick={onSettingsClick}
+              variant="subtle"
+              color="gray"
+              size="md"
+              aria-label="settings"
+            >
+              <IconSettings size={20} />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip label={`Search files (${shortcutKey})`}>
+            <ActionIcon
+              onClick={onFuzzySearchClick}
+              variant="subtle"
+              color="gray"
+              size="md"
+              aria-label="search files"
+            >
+              <IconSearch size={20} />
+            </ActionIcon>
+          </Tooltip>
+          {!isMobile && (
+            <Tooltip label="GitHub Repository">
+              <ActionIcon
+                component="a"
+                href="https://github.com/unhappychoice/mdts"
+                target="_blank"
+                rel="noopener"
+                variant="subtle"
+                color="gray"
+                size="md"
+                aria-label="GitHub repository"
+              >
+                <IconBrandGithub size={20} />
+              </ActionIcon>
+            </Tooltip>
+          )}
+          {!isMobile && (
+            <Tooltip label="Changelog">
+              <Anchor
+                href="https://github.com/unhappychoice/mdts/blob/main/CHANGELOG.md"
+                target="_blank"
+                rel="noopener"
+                size="sm"
+                ff="monospace"
+              >
+                v{process.env.APP_VERSION}
+              </Anchor>
+            </Tooltip>
+          )}
+        </Group>
+      </Group>
+    </Box>
   );
 };
 

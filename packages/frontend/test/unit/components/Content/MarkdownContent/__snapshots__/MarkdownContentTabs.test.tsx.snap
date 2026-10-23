@@ -3,52 +3,58 @@
 exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-i3qfz4"
+    class=""
+    style="margin-left: -24px; margin-right: -24px; padding-left: 16px; border-bottom: 1px solid var(--mantine-color-default-border);"
   >
     <div
-      class="MuiTabs-root css-1xkjjjh-MuiTabs-root"
+      aria-label="view mode tabs"
+      class="m_89d60db1 mantine-Tabs-root"
+      data-orientation="horizontal"
+      data-variant="default"
+      id="mantine-_r_1_"
+      style="--tabs-radius: var(--mantine-radius-default); --tabs-color: var(--mantine-color-blue-filled);"
     >
       <div
-        class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
-        style="overflow: hidden; margin-bottom: 0px;"
+        aria-orientation="horizontal"
+        class="m_576c9d4 m_89d33d6d mantine-Tabs-list"
+        data-orientation="horizontal"
+        data-variant="default"
+        role="tablist"
+        style="flex-wrap: nowrap; overflow-x: auto;"
       >
-        <div
-          aria-label="view mode tabs"
-          class="MuiTabs-list css-hzcega-MuiTabs-list"
-          role="tablist"
+        <button
+          aria-selected="true"
+          class="mantine-focus-auto m_539e827b m_4ec4dce6 mantine-Tabs-tab m_87cf2631 mantine-UnstyledButton-root"
+          data-active="true"
+          data-orientation="horizontal"
+          data-variant="default"
+          id="mantine-_r_1_-tab-preview"
+          role="tab"
+          tabindex="0"
+          type="button"
         >
-          <button
-            aria-selected="true"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-r8v7co-MuiButtonBase-root-MuiTab-root"
-            role="tab"
-            tabindex="0"
-            type="button"
+          <span
+            class="m_42bbd1ae mantine-Tabs-tabLabel"
           >
             Preview
-          </button>
-          <button
-            aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-r8v7co-MuiButtonBase-root-MuiTab-root"
-            role="tab"
-            tabindex="-1"
-            type="button"
+          </span>
+        </button>
+        <button
+          aria-selected="false"
+          class="mantine-focus-auto m_539e827b m_4ec4dce6 mantine-Tabs-tab m_87cf2631 mantine-UnstyledButton-root"
+          data-orientation="horizontal"
+          data-variant="default"
+          id="mantine-_r_1_-tab-raw"
+          role="tab"
+          tabindex="-1"
+          type="button"
+        >
+          <span
+            class="m_42bbd1ae mantine-Tabs-tabLabel"
           >
             Raw
-          </button>
-          <button
-            aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-r8v7co-MuiButtonBase-root-MuiTab-root"
-            role="tab"
-            tabindex="-1"
-            type="button"
-          >
-            Last Commit
-          </button>
-        </div>
-        <span
-          class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
-          style="left: 0px; width: 0px;"
-        />
+          </span>
+        </button>
       </div>
     </div>
   </div>

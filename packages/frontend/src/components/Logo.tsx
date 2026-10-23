@@ -1,10 +1,6 @@
-import { useTheme } from '@mui/material';
 import React from 'react';
 
 const Logo: React.FC = () => {
-  const theme = useTheme();
-  const color = theme.palette.primary.main;
-
   return (
     <svg
       viewBox="0 0 180 100"
@@ -13,8 +9,8 @@ const Logo: React.FC = () => {
     >
       <defs>
         <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={color} />
-          <stop offset="100%" stopColor={color} />
+          <stop offset="0%" stopColor="var(--mantine-primary-color-filled)" />
+          <stop offset="100%" stopColor="var(--mantine-primary-color-filled)" />
         </linearGradient>
         <style>
           {`

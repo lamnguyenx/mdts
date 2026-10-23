@@ -11,7 +11,7 @@ describe('FileTreeList', () => {
   let store;
   const mockFileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] = [
     { 'folder1': [] },
-    { path: 'file2.txt', status: ' ' },
+    { path: 'file2.txt' },
   ];
 
   beforeEach(() => {

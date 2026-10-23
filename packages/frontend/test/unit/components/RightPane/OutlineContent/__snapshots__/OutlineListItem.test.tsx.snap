@@ -2,18 +2,19 @@
 
 exports[`OutlineListItem should render correctly 1`] = `
 <DocumentFragment>
-  <li
-    class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-66b8d4-MuiListItem-root"
+  <button
+    class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
+    style="padding: 2px var(--mantine-spacing-sm) 2px 16px; border-radius: var(--mantine-radius-sm); width: 100%;"
+    type="button"
   >
-    <div
-      class="MuiListItemText-root css-6qv7tz-MuiListItemText-root"
+    <p
+      class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+      data-size="sm"
+      data-truncate="end"
+      style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm);"
     >
-      <span
-        class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1px98du-MuiTypography-root"
-      >
-        Heading 1
-      </span>
-    </div>
-  </li>
+      Heading 1
+    </p>
+  </button>
 </DocumentFragment>
 `;

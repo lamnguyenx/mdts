@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchData } from '../../api';
 
 export const fetchConfig = createAsyncThunk('config/fetchConfig', async () => {
@@ -47,7 +47,8 @@ const configSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchConfig.fulfilled, (state, action: PayloadAction<ConfigState>) => {
+    builder.addCase(fetchConfig.fulfilled, (state, action) => {
+      if (!action.payload) return;
       state.theme = action.payload.theme;
       state.syntaxHighlighterTheme = action.payload.syntaxHighlighterTheme;
       state.fontFamily = action.payload.fontFamily;

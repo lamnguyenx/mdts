@@ -7,12 +7,33 @@ import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
 import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
-import { diffRouter, diffPrevRouter } from './routes/diff';
 import { plantumlRouter } from './routes/plantuml';
 import { folderRouter } from './routes/folders';
 import { FolderService } from './folders';
 
 const MAX_PORT_RETRIES = 10;
+
+/**
+ * Resolve the directories holding static assets. When running from the compiled
+ * output (`dist/server`), they sit next to it (`./public`, `../frontend`).
+ * When running straight from TypeScript (`bun src/index.ts`), fall back to the
+ * repository layout (`public/`, `dist/frontend`) so dev mode needs no backend build.
+ */
+export const resolveStaticRoots = (currentLocation: string): { publicRoot: string; frontendRoot: string } => {
+  const firstExisting = (candidates: string[]): string =>
+    candidates.find((candidate) => fs.existsSync(candidate)) ?? candidates[0];
+
+  return {
+    publicRoot: firstExisting([
+      path.join(currentLocation, 'public'),
+      path.join(currentLocation, '../../public'),
+    ]),
+    frontendRoot: firstExisting([
+      path.join(currentLocation, '../frontend'),
+      path.join(currentLocation, '../../dist/frontend'),
+    ]),
+  };
+};
 
 const getFolderParam = (req: Request): string | undefined =>
   typeof req.query.folder === 'string' ? req.query.folder : undefined;
@@ -29,6 +50,7 @@ export const serve = (
   autoPort: boolean = false,
 ): Promise<{ server: import('http').Server; port: number }> => {
   const folders = new FolderService(options);
+  const { frontendRoot } = resolveStaticRoots(__dirname);
   const app = createApp(options, __dirname, folders);
 
   type ServeResult = { server: import('http').Server; port: number };
@@ -49,7 +71,7 @@ export const serve = (
           logger.log('Server', `⚠️  Port ${port} was in use, using ${currentPort} instead`);
         }
         logger.log('Server', `🚀 Server listening at http://${host}:${currentPort}`);
-        setupWatcher(options, server, currentPort, folders);
+        setupWatcher(options, server, currentPort, folders, path.join(frontendRoot, 'bundle.js'));
         resolve({ server, port: currentPort });
       });
 
@@ -73,8 +95,7 @@ export const createApp = (
   folders: FolderService = new FolderService(options),
 ): express.Express => {
   const app = express();
-  const publicRoot = path.join(currentLocation, './public');
-  const frontendRoot = path.join(currentLocation, '../frontend');
+  const { publicRoot, frontendRoot } = resolveStaticRoots(currentLocation);
 
   // JSON middleware - must be before routes that need it
   app.use(express.json());
@@ -102,8 +123,6 @@ export const createApp = (
   app.use('/api/folders', folderRouter(folders));
   app.use('/api/filetree', scoped, fileTreeRouter());
   app.use('/api/outline', scoped, outlineRouter());
-  app.use('/api/diff-prev', scoped, diffPrevRouter());
-  app.use('/api/diff', scoped, diffRouter());
   app.use('/api/plantuml', plantumlRouter());
   app.get('/api/config', (req, res) => {
     res.json(getConfig());

@@ -35,16 +35,15 @@ describe('Server E2E Tests', () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual({
       fileTree: expect.arrayContaining([
-        { path: 'another.md', status: ' ' },
+        { path: 'another.md' },
         {
           nested: [
-            { path: 'nested/nested.md', status: ' ' },
+            { path: 'nested/nested.md' },
           ],
         },
-        { path: 'test.md', status: ' ' },
+        { path: 'test.md' },
       ]),
       mountedDirectoryPath: contentDirectory,
-      isGitRepository: true,
     });
   });
 
@@ -55,7 +54,7 @@ describe('Server E2E Tests', () => {
 
     expect(res.statusCode).toEqual(200);
     expect(res.body.mountedDirectoryPath).toEqual(secondFolder);
-    expect(res.body.fileTree).toEqual([{ path: 'other.md', status: ' ' }]);
+    expect(res.body.fileTree).toEqual([{ path: 'other.md' }]);
   });
 
   it('GET /api/filetree without a folder returns 400 in dashboard-only mode', async () => {

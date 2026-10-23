@@ -3,94 +3,117 @@
 exports[`MarkdownContent renders welcome message when no file is selected 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1t4r39b"
+    class=""
+    style="width: 800px; min-width: 0; min-height: calc(100vh - var(--app-header-height)); margin: 0px auto; padding: var(--mantine-spacing-lg); background-color: var(--app-paper); border-left: 1px solid var(--mantine-color-default-border); border-right: 1px solid var(--mantine-color-default-border);"
   >
-    <nav
-      aria-label="breadcrumb"
-      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1eq4jhp-MuiTypography-root-MuiBreadcrumbs-root"
-    >
-      <ol
-        class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
-      />
-    </nav>
     <div
-      class="MuiBox-root css-1ol10sz"
+      aria-label="breadcrumb"
+      class="m_8b3717df mantine-Breadcrumbs-root"
+      style="margin-bottom: var(--mantine-spacing-sm);"
+    />
+    <div
+      class="m_4081bf90 mantine-Group-root"
+      style="--group-gap: var(--mantine-spacing-xs); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; margin-bottom: var(--mantine-spacing-sm);"
     >
       <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-1oa9u9i-MuiSvgIcon-root"
-        data-testid="ArticleOutlinedIcon"
-        focusable="false"
+        class="tabler-icon tabler-icon-file-text"
+        fill="none"
+        height="32"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
         viewBox="0 0 24 24"
+        width="32"
+        xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
+          d="M14 3v4a1 1 0 0 0 1 1h4"
         />
         <path
-          d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+          d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"
+        />
+        <path
+          d="M9 9l1 0"
+        />
+        <path
+          d="M9 13l6 0"
+        />
+        <path
+          d="M9 17l6 0"
         />
       </svg>
       <h4
-        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-lsowdo-MuiTypography-root"
+        class="m_8a5d1357 mantine-Title-root"
+        data-order="4"
+        style="--title-fw: var(--mantine-h4-font-weight); --title-lh: var(--mantine-h4-line-height); --title-fz: var(--mantine-h4-font-size); margin: 0px; word-break: break-word;"
       >
         🎉 Welcome to mdts!
       </h4>
     </div>
     <div
-      class="MuiBox-root css-i3qfz4"
+      class=""
+      style="margin-left: -24px; margin-right: -24px; padding-left: 16px; border-bottom: 1px solid var(--mantine-color-default-border);"
     >
       <div
-        class="MuiTabs-root css-1xkjjjh-MuiTabs-root"
+        aria-label="view mode tabs"
+        class="m_89d60db1 mantine-Tabs-root"
+        data-orientation="horizontal"
+        data-variant="default"
+        id="mantine-_r_5_"
+        style="--tabs-radius: var(--mantine-radius-default); --tabs-color: var(--mantine-color-blue-filled);"
       >
         <div
-          class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
-          style="overflow: hidden; margin-bottom: 0px;"
+          aria-orientation="horizontal"
+          class="m_576c9d4 m_89d33d6d mantine-Tabs-list"
+          data-orientation="horizontal"
+          data-variant="default"
+          role="tablist"
+          style="flex-wrap: nowrap; overflow-x: auto;"
         >
-          <div
-            aria-label="view mode tabs"
-            class="MuiTabs-list css-hzcega-MuiTabs-list"
-            role="tablist"
+          <button
+            aria-selected="true"
+            class="mantine-focus-auto m_539e827b m_4ec4dce6 mantine-Tabs-tab m_87cf2631 mantine-UnstyledButton-root"
+            data-active="true"
+            data-orientation="horizontal"
+            data-variant="default"
+            id="mantine-_r_5_-tab-preview"
+            role="tab"
+            tabindex="0"
+            type="button"
           >
-            <button
-              aria-selected="true"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-r8v7co-MuiButtonBase-root-MuiTab-root"
-              role="tab"
-              tabindex="0"
-              type="button"
+            <span
+              class="m_42bbd1ae mantine-Tabs-tabLabel"
             >
               Preview
-            </button>
-            <button
-              aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-r8v7co-MuiButtonBase-root-MuiTab-root"
-              role="tab"
-              tabindex="-1"
-              type="button"
+            </span>
+          </button>
+          <button
+            aria-selected="false"
+            class="mantine-focus-auto m_539e827b m_4ec4dce6 mantine-Tabs-tab m_87cf2631 mantine-UnstyledButton-root"
+            data-orientation="horizontal"
+            data-variant="default"
+            id="mantine-_r_5_-tab-raw"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            <span
+              class="m_42bbd1ae mantine-Tabs-tabLabel"
             >
               Raw
-            </button>
-            <button
-              aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-r8v7co-MuiButtonBase-root-MuiTab-root"
-              role="tab"
-              tabindex="-1"
-              type="button"
-            >
-              Last Commit
-            </button>
-          </div>
-          <span
-            class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
-            style="left: 0px; width: 0px;"
-          />
+            </span>
+          </button>
         </div>
       </div>
     </div>
     <div
-      class="MuiBox-root css-hk7m0v"
+      class=""
+      style="font-family: Roboto;"
     >
       <div
-        class="markdown-body MuiBox-root css-1yyviwt"
+        class="markdown-body"
+        style="padding-inline: 0rem; padding-block: var(--mantine-spacing-xs);"
       >
         <div
           data-testid="mock-react-markdown"

@@ -1,4 +1,4 @@
-import { Box, CircularProgress, CssBaseline, ThemeProvider } from '@mui/material';
+import { Center, Loader } from '@mantine/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -6,14 +6,14 @@ import Dashboard from './components/Dashboard/Dashboard';
 import FuzzySearchDialog from './components/FuzzySearch/FuzzySearchDialog';
 import SettingsDialog from './components/SettingsDialog/SettingsDialog';
 import { useFolder } from './hooks/useFolder';
-import { useTheme } from './hooks/useTheme';
 import { useWebSocket } from './hooks/useWebSocket';
 import Layout from './Layout';
 import { saveAppSetting } from './store/slices/appSettingSlice';
 import { fetchConfig } from './store/slices/configSlice';
 import { fetchFileTree } from './store/slices/fileTreeSlice';
 import { updateHistoryFromLocation } from './store/slices/historySlice';
-import { AppDispatch, RootState } from './store/store';
+import type { AppDispatch, RootState } from './store/store';
+import AppThemeProvider from './theme/AppThemeProvider';
 
 type AppMode = 'loading' | 'workspace' | 'dashboard' | 'legacy';
 
@@ -24,17 +24,9 @@ interface ServerInfo {
 }
 
 const LoadingScreen: React.FC = () => (
-  <Box
-    sx={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      bgcolor: 'background.default',
-    }}
-  >
-    <CircularProgress />
-  </Box>
+  <Center mih="100vh" bg="var(--app-background)">
+    <Loader role="progressbar" />
+  </Center>
 );
 
 const Workspace: React.FC = () => {
@@ -45,7 +37,6 @@ const Workspace: React.FC = () => {
   const { currentPath } = useSelector((state: RootState) => state.history);
   const { darkMode, contentMode } = useSelector((state: RootState) => state.appSetting);
   const { fontSize } = useSelector((state: RootState) => state.config);
-  const theme = useTheme();
 
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] = useState(false);
   const [isFuzzySearchOpen, setIsFuzzySearchOpen] = useState(false);
@@ -106,16 +97,15 @@ const Workspace: React.FC = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
       <Layout onSettingsClick={handleSettingsClick} onFuzzySearchClick={handleFuzzySearchClick} />
       <SettingsDialog open={isSettingsDialogOpen} onClose={handleCloseSettingsDialog} />
       <FuzzySearchDialog open={isFuzzySearchOpen} onClose={handleCloseFuzzySearch} />
-    </ThemeProvider>
+    </>
   );
 };
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const folder = useFolder();
   const [mode, setMode] = useState<AppMode>(folder ? 'workspace' : 'loading');
 
@@ -164,5 +154,11 @@ const App: React.FC = () => {
   if (mode === 'dashboard') return <Dashboard />;
   return <Workspace />;
 };
+
+const App: React.FC = () => (
+  <AppThemeProvider>
+    <AppContent />
+  </AppThemeProvider>
+);
 
 export default App;

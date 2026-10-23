@@ -1,4 +1,4 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { MantineProvider } from '@mantine/core';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import mermaid from 'mermaid';
 import React from 'react';
@@ -35,14 +35,11 @@ Object.defineProperty(document, 'fonts', {
 });
 
 const renderWithTheme = async (component: React.ReactElement, themeMode: 'light' | 'dark' = 'light') => {
-  const theme = createTheme({
-    palette: {
-      mode: themeMode,
-    },
-  });
   let rendered;
   await act(async () => {
-    rendered = render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
+    rendered = render(
+      <MantineProvider forceColorScheme={themeMode}>{component}</MantineProvider>
+    );
   });
   return rendered;
 };

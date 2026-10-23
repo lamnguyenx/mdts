@@ -54,22 +54,22 @@ describe('fileTreeSlice', () => {
 
   it('should handle setSearchQuery', () => {
     const fileTree = [
-      { 'dir1': [{ path: 'dir1/file1.md', status: ' ' }, { path: 'dir1/file2.txt', status: ' ' }] },
-      { path: 'file3.md', status: ' ' },
+      { 'dir1': [{ path: 'dir1/file1.md' }, { path: 'dir1/file2.txt' }] },
+      { path: 'file3.md' },
     ];
     store.dispatch(fetchFileTree.fulfilled({ fileTree, mountedDirectoryPath: '/test' }, '', undefined));
 
     store.dispatch(setSearchQuery('file1'));
     expect(store.getState().fileTree.searchQuery).toEqual('file1');
     expect(store.getState().fileTree.filteredFileTree).toEqual([
-      { 'dir1': [{ path: 'dir1/file1.md', status: ' ' }] },
+      { 'dir1': [{ path: 'dir1/file1.md' }] },
     ]);
 
     store.dispatch(setSearchQuery('file'));
     expect(store.getState().fileTree.searchQuery).toEqual('file');
     expect(store.getState().fileTree.filteredFileTree).toEqual([
-      { 'dir1': [{ path: 'dir1/file1.md', status: ' ' }, { path: 'dir1/file2.txt', status: ' ' }] },
-      { path: 'file3.md', status: ' ' },
+      { 'dir1': [{ path: 'dir1/file1.md' }, { path: 'dir1/file2.txt' }] },
+      { path: 'file3.md' },
     ]);
 
     store.dispatch(setSearchQuery(''));
@@ -85,18 +85,18 @@ describe('fileTreeSlice', () => {
     store.dispatch(setSearchQuery('FILE1'));
     expect(store.getState().fileTree.searchQuery).toEqual('FILE1');
     expect(store.getState().fileTree.filteredFileTree).toEqual([
-      { 'dir1': [{ path: 'dir1/file1.md', status: ' ' }] },
+      { 'dir1': [{ path: 'dir1/file1.md' }] },
     ]);
 
     // Test with nested directories
     const nestedFileTree = [
-      { 'dirA': [{ 'dirB': [{ path: 'dirA/dirB/fileX.md', status: ' ' }] }] },
-      { path: 'fileY.md', status: ' ' },
+      { 'dirA': [{ 'dirB': [{ path: 'dirA/dirB/fileX.md' }] }] },
+      { path: 'fileY.md' },
     ];
     store.dispatch(fetchFileTree.fulfilled({ fileTree: nestedFileTree, mountedDirectoryPath: '/test' }, '', undefined));
     store.dispatch(setSearchQuery('fileX'));
     expect(store.getState().fileTree.filteredFileTree).toEqual([
-      { 'dirA': [{ 'dirB': [{ path: 'dirA/dirB/fileX.md', status: ' ' }] }] },
+      { 'dirA': [{ 'dirB': [{ path: 'dirA/dirB/fileX.md' }] }] },
     ]);
 
     // Test with partial match in directory name (should not match)
@@ -165,8 +165,8 @@ describe('fileTreeSlice', () => {
 
   it('should handle expandAllNodes', () => {
     const fileTree = [
-      { 'dir1': [{ path: 'dir1/file1.md', status: ' ' }, { 'dir2': [{ path: 'dir1/dir2/file2.md', status: ' ' }] }] },
-      { path: 'file3.md', status: ' ' },
+      { 'dir1': [{ path: 'dir1/file1.md' }, { 'dir2': [{ path: 'dir1/dir2/file2.md' }] }] },
+      { path: 'file3.md' },
     ];
     store.dispatch(setMountedDirectoryPath('/test/path'));
     store.dispatch(expandAllNodes(fileTree));
@@ -206,7 +206,7 @@ describe('fileTreeSlice', () => {
     });
 
     it('should handle fulfilled state', async () => {
-      const mockFileTree = [{ 'dir': [{ path: 'dir/file.md', status: ' ' }] }];
+      const mockFileTree = [{ 'dir': [{ path: 'dir/file.md' }] }];
       const mockMountedPath = '/mock/path';
       (fetchData as jest.Mock).mockResolvedValueOnce({ fileTree: mockFileTree, mountedDirectoryPath: mockMountedPath });
 
@@ -220,7 +220,7 @@ describe('fileTreeSlice', () => {
     });
 
     it('should load expanded nodes from local storage on fulfilled state', async () => {
-      const mockFileTree = [{ 'dir': [{ path: 'dir/file.md', status: ' ' }] }];
+      const mockFileTree = [{ 'dir': [{ path: 'dir/file.md' }] }];
       const mockMountedPath = '/mock/path';
       localStorage.setItem(`mdts_expanded_nodes_${mockMountedPath}`, JSON.stringify(['dir']));
       (fetchData as jest.Mock).mockResolvedValueOnce({ fileTree: mockFileTree, mountedDirectoryPath: mockMountedPath });
@@ -245,7 +245,7 @@ describe('fileTreeSlice', () => {
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       localStorageMock.getItem = jest.fn(() => { throw new Error('localStorage getItem error'); });
 
-      const mockFileTree = [{ 'dir': [{ path: 'dir/file.md', status: ' ' }] }];
+      const mockFileTree = [{ 'dir': [{ path: 'dir/file.md' }] }];
       const mockMountedPath = '/mock/path';
       (fetchData as jest.Mock).mockResolvedValueOnce({ fileTree: mockFileTree, mountedDirectoryPath: mockMountedPath });
 
@@ -269,31 +269,31 @@ describe('fileTreeSlice', () => {
 
   describe('selectFilteredFileTree selector', () => {
     const fullFileTree = [
-      { 'dir1': [{ path: 'dir1/fileA.md', status: ' ' }, { path: 'dir1/fileB.txt', status: ' ' }] },
-      { 'dir2': [{ path: 'dir2/fileC.md', status: ' ' }] },
-      { path: 'root/fileD.md', status: ' ' },
+      { 'dir1': [{ path: 'dir1/fileA.md' }, { path: 'dir1/fileB.txt' }] },
+      { 'dir2': [{ path: 'dir2/fileC.md' }] },
+      { path: 'root/fileD.md' },
     ];
 
     it('should return top-level items when targetPath is empty', () => {
       const selected = selectFilteredFileTree(fullFileTree, '');
       expect(selected).toEqual([
-        { 'dir1': [{ path: 'dir1/fileA.md', status: ' ' }, { path: 'dir1/fileB.txt', status: ' ' }] },
-        { 'dir2': [{ path: 'dir2/fileC.md', status: ' ' }] },
-        { path: 'fileD.md', status: ' ' },
+        { 'dir1': [{ path: 'dir1/fileA.md' }, { path: 'dir1/fileB.txt' }] },
+        { 'dir2': [{ path: 'dir2/fileC.md' }] },
+        { path: 'fileD.md' },
       ]);
     });
 
     it('should return children of a specified directory', () => {
       const selected = selectFilteredFileTree(fullFileTree, 'dir1');
-      expect(selected).toEqual([{ path: 'fileA.md', status: ' ' }, { path: 'fileB.txt', status: ' ' }]);
+      expect(selected).toEqual([{ path: 'fileA.md' }, { path: 'fileB.txt' }]);
     });
 
     it('should return children of a nested directory', () => {
       const nestedFileTree = [
-        { 'dirA': [{ 'dirB': [{ path: 'dirA/dirB/fileX.md', status: ' ' }, { path: 'dirA/dirB/fileY.txt', status: ' ' }] }] },
+        { 'dirA': [{ 'dirB': [{ path: 'dirA/dirB/fileX.md' }, { path: 'dirA/dirB/fileY.txt' }] }] },
       ];
       const selected = selectFilteredFileTree(nestedFileTree, 'dirA/dirB');
-      expect(selected).toEqual([{ path: 'fileX.md', status: ' ' }, { path: 'fileY.txt', status: ' ' }]);
+      expect(selected).toEqual([{ path: 'fileX.md' }, { path: 'fileY.txt' }]);
     });
 
     it('should return empty array for non-existent path', () => {
@@ -308,10 +308,10 @@ describe('fileTreeSlice', () => {
 
     it('should handle deeply nested directories', () => {
       const deeplyNestedFileTree = [
-        { 'a': [{ 'b': [{ 'c': [{ path: 'a/b/c/d.md', status: ' ' }] }] }] },
+        { 'a': [{ 'b': [{ 'c': [{ path: 'a/b/c/d.md' }] }] }] },
       ];
       const selected = selectFilteredFileTree(deeplyNestedFileTree, 'a/b/c');
-      expect(selected).toEqual([{ path: 'd.md', status: ' ' }]);
+      expect(selected).toEqual([{ path: 'd.md' }]);
     });
 
     it('should handle empty file tree', () => {
@@ -325,37 +325,37 @@ describe('fileTreeSlice', () => {
     });
 
     it('should handle file tree with only files at root', () => {
-      const fileOnlyTree = [{ path: 'file1.md', status: ' ' }, { path: 'file2.txt', status: ' ' }];
+      const fileOnlyTree = [{ path: 'file1.md' }, { path: 'file2.txt' }];
       const selected = selectFilteredFileTree(fileOnlyTree, '');
-      expect(selected).toEqual([{ path: 'file1.md', status: ' ' }, { path: 'file2.txt', status: ' ' }]);
+      expect(selected).toEqual([{ path: 'file1.md' }, { path: 'file2.txt' }]);
     });
 
     it('should handle file tree with mixed files and directories at root', () => {
       const mixedTree = [
-        { 'dir1': [{ path: 'dir1/fileA.md', status: ' ' }] },
-        { path: 'fileB.md', status: ' ' },
+        { 'dir1': [{ path: 'dir1/fileA.md' }] },
+        { path: 'fileB.md' },
       ];
       const selected = selectFilteredFileTree(mixedTree, '');
       expect(selected).toEqual([
-        { 'dir1': [{ path: 'dir1/fileA.md', status: ' ' }] },
-        { path: 'fileB.md', status: ' ' },
+        { 'dir1': [{ path: 'dir1/fileA.md' }] },
+        { path: 'fileB.md' },
       ]);
     });
 
     it('should handle targetPath that is a direct child of a root directory', () => {
       const tree = [
-        { 'root': [{ path: 'root/file1.md', status: ' ' }, { 'root/nested': [{ path: 'root/nested/file2.md', status: ' ' }] }] },
+        { 'root': [{ path: 'root/file1.md' }, { 'root/nested': [{ path: 'root/nested/file2.md' }] }] },
       ];
       const selected = selectFilteredFileTree(tree, 'root');
-      expect(selected).toEqual([{ path: 'file1.md', status: ' ' }, { 'nested': [{ path: 'root/nested/file2.md', status: ' ' }] }]);
+      expect(selected).toEqual([{ path: 'file1.md' }, { 'nested': [{ path: 'root/nested/file2.md' }] }]);
     });
 
     it('should handle targetPath that is a direct child of a nested directory', () => {
       const tree = [
-        { 'root': [{ path: 'root/file1.md', status: ' ' }, { 'nested': [{ path: 'root/nested/file2.md', status: ' ' }] }] },
+        { 'root': [{ path: 'root/file1.md' }, { 'nested': [{ path: 'root/nested/file2.md' }] }] },
       ];
       const selected = selectFilteredFileTree(tree, 'root/nested');
-      expect(selected).toEqual([{ path: 'file2.md', status: ' ' }]);
+      expect(selected).toEqual([{ path: 'file2.md' }]);
     });
   });
 });

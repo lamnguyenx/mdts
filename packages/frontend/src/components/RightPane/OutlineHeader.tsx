@@ -1,6 +1,5 @@
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Box, IconButton, Typography } from '@mui/material';
+import { ActionIcon, Box, Group, Text } from '@mantine/core';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import React from 'react';
 
 interface OutlineHeaderProps {
@@ -11,22 +10,30 @@ interface OutlineHeaderProps {
 const OutlineHeader: React.FC<OutlineHeaderProps> = ({ isOpen, onToggle }) => {
   return (
     <Box
-      sx={{
+      style={{
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        height: '34px',
-        marginBottom: 2,
-        px: isOpen ? 2 : 0.5,
+        height: 30,
+        marginBottom: 'var(--mantine-spacing-xs)',
+        paddingLeft: isOpen ? 'var(--mantine-spacing-sm)' : 4,
+        paddingRight: isOpen ? 'var(--mantine-spacing-sm)' : 4,
       }}
     >
-      <IconButton onClick={onToggle} size="small" sx={{ marginBottom: 0, marginLeft: isOpen ? '0' : '12px' }} aria-label="toggle outline">
-        {isOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-      </IconButton>
+      <ActionIcon
+        onClick={onToggle}
+        size="sm"
+        variant="subtle"
+        color="gray"
+        aria-label="toggle outline"
+        style={{ marginLeft: isOpen ? 0 : 12 }}
+      >
+        {isOpen ? <IconChevronRight size={16} /> : <IconChevronLeft size={16} />}
+      </ActionIcon>
       {isOpen && (
-        <Typography variant="h6" gutterBottom sx={{ marginLeft: 1, marginBottom: 0 }}>
-          Outline
-        </Typography>
+        <Group gap="xs" style={{ marginLeft: 'var(--mantine-spacing-xs)' }}>
+          <Text fw={600}>Outline</Text>
+        </Group>
       )}
     </Box>
   );

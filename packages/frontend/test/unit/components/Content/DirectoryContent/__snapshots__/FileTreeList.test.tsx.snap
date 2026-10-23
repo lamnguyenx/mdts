@@ -2,68 +2,80 @@
 
 exports[`FileTreeList renders correctly with files and folders 1`] = `
 <DocumentFragment>
-  <ul
-    class="MuiList-root MuiList-padding css-1tfyysn-MuiList-root"
+  <div
+    class="m_6d731127 mantine-Stack-root"
+    style="--stack-gap: 0rem; --stack-align: stretch; --stack-justify: flex-start;"
   >
-    <li
-      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-z2qibm-MuiListItem-root"
+    <button
+      class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
+      style="display: flex; align-items: center; gap: var(--mantine-spacing-xs); padding: 4px 8px; border-radius: var(--mantine-radius-sm);"
+      type="button"
     >
-      <div
-        class="MuiListItemIcon-root css-ogi1zq-MuiListItemIcon-root"
+      <svg
+        class="tabler-icon tabler-icon-folder"
+        fill="none"
+        height="20"
+        stroke="var(--mantine-primary-color-filled)"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-1wtp6o0-MuiSvgIcon-root"
-          data-testid="FolderOutlinedIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="m9.17 6 2 2H20v10H4V6zM10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8z"
-          />
-        </svg>
-      </div>
-      <div
-        class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
+        <path
+          d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"
+        />
+      </svg>
+      <p
+        class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+        data-size="sm"
+        style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm);"
       >
-        <span
-          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1px98du-MuiTypography-root"
-        >
-          folder1
-        </span>
-      </div>
-    </li>
-    <li
-      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-z2qibm-MuiListItem-root"
+        folder1
+      </p>
+    </button>
+    <button
+      class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
+      style="display: flex; align-items: center; gap: var(--mantine-spacing-xs); padding: 4px 8px; border-radius: var(--mantine-radius-sm);"
+      type="button"
     >
-      <div
-        class="MuiListItemIcon-root css-ogi1zq-MuiListItemIcon-root"
+      <svg
+        class="tabler-icon tabler-icon-file-text"
+        fill="none"
+        height="20"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-          data-testid="ArticleOutlinedIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
-          />
-          <path
-            d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
-          />
-        </svg>
-      </div>
-      <div
-        class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
+        <path
+          d="M14 3v4a1 1 0 0 0 1 1h4"
+        />
+        <path
+          d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"
+        />
+        <path
+          d="M9 9l1 0"
+        />
+        <path
+          d="M9 13l6 0"
+        />
+        <path
+          d="M9 17l6 0"
+        />
+      </svg>
+      <p
+        class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+        data-size="sm"
+        style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm);"
       >
-        <span
-          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1px98du-MuiTypography-root"
-        >
-          file2.txt
-        </span>
-      </div>
-    </li>
-  </ul>
+        file2.txt
+      </p>
+    </button>
+  </div>
 </DocumentFragment>
 `;

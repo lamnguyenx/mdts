@@ -36,10 +36,39 @@ export const setupWatcher = (
   server: http.Server,
   port: number,
   folders: FolderService = new FolderService(options),
+  frontendBundlePath?: string,
 ): void => {
   const wss = new WebSocketServer({ server });
   const folderStates = new Map<string, FolderState>();
   const clientStates = new Map<WebSocket, ClientState>();
+
+  const broadcastFullReload = (): void => {
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify({ type: 'reload-page' }));
+      }
+    });
+  };
+
+  const watchFrontendBundle = (bundlePath: string): void => {
+    let reloadTimer: NodeJS.Timeout | null = null;
+    chokidar
+      .watch(bundlePath, { ignoreInitial: true })
+      .on('add', broadcastFullReload)
+      .on('change', () => {
+        // Webpack rewrites the bundle in several passes; debounce the reload.
+        if (reloadTimer) clearTimeout(reloadTimer);
+        reloadTimer = setTimeout(broadcastFullReload, 300);
+      })
+      .on('error', (error) => {
+        logger.error('🚫 Error watching frontend bundle:', error);
+      });
+    logger.log('Livereload', `🎨 Watching frontend bundle: ${bundlePath}`);
+  };
+
+  if (frontendBundlePath) {
+    watchFrontendBundle(frontendBundlePath);
+  }
 
   const broadcastTreeReload = (folder: string): void => {
     const state = folderStates.get(folder);

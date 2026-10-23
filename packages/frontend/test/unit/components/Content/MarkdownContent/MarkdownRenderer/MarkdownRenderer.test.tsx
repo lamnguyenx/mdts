@@ -1,4 +1,3 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -124,11 +123,6 @@ const renderWithProviders = (
   selectedFilePath: string | null = null,
   enableBreaks = false
 ) => {
-  const theme = createTheme({
-    palette: {
-      mode: 'light',
-    },
-  });
   const store = mockStore({
     content: {
       content: '# Test Markdown',
@@ -155,13 +149,11 @@ const renderWithProviders = (
   return render(
     <Provider store={store}>
       <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <MarkdownRenderer
-            content={content}
-            selectedFilePath={selectedFilePath}
-            enableBreaks={enableBreaks}
-          />
-        </ThemeProvider>
+        <MarkdownRenderer
+          content={content}
+          selectedFilePath={selectedFilePath}
+          enableBreaks={enableBreaks}
+        />
       </BrowserRouter>
     </Provider>
   );

@@ -3,172 +3,219 @@
 exports[`ColorSchemeSettingsTab should render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-19midj6"
+    class=""
+    style="padding: var(--mantine-spacing-xs);"
   >
-    <h6
-      class="MuiTypography-root MuiTypography-subtitle2 css-n2une3-MuiTypography-root"
+    <p
+      class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+      data-size="sm"
+      style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); margin-bottom: var(--mantine-spacing-sm); font-weight: 600;"
     >
       Dark Mode
-    </h6>
+    </p>
     <div
       aria-label="dark mode"
-      class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal MuiToggleButtonGroup-fullWidth css-1jjbo4h-MuiToggleButtonGroup-root"
-      role="group"
+      class="m_cf365364 mantine-SegmentedControl-root"
+      data-full-width="true"
+      data-initialized="true"
+      data-size="sm"
+      data-with-items-borders="true"
+      role="radiogroup"
+      style="--sc-shadow: var(--mantine-shadow-xs); --sc-padding: var(--sc-padding-sm); --sc-font-size: var(--mantine-font-size-sm); margin-bottom: var(--mantine-spacing-md);"
     >
-      <button
-        aria-label="dark"
-        aria-pressed="true"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
-        tabindex="0"
-        type="button"
-        value="dark"
+      <span
+        class="m_9e182ccd mantine-SegmentedControl-indicator m_96b553a6 mantine-FloatingIndicator-root"
+        style="--transition-duration: var(--sc-transition-duration); transform: translateY(0px) translateX(0px); width: 0px; height: 0px;"
+      />
+      <div
+        class="m_69686b9b mantine-SegmentedControl-control"
+        data-active="true"
       >
-        Dark
-      </button>
-      <button
-        aria-label="light"
-        aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-middleButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
-        tabindex="-1"
-        type="button"
-        value="light"
+        <input
+          checked=""
+          class="m_1714d588 mantine-SegmentedControl-input"
+          data-focus-ring="auto"
+          id="mantine-_r_2_-dark"
+          name="mantine-_r_2_"
+          type="radio"
+          value="dark"
+        />
+        <label
+          class="m_1738fcb2 mantine-SegmentedControl-label"
+          data-active="true"
+          for="mantine-_r_2_-dark"
+        >
+          <span
+            class="m_78882f40 mantine-SegmentedControl-innerLabel"
+          >
+            Dark
+          </span>
+        </label>
+      </div>
+      <div
+        class="m_69686b9b mantine-SegmentedControl-control"
       >
-        Light
-      </button>
-      <button
-        aria-label="auto"
-        aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-lastButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
-        tabindex="-1"
-        type="button"
-        value="auto"
+        <input
+          class="m_1714d588 mantine-SegmentedControl-input"
+          data-focus-ring="auto"
+          id="mantine-_r_2_-light"
+          name="mantine-_r_2_"
+          type="radio"
+          value="light"
+        />
+        <label
+          class="m_1738fcb2 mantine-SegmentedControl-label"
+          for="mantine-_r_2_-light"
+        >
+          <span
+            class="m_78882f40 mantine-SegmentedControl-innerLabel"
+          >
+            Light
+          </span>
+        </label>
+      </div>
+      <div
+        class="m_69686b9b mantine-SegmentedControl-control"
       >
-        Auto (System)
-      </button>
+        <input
+          class="m_1714d588 mantine-SegmentedControl-input"
+          data-focus-ring="auto"
+          id="mantine-_r_2_-auto"
+          name="mantine-_r_2_"
+          type="radio"
+          value="auto"
+        />
+        <label
+          class="m_1738fcb2 mantine-SegmentedControl-label"
+          for="mantine-_r_2_-auto"
+        >
+          <span
+            class="m_78882f40 mantine-SegmentedControl-innerLabel"
+          >
+            Auto (System)
+          </span>
+        </label>
+      </div>
     </div>
-    <h6
-      class="MuiTypography-root MuiTypography-subtitle2 css-n2une3-MuiTypography-root"
+    <p
+      class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+      data-size="sm"
+      style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); margin-bottom: var(--mantine-spacing-sm); font-weight: 600;"
     >
       Theme
-    </h6>
+    </p>
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiSelect-root css-1v0ium5-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+      class="m_46b77525 mantine-InputWrapper-root mantine-Select-root"
+      data-size="sm"
+      style="margin-bottom: var(--mantine-spacing-md);"
     >
       <div
-        aria-expanded="false"
-        aria-haspopup="listbox"
-        class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-322cp6-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-        role="combobox"
-        tabindex="0"
+        class="m_6c018570 mantine-Input-wrapper mantine-Select-wrapper"
+        data-pointer="true"
+        data-size="sm"
+        data-variant="default"
+        data-with-right-section="true"
+        style="--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); --input-right-section-pointer-events: none;"
       >
+        <input
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="Theme"
+          autocomplete="off"
+          class="m_8fb7ebe7 mantine-Input-input mantine-Select-input"
+          data-testid="theme-select"
+          data-variant="default"
+          id="mantine-_r_b_"
+          readonly=""
+          role="combobox"
+          value="Default"
+        />
         <div
-          class="MuiBox-root css-7pf6at"
+          class="m_82577fc2 mantine-Input-section mantine-Select-section"
+          data-position="right"
         >
-          <div
-            class="MuiBox-root css-157xh8y"
+          <svg
+            class="m_2943220b mantine-ComboboxChevron-chevron"
+            data-combobox-chevron="true"
+            data-size="sm"
+            fill="none"
+            style="--combobox-chevron-size: var(--combobox-chevron-size-sm);"
+            viewBox="0 0 15 15"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <div
-              class="MuiBox-root css-dergdt"
+            <path
+              clip-rule="evenodd"
+              d="M4.93179 5.43179C4.75605 5.60753 4.75605 5.89245 4.93179 6.06819C5.10753 6.24392 5.39245 6.24392 5.56819 6.06819L7.49999 4.13638L9.43179 6.06819C9.60753 6.24392 9.89245 6.24392 10.0682 6.06819C10.2439 5.89245 10.2439 5.60753 10.0682 5.43179L7.81819 3.18179C7.73379 3.0974 7.61933 3.04999 7.49999 3.04999C7.38064 3.04999 7.26618 3.0974 7.18179 3.18179L4.93179 5.43179ZM10.0682 9.56819C10.2439 9.39245 10.2439 9.10753 10.0682 8.93179C9.89245 8.75606 9.60753 8.75606 9.43179 8.93179L7.49999 10.8636L5.56819 8.93179C5.39245 8.75606 5.10753 8.75606 4.93179 8.93179C4.75605 9.10753 4.75605 9.39245 4.93179 9.56819L7.18179 11.8182C7.35753 11.9939 7.64245 11.9939 7.81819 11.8182L10.0682 9.56819Z"
+              fill="currentColor"
+              fill-rule="evenodd"
             />
-          </div>
-          <p
-            class="MuiTypography-root MuiTypography-body2 css-2wbpcv-MuiTypography-root"
-          >
-            Default
-          </p>
+          </svg>
         </div>
       </div>
-      <input
-        aria-hidden="true"
-        aria-invalid="false"
-        class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-        id="_r_1_"
-        tabindex="-1"
-        value="default"
-      />
-      <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon css-1rfqz7c-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
-        data-testid="ArrowDropDownIcon"
-        focusable="false"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M7 10l5 5 5-5z"
-        />
-      </svg>
-      <fieldset
-        aria-hidden="true"
-        class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-      >
-        <legend
-          class="css-1nf2c5d-MuiNotchedOutlined-root"
-        >
-          <span
-            aria-hidden="true"
-            class="notranslate"
-          >
-            ​
-          </span>
-        </legend>
-      </fieldset>
     </div>
-    <h6
-      class="MuiTypography-root MuiTypography-subtitle2 css-14l8bx7-MuiTypography-root"
+    <input
+      type="hidden"
+      value="default"
+    />
+    <p
+      class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+      data-size="sm"
       id="syntax-highlighter-theme-label"
+      style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); margin-top: var(--mantine-spacing-md); margin-bottom: var(--mantine-spacing-sm); font-weight: 600;"
     >
       Syntax Highlighter Theme
-    </h6>
+    </p>
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiSelect-root css-134kgh-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-      data-testid="syntax-highlighter-theme-select"
+      class="m_46b77525 mantine-InputWrapper-root mantine-Select-root"
+      data-size="sm"
+      style="margin-bottom: var(--mantine-spacing-xs);"
     >
       <div
-        aria-expanded="false"
-        aria-haspopup="listbox"
-        aria-labelledby="syntax-highlighter-theme-label"
-        class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-322cp6-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-        id="syntaxHighlighterTheme"
-        role="combobox"
-        tabindex="0"
+        class="m_6c018570 mantine-Input-wrapper mantine-Select-wrapper"
+        data-size="sm"
+        data-variant="default"
+        data-with-right-section="true"
+        style="--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); --input-right-section-pointer-events: none;"
       >
-        Auto
-      </div>
-      <input
-        aria-hidden="true"
-        aria-invalid="false"
-        class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-        id="_r_3_"
-        tabindex="-1"
-        value="auto"
-      />
-      <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon css-1rfqz7c-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
-        data-testid="ArrowDropDownIcon"
-        focusable="false"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M7 10l5 5 5-5z"
+        <input
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="Syntax Highlighter Theme"
+          autocomplete="off"
+          class="m_8fb7ebe7 mantine-Input-input mantine-Select-input"
+          data-testid="syntax-highlighter-theme-select"
+          data-variant="default"
+          id="syntaxHighlighterTheme"
+          role="combobox"
+          value="Auto"
         />
-      </svg>
-      <fieldset
-        aria-hidden="true"
-        class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-      >
-        <legend
-          class="css-1nf2c5d-MuiNotchedOutlined-root"
+        <div
+          class="m_82577fc2 mantine-Input-section mantine-Select-section"
+          data-position="right"
         >
-          <span
-            aria-hidden="true"
-            class="notranslate"
+          <svg
+            class="m_2943220b mantine-ComboboxChevron-chevron"
+            data-combobox-chevron="true"
+            data-size="sm"
+            fill="none"
+            style="--combobox-chevron-size: var(--combobox-chevron-size-sm);"
+            viewBox="0 0 15 15"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            ​
-          </span>
-        </legend>
-      </fieldset>
+            <path
+              clip-rule="evenodd"
+              d="M4.93179 5.43179C4.75605 5.60753 4.75605 5.89245 4.93179 6.06819C5.10753 6.24392 5.39245 6.24392 5.56819 6.06819L7.49999 4.13638L9.43179 6.06819C9.60753 6.24392 9.89245 6.24392 10.0682 6.06819C10.2439 5.89245 10.2439 5.60753 10.0682 5.43179L7.81819 3.18179C7.73379 3.0974 7.61933 3.04999 7.49999 3.04999C7.38064 3.04999 7.26618 3.0974 7.18179 3.18179L4.93179 5.43179ZM10.0682 9.56819C10.2439 9.39245 10.2439 9.10753 10.0682 8.93179C9.89245 8.75606 9.60753 8.75606 9.43179 8.93179L7.49999 10.8636L5.56819 8.93179C5.39245 8.75606 5.10753 8.75606 4.93179 8.93179C4.75605 9.10753 4.75605 9.39245 4.93179 9.56819L7.18179 11.8182C7.35753 11.9939 7.64245 11.9939 7.81819 11.8182L10.0682 9.56819Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
     </div>
+    <input
+      type="hidden"
+      value="auto"
+    />
   </div>
 </DocumentFragment>
 `;

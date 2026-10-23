@@ -60,8 +60,8 @@ describe('FileTree mobile behavior', () => {
     (useIsMobile as jest.Mock).mockReturnValue(true);
     store = mockStore({
       fileTree: {
-        fileTree: [{ 'folder1': [{ path: 'folder1/file1.md', status: ' ' }] }],
-        filteredFileTree: [{ 'folder1': [{ path: 'folder1/file1.md', status: ' ' }] }],
+        fileTree: [{ 'folder1': [{ path: 'folder1/file1.md' }] }],
+        filteredFileTree: [{ 'folder1': [{ path: 'folder1/file1.md' }] }],
         loading: false,
         error: null,
         searchQuery: '',

@@ -1,4 +1,3 @@
-import { createTheme } from '@mui/material';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -7,7 +6,6 @@ import { saveAppSetting } from '../../src/store/slices/appSettingSlice';
 import { fetchConfig } from '../../src/store/slices/configSlice';
 import { fetchFileTree } from '../../src/store/slices/fileTreeSlice';
 import { updateHistoryFromLocation } from '../../src/store/slices/historySlice';
-import { useTheme } from '../../src/hooks/useTheme';
 import { useWebSocket } from '../../src/hooks/useWebSocket';
 import { createMockStore } from '../utils';
 
@@ -21,10 +19,6 @@ jest.mock('../../src/api', () => ({
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => mockUseLocation(),
-}));
-
-jest.mock('../../src/hooks/useTheme', () => ({
-  useTheme: jest.fn(),
 }));
 
 jest.mock('../../src/hooks/useWebSocket', () => ({
@@ -74,7 +68,6 @@ jest.mock('../../src/store/slices/historySlice', () => ({
 }));
 
 describe('App behavior', () => {
-  const mockedUseTheme = useTheme as jest.MockedFunction<typeof useTheme>;
   const mockedUseWebSocket = useWebSocket as jest.MockedFunction<typeof useWebSocket>;
   const mockedFetchConfig = fetchConfig as jest.MockedFunction<typeof fetchConfig>;
   const mockedFetchFileTree = fetchFileTree as jest.MockedFunction<typeof fetchFileTree>;
@@ -84,7 +77,6 @@ describe('App behavior', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseLocation.mockReturnValue({ pathname: '/docs/readme.md' });
-    mockedUseTheme.mockReturnValue(createTheme());
   });
 
   const renderApp = (initialState = {}) => {

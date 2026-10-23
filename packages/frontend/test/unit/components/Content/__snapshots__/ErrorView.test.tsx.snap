@@ -3,24 +3,43 @@
 exports[`ErrorView renders snapshot correctly with 404 error 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1f23zer"
+    class="m_4451eb3a mantine-Center-root"
+    style="padding: var(--mantine-spacing-xl); height: 100%;"
   >
-    <svg
-      aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-colorAction MuiSvgIcon-fontSizeMedium css-17g5et6-MuiSvgIcon-root"
-      data-testid="ReportProblemOutlinedIcon"
-      focusable="false"
-      viewBox="0 0 24 24"
+    <div
+      class="m_6d731127 mantine-Stack-root"
+      style="--stack-gap: var(--mantine-spacing-sm); --stack-align: center; --stack-justify: flex-start;"
     >
-      <path
-        d="M12 5.99 19.53 19H4.47zM12 2 1 21h22zm1 14h-2v2h2zm0-6h-2v4h2z"
-      />
-    </svg>
-    <h5
-      class="MuiTypography-root MuiTypography-h5 css-2gq52s-MuiTypography-root"
-    >
-      Not Found
-    </h5>
+      <svg
+        class="tabler-icon tabler-icon-alert-triangle"
+        fill="none"
+        height="60"
+        stroke="var(--mantine-color-dimmed)"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+        viewBox="0 0 24 24"
+        width="60"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 9v4"
+        />
+        <path
+          d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"
+        />
+        <path
+          d="M12 16h.01"
+        />
+      </svg>
+      <p
+        class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+        data-size="xl"
+        style="--text-fz: var(--mantine-font-size-xl); --text-lh: var(--mantine-line-height-xl); color: var(--mantine-color-dimmed);"
+      >
+        Not Found
+      </p>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -28,24 +47,43 @@ exports[`ErrorView renders snapshot correctly with 404 error 1`] = `
 exports[`ErrorView renders snapshot correctly with an error 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1f23zer"
+    class="m_4451eb3a mantine-Center-root"
+    style="padding: var(--mantine-spacing-xl); height: 100%;"
   >
-    <svg
-      aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-colorAction MuiSvgIcon-fontSizeMedium css-17g5et6-MuiSvgIcon-root"
-      data-testid="ReportProblemOutlinedIcon"
-      focusable="false"
-      viewBox="0 0 24 24"
+    <div
+      class="m_6d731127 mantine-Stack-root"
+      style="--stack-gap: var(--mantine-spacing-sm); --stack-align: center; --stack-justify: flex-start;"
     >
-      <path
-        d="M12 5.99 19.53 19H4.47zM12 2 1 21h22zm1 14h-2v2h2zm0-6h-2v4h2z"
-      />
-    </svg>
-    <h5
-      class="MuiTypography-root MuiTypography-h5 css-2gq52s-MuiTypography-root"
-    >
-      Error: Test error message
-    </h5>
+      <svg
+        class="tabler-icon tabler-icon-alert-triangle"
+        fill="none"
+        height="60"
+        stroke="var(--mantine-color-dimmed)"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+        viewBox="0 0 24 24"
+        width="60"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 9v4"
+        />
+        <path
+          d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"
+        />
+        <path
+          d="M12 16h.01"
+        />
+      </svg>
+      <p
+        class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+        data-size="xl"
+        style="--text-fz: var(--mantine-font-size-xl); --text-lh: var(--mantine-line-height-xl); color: var(--mantine-color-dimmed);"
+      >
+        Error: Test error message
+      </p>
+    </div>
   </div>
 </DocumentFragment>
 `;

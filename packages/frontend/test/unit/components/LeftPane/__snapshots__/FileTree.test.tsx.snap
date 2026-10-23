@@ -3,195 +3,269 @@
 exports[`FileTree renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-9681nh"
+    class=""
+    style="width: 260px; background: linear-gradient(135deg, rgba(192, 192, 192, 0.01) 0%, var(--app-paper) 100%); padding-top: var(--mantine-spacing-xs); padding-bottom: var(--mantine-spacing-xs); border-right: 1px solid var(--mantine-color-default-border); min-height: 100%; flex-shrink: 0;"
   >
     <div
-      class="MuiBox-root css-xonpca"
+      class=""
+      style="display: flex; justify-content: space-between; align-items: center; height: 30px; margin-bottom: var(--mantine-spacing-xs); padding-left: var(--mantine-spacing-sm); padding-right: var(--mantine-spacing-sm);"
     >
       <div
-        class="MuiBox-root css-1g3qtqm"
+        class="m_4081bf90 mantine-Group-root"
+        style="--group-gap: calc(0.25rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; flex: 1 1 0%;"
       >
-        <h6
-          class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-1b6r7r0-MuiTypography-root"
+        <p
+          class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+          style="flex: 1 1 0%; margin-left: var(--mantine-spacing-xs); font-weight: 600;"
         >
           File Tree
-        </h6>
+        </p>
         <button
           aria-label="expand all"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
-          tabindex="0"
+          class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+          data-size="sm"
+          data-variant="subtle"
+          style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
           type="button"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-            data-testid="UnfoldMoreIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <span
+            class="m_8d3afb97 mantine-ActionIcon-icon"
           >
-            <path
-              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15z"
-            />
-          </svg>
+            <svg
+              class="tabler-icon tabler-icon-chevrons-down"
+              fill="none"
+              height="16"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7 7l5 5l5 -5"
+              />
+              <path
+                d="M7 13l5 5l5 -5"
+              />
+            </svg>
+          </span>
         </button>
         <button
           aria-label="collapse all"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
-          tabindex="0"
+          class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+          data-size="sm"
+          data-variant="subtle"
+          style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
           type="button"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-            data-testid="UnfoldLessIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <span
+            class="m_8d3afb97 mantine-ActionIcon-icon"
           >
-            <path
-              d="M7.41 18.59 8.83 20 12 16.83 15.17 20l1.41-1.41L12 14zm9.18-13.18L15.17 4 12 7.17 8.83 4 7.41 5.41 12 10z"
-            />
-          </svg>
+            <svg
+              class="tabler-icon tabler-icon-chevrons-up"
+              fill="none"
+              height="16"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7 11l5 -5l5 5"
+              />
+              <path
+                d="M7 17l5 -5l5 5"
+              />
+            </svg>
+          </span>
         </button>
       </div>
       <button
         aria-label="toggle file tree"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1afdov1-MuiButtonBase-root-MuiIconButton-root"
-        tabindex="0"
+        class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+        data-size="sm"
+        data-variant="subtle"
+        style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; margin-left: 0px;"
         type="button"
       >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-          data-testid="ChevronLeftIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
+        <span
+          class="m_8d3afb97 mantine-ActionIcon-icon"
         >
-          <path
-            d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
-          />
-        </svg>
+          <svg
+            class="tabler-icon tabler-icon-chevron-left"
+            fill="none"
+            height="16"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 6l-6 6l6 6"
+            />
+          </svg>
+        </span>
       </button>
     </div>
     <div
-      class="MuiBox-root css-0"
-      mb="2"
-      px="2"
+      class=""
+      style="margin-bottom: var(--mantine-spacing-xs); padding-inline: var(--mantine-spacing-sm);"
     >
       <div
-        class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"
+        class="m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"
+        data-size="xs"
       >
-        <input
-          aria-label="search files"
-          class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
-          placeholder="Search files..."
-          type="text"
-          value=""
-        />
+        <div
+          class="m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"
+          data-size="xs"
+          data-variant="default"
+          data-with-left-section="true"
+          style="--input-height: var(--input-height-xs); --input-fz: var(--mantine-font-size-xs); --input-left-section-width: calc(1.875rem * var(--mantine-scale)); --input-right-section-width: calc(1.875rem * var(--mantine-scale));"
+        >
+          <div
+            class="m_82577fc2 mantine-Input-section mantine-TextInput-section"
+            data-position="left"
+          >
+            <svg
+              class="tabler-icon tabler-icon-search"
+              fill="none"
+              height="14"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="14"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"
+              />
+              <path
+                d="M21 21l-6 -6"
+              />
+            </svg>
+          </div>
+          <input
+            aria-label="search files"
+            class="m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"
+            data-variant="default"
+            id="mantine-_r_h_"
+            placeholder="Search files..."
+            value=""
+          />
+        </div>
       </div>
     </div>
     <ul
       aria-multiselectable="false"
-      class="custom-scrollbar MuiSimpleTreeView-root css-5c3a1o-MuiSimpleTreeView-root"
-      defaultcollapseicon="[object Object]"
-      defaultexpandicon="[object Object]"
-      id="_r_3_"
+      class="custom-scrollbar m_f698e191 mantine-Tree-root"
+      data-tree-root="true"
+      data-with-lines="true"
       role="tree"
-      style="--TreeView-itemChildrenIndentation: 12px;"
+      style="--level-offset: var(--mantine-spacing-md); flex-grow: 1; max-width: 400px; overflow-y: auto; height: calc(100vh - 148px); padding-left: var(--mantine-spacing-sm); padding-right: var(--mantine-spacing-sm); padding-bottom: var(--mantine-spacing-sm);"
     >
       <li
         aria-selected="false"
-        class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
-        id="_r_3_-file3.js"
+        class="m_f6970eb1 mantine-Tree-node"
+        data-level="1"
+        data-value="file3.js"
         role="treeitem"
-        style="--TreeView-itemDepth: 0;"
+        style="--label-offset: calc(var(--level-offset) * 0);"
         tabindex="0"
       >
         <div
-          class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
+          class="m_dc283425 mantine-Tree-label m_4081bf90 mantine-Group-root"
+          data-value="file3.js"
+          style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: 1px; padding-inline-end: 4px; border-radius: var(--mantine-radius-sm);"
         >
-          <div
-            class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
-          />
-          <div
-            class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
+          <svg
+            class="tabler-icon tabler-icon-file-text"
+            fill="none"
+            height="16"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            style="flex-shrink: 0;"
+            viewBox="0 0 24 24"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <div
-              class="MuiBox-root css-70qvj9"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-eep7r1-MuiSvgIcon-root"
-                data-testid="ArticleOutlinedIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
-                />
-                <path
-                  d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
-                />
-              </svg>
-              <p
-                class="MuiTypography-root MuiTypography-body2 css-1q85b70-MuiTypography-root"
-              >
-                file3.js
-              </p>
-            </div>
-          </div>
+            <path
+              d="M14 3v4a1 1 0 0 0 1 1h4"
+            />
+            <path
+              d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"
+            />
+            <path
+              d="M9 9l1 0"
+            />
+            <path
+              d="M9 13l6 0"
+            />
+            <path
+              d="M9 17l6 0"
+            />
+          </svg>
+          <p
+            class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+            data-size="sm"
+            data-truncate="end"
+            style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); flex: 1 1 0%;"
+          >
+            file3.js
+          </p>
         </div>
       </li>
       <li
         aria-expanded="false"
         aria-selected="false"
-        class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
-        id="_r_3_-folder1"
+        class="m_f6970eb1 mantine-Tree-node"
+        data-level="1"
+        data-value="folder1"
         role="treeitem"
-        style="--TreeView-itemDepth: 0;"
+        style="--label-offset: calc(var(--level-offset) * 0);"
         tabindex="-1"
       >
         <div
-          class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
+          class="m_dc283425 mantine-Tree-label m_4081bf90 mantine-Group-root"
+          data-value="folder1"
+          style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: 1px; padding-inline-end: 4px; border-radius: var(--mantine-radius-sm);"
         >
-          <div
-            class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
+          <svg
+            class="tabler-icon tabler-icon-folder"
+            fill="none"
+            height="16"
+            stroke="var(--mantine-primary-color-filled)"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            style="flex-shrink: 0;"
+            viewBox="0 0 24 24"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="TreeViewExpandIconIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
-              />
-            </svg>
-          </div>
-          <div
-            class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
+            <path
+              d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"
+            />
+          </svg>
+          <p
+            class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+            data-size="sm"
+            data-truncate="end"
+            style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); flex: 1 1 0%;"
           >
-            <div
-              class="MuiBox-root css-70qvj9"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-muidwl-MuiSvgIcon-root"
-                data-testid="FolderOutlinedIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="m9.17 6 2 2H20v10H4V6zM10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8z"
-                />
-              </svg>
-              <p
-                class="MuiTypography-root MuiTypography-body2 css-1jo9ady-MuiTypography-root"
-              >
-                folder1
-              </p>
-            </div>
-          </div>
+            folder1
+          </p>
         </div>
       </li>
     </ul>

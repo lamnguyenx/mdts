@@ -1,9 +1,11 @@
+import { ActionIcon, Box, Group, Text, Tooltip } from '@mantine/core';
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconChevronsDown,
+  IconChevronsUp,
+} from '@tabler/icons-react';
 import React from 'react';
-import { Box, IconButton, Typography } from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
-import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 
 interface FileTreeHeaderProps {
   isOpen: boolean;
@@ -15,31 +17,43 @@ interface FileTreeHeaderProps {
 const FileTreeHeader: React.FC<FileTreeHeaderProps> = ({ isOpen, onToggle, onExpandAllClick, onCollapseAll }) => {
   return (
     <Box
-      sx={{
+      style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: '34px',
-        marginBottom: 2,
-        px: isOpen ? 2 : 0.5
+        height: 30,
+        marginBottom: 'var(--mantine-spacing-xs)',
+        paddingLeft: isOpen ? 'var(--mantine-spacing-sm)' : 4,
+        paddingRight: isOpen ? 'var(--mantine-spacing-sm)' : 4,
       }}
     >
       {isOpen && (
-        <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-          <Typography variant="h6" gutterBottom sx={{ flex: 1, marginLeft: 1, marginBottom: 0 }}>
+        <Group gap={4} style={{ flex: 1 }} wrap="nowrap">
+          <Text fw={600} style={{ flex: 1, marginLeft: 'var(--mantine-spacing-xs)' }}>
             File Tree
-          </Typography>
-          <IconButton onClick={onExpandAllClick} size="small" aria-label="expand all">
-            <UnfoldMoreIcon />
-          </IconButton>
-          <IconButton onClick={onCollapseAll} size="small" aria-label="collapse all">
-            <UnfoldLessIcon />
-          </IconButton>
-        </Box>
+          </Text>
+          <Tooltip label="Expand all">
+            <ActionIcon onClick={onExpandAllClick} size="sm" variant="subtle" color="gray" aria-label="expand all">
+              <IconChevronsDown size={16} />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip label="Collapse all">
+            <ActionIcon onClick={onCollapseAll} size="sm" variant="subtle" color="gray" aria-label="collapse all">
+              <IconChevronsUp size={16} />
+            </ActionIcon>
+          </Tooltip>
+        </Group>
       )}
-      <IconButton onClick={onToggle} size="small" sx={{ marginBottom: 0, marginLeft: isOpen ? '0' : '12px' }} aria-label="toggle file tree">
-        {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-      </IconButton>
+      <ActionIcon
+        onClick={onToggle}
+        size="sm"
+        variant="subtle"
+        color="gray"
+        aria-label="toggle file tree"
+        style={{ marginLeft: isOpen ? 0 : 12 }}
+      >
+        {isOpen ? <IconChevronLeft size={16} /> : <IconChevronRight size={16} />}
+      </ActionIcon>
     </Box>
   );
 };

@@ -30,12 +30,12 @@ describe('FileTree', () => {
   const initialState = {
     fileTree: {
       fileTree: [
-        { path: 'file3.js', status: ' ' },
-        { 'folder1': [{ path: 'folder1/file1.md', status: ' ' }, { path: 'folder1/file2.txt', status: ' ' }] },
+        { path: 'file3.js' },
+        { 'folder1': [{ path: 'folder1/file1.md' }, { path: 'folder1/file2.txt' }] },
       ],
       filteredFileTree: [
-        { path: 'file3.js', status: ' ' },
-        { 'folder1': [{ path: 'folder1/file1.md', status: ' ' }, { path: 'folder1/file2.txt', status: ' ' }] },
+        { path: 'file3.js' },
+        { 'folder1': [{ path: 'folder1/file1.md' }, { path: 'folder1/file2.txt' }] },
       ],
       loading: false,
       error: null,
@@ -87,7 +87,7 @@ describe('FileTree', () => {
       fileTree: {
         ...initialState.fileTree,
         searchQuery: 'file',
-        filteredFileTree: [{ path: '/folder1/file1.md', status: ' ' }],
+        filteredFileTree: [{ path: '/folder1/file1.md' }],
       },
     });
     jest.spyOn(store, 'dispatch');
@@ -131,7 +131,7 @@ describe('FileTree', () => {
   });
 
   test('updates expandedNodes when search query changes and filteredFileTree is not empty', async () => {
-    const updatedFileTree = [{ 'folder1': [{ path: 'folder1/file1.md', status: ' ' }] }];
+    const updatedFileTree = [{ 'folder1': [{ path: 'folder1/file1.md' }] }];
     let currentStore = mockStore(initialState);
     const { rerender } = render(
       <Provider store={currentStore}>
@@ -170,7 +170,7 @@ describe('FileTree', () => {
       fileTree: {
         ...initialState.fileTree,
         searchQuery: '',
-        filteredFileTree: [{ 'folder1': [{ path: 'file1.md', status: ' ' }] }],
+        filteredFileTree: [{ 'folder1': [{ path: 'file1.md' }] }],
       },
     };
     store = mockStore(updatedState);

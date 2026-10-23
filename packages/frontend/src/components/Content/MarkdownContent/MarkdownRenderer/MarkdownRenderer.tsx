@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box } from '@mantine/core';
 import React, { useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
@@ -28,7 +28,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFi
   );
 
   return (
-    <Box className={'markdown-body'} sx={{ py: 2, px: 0 }}>
+    <Box className={'markdown-body'} py="xs" px={0}>
       <ReactMarkdown
         remarkPlugins={remarkPlugins}
         rehypePlugins={[rehypeRaw, rehypeSlug, rehypeKatex, rehypeGithubAlerts]}
@@ -38,8 +38,8 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFi
           img: (props) => (
             <MarkdownImage {...props} selectedFilePath={selectedFilePath} />
           ),
-          code: ({ inline, className, children, ...props }) => (
-            <MarkdownCode inline={inline} className={className} {...props}>
+          code: ({ className, children }) => (
+            <MarkdownCode inline={!className} className={className}>
               {children}
             </MarkdownCode>
           ),

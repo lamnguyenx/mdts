@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Flex } from '@mantine/core';
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ import Outline from './components/RightPane/Outline';
 import useIsMobile from './hooks/useIsMobile';
 import { useFolder } from './hooks/useFolder';
 import { toggleFileTree, toggleOutline, } from './store/slices/appSettingSlice';
-import { RootState } from './store/store';
+import type { RootState } from './store/store';
 
 interface LayoutProps {
   onSettingsClick: () => void;
@@ -83,7 +83,7 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick, onFuzzySearchClick }) 
   const outlineIsOpen = isMobile ? mobileOutlineOpen : outlineOpen;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+    <Flex direction="column" h="100vh">
       <AppHeader
         handleFileSelect={handleFileSelect}
         onSettingsClick={onSettingsClick}
@@ -95,7 +95,7 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick, onFuzzySearchClick }) 
       />
       <Box
         component="main"
-        sx={{ flexGrow: 1, display: 'flex', overflowY: 'hidden', height: '100%' }}
+        style={{ flexGrow: 1, display: 'flex', overflowY: 'hidden', height: '100%' }}
       >
         <FileTree
           onFileSelect={handleFileSelect}
@@ -115,7 +115,7 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick, onFuzzySearchClick }) 
           onToggle={handleToggleOutline}
         />
       </Box>
-    </Box>
+    </Flex>
   );
 };
 

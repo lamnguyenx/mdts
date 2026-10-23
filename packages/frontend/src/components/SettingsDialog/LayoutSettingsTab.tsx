@@ -1,12 +1,4 @@
-import {
-  Box,
-  FormControlLabel,
-  Switch,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, SegmentedControl, Switch, Text } from '@mantine/core';
 import React, { useCallback } from 'react';
 
 interface LayoutSettingsTabProps {
@@ -22,77 +14,40 @@ const LayoutSettingsTab: React.FC<LayoutSettingsTabProps> = ({
   handleToggleContentMode,
   setEnableBreaks,
 }) => {
-  const theme = useTheme();
-
-  const handleChange = useCallback((_, newMode) => {
-    if (newMode)
-      handleToggleContentMode(newMode);
-  } , [handleToggleContentMode]);
+  const handleChange = useCallback((value: string) => {
+    handleToggleContentMode(value as 'full' | 'compact');
+  }, [handleToggleContentMode]);
 
   const handleEnableBreaksChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setEnableBreaks(event.target.checked);
   }, [setEnableBreaks]);
 
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="subtitle2" sx={{ mb: 2 }}>Content Width</Typography>
-      <ToggleButtonGroup
+    <Box p="xs">
+      <Text size="sm" fw={600} mb="sm">Content Width</Text>
+      <SegmentedControl
         value={contentMode}
-        exclusive
         onChange={handleChange}
         aria-label="content width"
         fullWidth
-        size="small"
-        sx={{ mb: 3 }}
-      >
-        <ToggleButton
-          value="full"
-          aria-label="full"
-          sx={{
-            flexGrow: 1,
-            '&.Mui-selected': {
-              backgroundColor: theme.palette.primary.main,
-              color: theme.palette.primary.contrastText,
-              '&:hover': {
-                backgroundColor: theme.palette.primary.dark,
-              },
-            },
-          }}
-        >
-          Full
-        </ToggleButton>
-        <ToggleButton
-          value="compact"
-          aria-label="compact"
-          sx={{
-            flexGrow: 1,
-            '&.Mui-selected': {
-              backgroundColor: theme.palette.primary.main,
-              color: theme.palette.primary.contrastText,
-              '&:hover': {
-                backgroundColor: theme.palette.primary.dark,
-              },
-            },
-          }}
-        >
-          Compact
-        </ToggleButton>
-      </ToggleButtonGroup>
+        size="sm"
+        mb="md"
+        data={[
+          { value: 'full', label: 'Full' },
+          { value: 'compact', label: 'Compact' },
+        ]}
+      />
 
-      <Typography variant="subtitle2" sx={{ mb: 1 }}>Markdown</Typography>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={enableBreaks}
-            onChange={handleEnableBreaksChange}
-            size="small"
-          />
-        }
+      <Text size="sm" fw={600} mb="xs">Markdown</Text>
+      <Switch
+        checked={enableBreaks}
+        onChange={handleEnableBreaksChange}
+        size="sm"
         label="Enable soft line breaks"
       />
-      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+      <Text size="xs" c="dimmed" mt={4}>
         Convert single line breaks to {'<br>'} elements
-      </Typography>
+      </Text>
     </Box>
   );
 };

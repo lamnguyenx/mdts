@@ -93,8 +93,7 @@ Returns the complete file tree structure of the mounted directory.
 ```json
 {
   "fileTree": [...],
-  "mountedDirectoryPath": "/path/to/directory",
-  "isGitRepository": true
+  "mountedDirectoryPath": "/path/to/directory"
 }
 ```
 

@@ -25,8 +25,8 @@ describe('useSettingsForm', () => {
 
     act(() => {
       result.current.handleToggleTheme('aurora');
-      result.current.handleFontInputModeChange({} as React.MouseEvent<HTMLElement>, 'select');
-      result.current.handleFontInputModeMonospaceChange({} as React.MouseEvent<HTMLElement>, 'select');
+      result.current.handleFontInputModeChange('select');
+      result.current.handleFontInputModeMonospaceChange('select');
     });
 
     expect(result.current.themeType).toBe('aurora');

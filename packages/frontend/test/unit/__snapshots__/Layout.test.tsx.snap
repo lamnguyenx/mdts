@@ -3,7 +3,8 @@
 exports[`Layout renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-s92abg"
+    class="m_8bffd616 mantine-Flex-root __m__-_r_0_"
+    style="flex-direction: column; height: 100vh;"
   >
     <div>
       <button>
@@ -24,7 +25,8 @@ exports[`Layout renders correctly 1`] = `
       </button>
     </div>
     <main
-      class="MuiBox-root css-1b2sp54"
+      class=""
+      style="flex-grow: 1; display: flex; overflow-y: hidden; height: 100%;"
     >
       <div>
         <div

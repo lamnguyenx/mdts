@@ -71,7 +71,7 @@ describe('OutlineContent', () => {
         onItemClick={jest.fn()}
       />
     );
-    const subheadingItem = screen.getByText('Subheading 1').closest('li');
-    expect(subheadingItem).toHaveStyle('padding-left: 32px'); // level 2 * 16px (default ListItem padding) = 32px
+    const subheadingItem = screen.getByText('Subheading 1').closest('button');
+    expect(subheadingItem).toHaveStyle('padding: 2px var(--mantine-spacing-sm) 2px 32px');
   });
 });

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { WEB_SAFE_FONTS, WEB_SAFE_MONOSPACE_FONTS } from '../constants';
 import { saveAppSetting } from '../store/slices/appSettingSlice';
 import { saveConfigToBackend } from '../store/slices/configSlice';
-import { AppDispatch, RootState } from '../store/store';
+import type { AppDispatch, RootState } from '../store/store';
 
 interface UseSettingsFormReturn {
   darkMode: 'dark' | 'light' | 'auto';
@@ -31,8 +31,8 @@ interface UseSettingsFormReturn {
   handleToggleDarkMode: (mode: 'dark' | 'light' | 'auto') => void;
   handleToggleTheme: (theme: string) => void;
   handleToggleContentMode: (mode: 'full' | 'compact') => void;
-  handleFontInputModeChange: (_: React.MouseEvent<HTMLElement>, newMode: 'select' | 'text' | null) => void;
-  handleFontInputModeMonospaceChange: (_: React.MouseEvent<HTMLElement>, newMode: 'select' | 'text' | null) => void;
+  handleFontInputModeChange: (mode: 'select' | 'text') => void;
+  handleFontInputModeMonospaceChange: (mode: 'select' | 'text') => void;
   handleReset: () => void;
 }
 
@@ -131,21 +131,17 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     setContentMode(mode);
   }, []);
 
-  const handleFontInputModeChange = useCallback((_: React.MouseEvent<HTMLElement>, newMode: 'select' | 'text' | null) => {
-    if (newMode) {
-      setFontInputMode(newMode);
-      if (newMode === 'select' && !WEB_SAFE_FONTS.includes(fontFamily)) {
-        setFontFamily(WEB_SAFE_FONTS[0]); // Reset to first web-safe font if current is not in list
-      }
+  const handleFontInputModeChange = useCallback((newMode: 'select' | 'text') => {
+    setFontInputMode(newMode);
+    if (newMode === 'select' && !WEB_SAFE_FONTS.includes(fontFamily)) {
+      setFontFamily(WEB_SAFE_FONTS[0]); // Reset to first web-safe font if current is not in list
     }
   }, [fontFamily]);
 
-  const handleFontInputModeMonospaceChange = useCallback((_: React.MouseEvent<HTMLElement>, newMode: 'select' | 'text' | null) => {
-    if (newMode) {
-      setFontInputModeMonospace(newMode);
-      if (newMode === 'select' && !WEB_SAFE_MONOSPACE_FONTS.includes(fontFamilyMonospace)) {
-        setFontFamilyMonospace(WEB_SAFE_MONOSPACE_FONTS[0]); // Reset to first web-safe monospace font if current is not in list
-      }
+  const handleFontInputModeMonospaceChange = useCallback((newMode: 'select' | 'text') => {
+    setFontInputModeMonospace(newMode);
+    if (newMode === 'select' && !WEB_SAFE_MONOSPACE_FONTS.includes(fontFamilyMonospace)) {
+      setFontFamilyMonospace(WEB_SAFE_MONOSPACE_FONTS[0]); // Reset to first web-safe monospace font if current is not in list
     }
   }, [fontFamilyMonospace]);
 

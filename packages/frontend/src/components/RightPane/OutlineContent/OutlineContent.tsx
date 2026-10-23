@@ -2,7 +2,7 @@ import React from 'react';
 import ErrorView from '../../ErrorView';
 import { LoadingIndicator } from './LoadingIndicator';
 import { OutlineList } from './OutlineList';
-import { OutlineItem } from './types';
+import type { OutlineItem } from './types';
 
 interface OutlineContentProps {
   outline: OutlineItem[];

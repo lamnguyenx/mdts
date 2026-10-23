@@ -30,12 +30,8 @@ describe('MarkdownContentTabs', () => {
   const renderWithStore = (
     viewMode: ViewMode,
     hasFrontmatter: boolean,
-    { isGitRepository = true, diff = '' }: { isGitRepository?: boolean; diff?: string } = {},
   ) => {
-    const store = mockStore({
-      fileTree: { isGitRepository },
-      diff: { diff },
-    });
+    const store = mockStore({});
     return render(
       <Provider store={store}>
         <BrowserRouter>
@@ -58,27 +54,6 @@ describe('MarkdownContentTabs', () => {
     expect(screen.getByRole('tab', { name: /preview/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /frontmatter/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /raw/i })).toBeInTheDocument();
-  });
-
-  test('renders diff tab when isGitRepository is true and diff exists', () => {
-    renderWithStore('preview', false, { isGitRepository: true, diff: '+added line' });
-    expect(screen.getByRole('tab', { name: /diff/i })).toBeInTheDocument();
-  });
-
-  test('does not render diff tab when diff is empty', () => {
-    renderWithStore('preview', false, { isGitRepository: true, diff: '' });
-    expect(screen.queryByRole('tab', { name: /^diff$/i })).not.toBeInTheDocument();
-  });
-
-  test('renders last commit tab when isGitRepository is true', () => {
-    renderWithStore('preview', false, { isGitRepository: true });
-    expect(screen.getByRole('tab', { name: /last commit/i })).toBeInTheDocument();
-  });
-
-  test('does not render diff tabs when isGitRepository is false', () => {
-    renderWithStore('preview', false, { isGitRepository: false });
-    expect(screen.queryByRole('tab', { name: /diff/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('tab', { name: /last commit/i })).not.toBeInTheDocument();
   });
 
   test('sets search param to "frontmatter" when frontmatter tab is clicked', () => {

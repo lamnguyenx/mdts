@@ -90,7 +90,7 @@ provides folder browsing and recents. A scoped middleware stores the result in
 
 ### Folder-scoped APIs
 
-`/api/filetree`, `/api/outline`, `/api/markdown`, `/api/diff`, and `/api/diff-prev`
+`/api/filetree`, `/api/outline`, and `/api/markdown`
 resolve the folder from `?folder=`. `/api/config` and the welcome markdown are global.
 
 ### Recent folder storage
@@ -128,6 +128,12 @@ Isolation invariants:
 - each client has its own content watcher
 - `reload-content` is sent only to the client that selected the file
 - the folder watcher closes when its last client disconnects
+
+One deliberate exception: `reload-page` is broadcast to **all** connected
+clients regardless of folder. The server emits it when the frontend bundle
+(`dist/frontend/bundle.js`) changes — i.e. during development, when webpack
+rebuilds — and clients respond with a full `window.location.reload()`. Content
+and tree events never use it.
 
 ## Frontend Modes
 

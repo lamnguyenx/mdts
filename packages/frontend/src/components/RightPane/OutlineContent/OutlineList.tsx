@@ -1,7 +1,7 @@
-import { List } from '@mui/material';
+import { ScrollArea, Stack } from '@mantine/core';
 import React from 'react';
 import { OutlineListItem } from './OutlineListItem';
-import { OutlineItem } from './types';
+import type { OutlineItem } from './types';
 
 interface OutlineListProps {
   outline: OutlineItem[];
@@ -9,9 +9,16 @@ interface OutlineListProps {
 }
 
 export const OutlineList: React.FC<OutlineListProps> = ({ outline, onItemClick }) => (
-  <List dense className="custom-scrollbar" sx={{ overflowY: 'auto', height: 'calc(100vh - 132px)', px: 2 }}>
-    {outline.map((item) => (
-      <OutlineListItem key={item.id} item={item} onItemClick={onItemClick} />
-    ))}
-  </List>
+  <ScrollArea
+    type="auto"
+    className="custom-scrollbar"
+    style={{ height: 'calc(100vh - 108px)' }}
+    px="sm"
+  >
+    <Stack gap={0}>
+      {outline.map((item) => (
+        <OutlineListItem key={item.id} item={item} onItemClick={onItemClick} />
+      ))}
+    </Stack>
+  </ScrollArea>
 );

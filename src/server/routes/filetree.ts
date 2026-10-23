@@ -1,13 +1,12 @@
 import { Router } from 'express';
 import fs, { Dirent } from 'fs';
 import path from 'path';
-import { simpleGit, SimpleGit, StatusResult, FileStatusResult } from 'simple-git';
 import { EXCLUDED_DIRECTORIES } from '../../constants';
 import { ServerContext } from '../context';
 import { logger } from '../../utils/logger';
 import { isUnreadableDirectoryError } from '../../utils/errors';
 
-type FileTreeItem = { path: string, status: string, isDirectory?: boolean } | { [key: string]: FileTree };
+type FileTreeItem = { path: string } | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
 
 const toPosixPath = (p: string): string => p.split(path.sep).join('/');
@@ -23,14 +22,11 @@ export const fileTreeRouter = (fallbackContext?: ServerContext): Router => {
     }
 
     const { directory } = context;
-    const git: SimpleGit = simpleGit({ baseDir: directory });
-    const isRepo = await git.checkIsRepo();
-    const gitStatus = isRepo ? await git.status() : null;
     const filePatterns = context.filePatterns;
     const fileTree = filePatterns
-      ? buildFileTreeFromPatterns(filePatterns, gitStatus)
-      : await getFileTree(directory, '', gitStatus);
-    res.json({ fileTree, mountedDirectoryPath: directory, isGitRepository: isRepo });
+      ? buildFileTreeFromPatterns(filePatterns)
+      : await getFileTree(directory, '');
+    res.json({ fileTree, mountedDirectoryPath: directory });
   });
 
   return router;
@@ -44,10 +40,7 @@ const shouldIncludeEntry = (entry: Dirent): boolean => {
   return !isDotFileOrDirectory(entry.name) && !EXCLUDED_DIRECTORIES.includes(entry.name);
 };
 
-const buildFileTreeFromPatterns = (
-  filePatterns: string[],
-  gitStatus: StatusResult | null,
-): FileTree => {
+const buildFileTreeFromPatterns = (filePatterns: string[]): FileTree => {
   const root: FileTree = [];
   const dirMap = new Map<string, FileTree>();
   dirMap.set('', root);
@@ -79,25 +72,15 @@ const buildFileTreeFromPatterns = (
   sorted.forEach(filePath => {
     const dirPath = path.dirname(filePath);
     const targetTree = dirPath === '.' ? root : getOrCreateDir(dirPath);
-    const posixPath = toPosixPath(filePath);
-    const status = getGitStatus(posixPath, gitStatus);
-    targetTree.push({ path: posixPath, status });
+    targetTree.push({ path: toPosixPath(filePath) });
   });
 
   return root;
 };
 
-const getGitStatus = (filePath: string, gitStatus: StatusResult | null): string => {
-  if (!gitStatus) return ' ';
-  const fileStatus = gitStatus.files.find((f: FileStatusResult) => f.path === filePath);
-  if (!fileStatus) return ' ';
-  return fileStatus.index !== ' ' ? fileStatus.index : fileStatus.working_dir;
-};
-
 const getFileTree = async (
   baseDirectory: string,
-  currentRelativePath: string,
-  gitStatus: StatusResult | null
+  currentRelativePath: string
 ): Promise<FileTree> => {
   const fullPath = path.join(baseDirectory, currentRelativePath);
   let entriesInDir: Dirent[];
@@ -117,16 +100,13 @@ const getFileTree = async (
   for (const entry of entries) {
     const entryPath = path.join(currentRelativePath, entry.name);
     if (entry.isDirectory()) {
-      const subTree = await getFileTree(baseDirectory, entryPath, gitStatus);
+      const subTree = await getFileTree(baseDirectory, entryPath);
       if (subTree.length > 0) {
         tree.push({ [entry.name]: subTree });
       }
     } else if (entry.name.endsWith('.md') || entry.name.endsWith('.markdown')) {
-      const posixPath = toPosixPath(entryPath);
-      const status = getGitStatus(posixPath, gitStatus);
-      tree.push({ path: posixPath, status });
+      tree.push({ path: toPosixPath(entryPath) });
     }
   }
   return tree;
 };
-

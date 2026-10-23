@@ -52,11 +52,10 @@ describe('filetree.ts', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         fileTree: [
-          { 'dir1': [{ path: 'dir1/subfile1.md', status: ' ' }] },
-          { path: 'file1.md', status: ' ' },
+          { 'dir1': [{ path: 'dir1/subfile1.md' }] },
+          { path: 'file1.md' },
         ],
         mountedDirectoryPath: mockDirectory,
-        isGitRepository: true,
       });
     });
 
@@ -71,7 +70,6 @@ describe('filetree.ts', () => {
       expect(response.body).toEqual({
         fileTree: [],
         mountedDirectoryPath: mockDirectory,
-        isGitRepository: true,
       });
     });
 
@@ -90,9 +88,8 @@ describe('filetree.ts', () => {
       const response = await request(app).get('/api/filetree');
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
-        fileTree: [{ path: 'file1.md', status: ' ' }],
+        fileTree: [{ path: 'file1.md' }],
         mountedDirectoryPath: mockDirectory,
-        isGitRepository: true,
       });
     });
   });
@@ -114,19 +111,18 @@ describe('filetree.ts', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         fileTree: [
-          { path: 'README.md', status: ' ' },
+          { path: 'README.md' },
           { apps: [
             { app1: [
-              { path: 'apps/app1/README.md', status: ' ' },
+              { path: 'apps/app1/README.md' },
             ]},
           ]},
           { docs: [
-            { path: 'docs/api.md', status: ' ' },
-            { path: 'docs/guide.md', status: ' ' },
+            { path: 'docs/api.md' },
+            { path: 'docs/guide.md' },
           ]},
         ],
         mountedDirectoryPath: mockDirectory,
-        isGitRepository: true,
       });
     });
 

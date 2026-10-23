@@ -3,400 +3,430 @@
 exports[`FontSettingsTab should render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-19midj6"
+    class=""
+    style="padding: var(--mantine-spacing-xs);"
   >
-    <h6
-      class="MuiTypography-root MuiTypography-subtitle2 MuiTypography-gutterBottom css-1685pvh-MuiTypography-root"
+    <p
+      class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+      data-size="sm"
+      style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); margin-bottom: var(--mantine-spacing-xs); font-weight: 600;"
     >
       Font Size
-    </h6>
-    <span
-      class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeSmall css-x7n0q8-MuiSlider-root"
-    >
-      <span
-        class="MuiSlider-rail css-vr7j9o-MuiSlider-rail"
-      />
-      <span
-        class="MuiSlider-track css-ijht1x-MuiSlider-track"
-        style="left: 0%; width: 0%;"
-      />
-      <span
-        class="MuiSlider-mark MuiSlider-markActive css-81wool-MuiSlider-mark"
-        data-index="0"
-        style="left: 0%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="1"
-        style="left: 7.142857142857143%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="2"
-        style="left: 14.285714285714286%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="3"
-        style="left: 21.428571428571427%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="4"
-        style="left: 28.571428571428573%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="5"
-        style="left: 35.714285714285715%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="6"
-        style="left: 42.857142857142854%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="7"
-        style="left: 50%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="8"
-        style="left: 57.142857142857146%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="9"
-        style="left: 64.28571428571429%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="10"
-        style="left: 71.42857142857143%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="11"
-        style="left: 78.57142857142857%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="12"
-        style="left: 85.71428571428571%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="13"
-        style="left: 92.85714285714286%;"
-      />
-      <span
-        class="MuiSlider-mark css-lq5hqx-MuiSlider-mark"
-        data-index="14"
-        style="left: 100%;"
-      />
-      <span
-        class="MuiSlider-thumb MuiSlider-thumb css-398ij6-MuiSlider-thumb"
-        data-index="0"
-        style="left: 0%;"
-      >
-        <input
-          aria-label="Font Size"
-          aria-labelledby="font-size-slider"
-          aria-orientation="horizontal"
-          aria-valuemax="24"
-          aria-valuemin="10"
-          aria-valuenow="10"
-          data-index="0"
-          max="24"
-          min="10"
-          step="1"
-          style="border: 0px; clip-path: inset(50%); height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-          type="range"
-          value="10"
-        />
-        <span
-          aria-hidden="true"
-          class="MuiSlider-valueLabel css-p0ndrw-MuiSlider-valueLabel"
-        >
-          <span
-            class="MuiSlider-valueLabelCircle"
-          >
-            <span
-              class="MuiSlider-valueLabelLabel"
-            >
-              10
-            </span>
-          </span>
-        </span>
-      </span>
-    </span>
-    <h6
-      class="MuiTypography-root MuiTypography-subtitle2 MuiTypography-gutterBottom css-s0b3wc-MuiTypography-root"
-      id="font-family-label"
-    >
-      Font Family
-    </h6>
+    </p>
     <div
-      aria-labelledby="font-family-label"
-      class="MuiFormGroup-root MuiFormGroup-row MuiRadioGroup-root MuiRadioGroup-row css-1ew1ryv-MuiFormGroup-root"
-      role="radiogroup"
-    >
-      <label
-        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
-      >
-        <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1tpgjhd-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
-        >
-          <input
-            class="PrivateSwitchBase-input css-gjsmck-MuiSwitchBase-root"
-            name="font-input-mode-group"
-            type="radio"
-            value="select"
-          />
-          <span
-            class="css-9oxshb-MuiRadioButtonIcon-root"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-10fh2vq-MuiSvgIcon-root-MuiRadioButtonIcon-root"
-              data-testid="RadioButtonUncheckedIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-              />
-            </svg>
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-4reyio-MuiSvgIcon-root-MuiRadioButtonIcon-root"
-              data-testid="RadioButtonCheckedIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
-              />
-            </svg>
-          </span>
-        </span>
-        <span
-          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-1px98du-MuiTypography-root"
-        >
-          Select from list
-        </span>
-      </label>
-      <label
-        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
-      >
-        <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1tpgjhd-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
-        >
-          <input
-            class="PrivateSwitchBase-input css-gjsmck-MuiSwitchBase-root"
-            name="font-input-mode-group"
-            type="radio"
-            value="text"
-          />
-          <span
-            class="css-9oxshb-MuiRadioButtonIcon-root"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-10fh2vq-MuiSvgIcon-root-MuiRadioButtonIcon-root"
-              data-testid="RadioButtonUncheckedIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-              />
-            </svg>
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-4reyio-MuiSvgIcon-root-MuiRadioButtonIcon-root"
-              data-testid="RadioButtonCheckedIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
-              />
-            </svg>
-          </span>
-        </span>
-        <span
-          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-1px98du-MuiTypography-root"
-        >
-          Enter manually
-        </span>
-      </label>
-    </div>
-    <div
-      aria-labelledby="font-family-label"
-      class="MuiFormControl-root MuiFormControl-marginDense MuiFormControl-fullWidth MuiTextField-root css-2lrxdj-MuiFormControl-root-MuiTextField-root"
-      data-testid="font-family-input"
+      class="m_dd36362e mantine-Slider-root"
+      data-size="sm"
+      style="--slider-size: var(--slider-size-sm); --slider-radius: var(--mantine-radius-xl); --slider-thumb-size: calc(var(--slider-size) * 2); margin-bottom: var(--mantine-spacing-md);"
+      tabindex="-1"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth Mui-focused MuiInputBase-formControl MuiInputBase-sizeSmall css-1iqcefa-MuiInputBase-root-MuiOutlinedInput-root"
+        class="m_a8645c2 mantine-Slider-trackContainer"
+      >
+        <div
+          class="m_c9ade57f mantine-Slider-track"
+        >
+          <div
+            class="m_38aeed47 mantine-Slider-bar"
+            style="--slider-bar-width: calc(28.57142857142857% + 2 * var(--slider-size)); --slider-bar-offset: calc(0% - var(--slider-size));"
+          />
+          <div
+            aria-label="Font Size"
+            aria-orientation="horizontal"
+            aria-valuemax="24"
+            aria-valuemin="10"
+            aria-valuenow="14"
+            class="mantine-focus-auto m_c9a9a60a mantine-Slider-thumb"
+            role="slider"
+            style="--slider-thumb-offset: 28.57142857142857%;"
+            tabindex="0"
+          />
+          <div>
+            <div
+              class="m_b7b0423a mantine-Slider-markWrapper"
+              style="--mark-offset: 0%;"
+            >
+              <div
+                class="m_dd33bc19 mantine-Slider-mark"
+                data-filled="true"
+              />
+            </div>
+            <div
+              class="m_b7b0423a mantine-Slider-markWrapper"
+              style="--mark-offset: 28.57142857142857%;"
+            >
+              <div
+                class="m_dd33bc19 mantine-Slider-mark"
+                data-filled="true"
+              />
+            </div>
+            <div
+              class="m_b7b0423a mantine-Slider-markWrapper"
+              style="--mark-offset: 57.14285714285714%;"
+            >
+              <div
+                class="m_dd33bc19 mantine-Slider-mark"
+              />
+            </div>
+            <div
+              class="m_b7b0423a mantine-Slider-markWrapper"
+              style="--mark-offset: 100%;"
+            >
+              <div
+                class="m_dd33bc19 mantine-Slider-mark"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <input
+        type="hidden"
+        value="14"
+      />
+    </div>
+    <div
+      class="m_46b77525 mantine-InputWrapper-root mantine-RadioGroup-root"
+      style="margin-bottom: var(--mantine-spacing-xs);"
+    >
+      <div
+        class="m_8fdc1311 mantine-InputWrapper-label mantine-RadioGroup-label"
+        id="mantine-_r_g_-label"
+      >
+        Font Family
+      </div>
+      <div
+        aria-labelledby="mantine-_r_g_-label"
+        role="radiogroup"
+      >
+        <div
+          class="m_4081bf90 mantine-Group-root"
+          style="--group-gap: var(--mantine-spacing-lg); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"
+        >
+          <div
+            class="m_f3f1af94 mantine-Radio-root m_5f75b09e mantine-Radio-root"
+            data-checked="true"
+            data-label-position="right"
+            data-size="xs"
+            style="--radio-size: var(--radio-size-xs); --radio-color: var(--mantine-color-blue-filled); --radio-icon-size: var(--radio-icon-size-xs); --label-fz: var(--mantine-font-size-xs); --label-lh: var(--label-lh-xs);"
+          >
+            <div
+              class="m_5f6e695e mantine-Radio-body"
+            >
+              <div
+                class="m_89c4f5e4 mantine-Radio-inner"
+                data-label-position="right"
+              >
+                <input
+                  checked=""
+                  class="mantine-focus-auto m_8a3dbb89 mantine-Radio-radio"
+                  data-with-error-styles="true"
+                  id="mantine-_r_k_"
+                  name="mantine-_r_f_"
+                  type="radio"
+                  value="select"
+                />
+                <svg
+                  aria-hidden="true"
+                  class="m_f3ed6b2b mantine-Radio-icon"
+                  fill="none"
+                  viewBox="0 0 5 5"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="2.5"
+                    cy="2.5"
+                    fill="currentColor"
+                    r="2.5"
+                  />
+                </svg>
+              </div>
+              <div
+                class="m_d3ea56bb mantine-Radio-labelWrapper"
+              >
+                <label
+                  class="m_8ee546b8 mantine-Radio-label"
+                  for="mantine-_r_k_"
+                >
+                  Select from list
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="m_f3f1af94 mantine-Radio-root m_5f75b09e mantine-Radio-root"
+            data-label-position="right"
+            data-size="xs"
+            style="--radio-size: var(--radio-size-xs); --radio-color: var(--mantine-color-blue-filled); --radio-icon-size: var(--radio-icon-size-xs); --label-fz: var(--mantine-font-size-xs); --label-lh: var(--label-lh-xs);"
+          >
+            <div
+              class="m_5f6e695e mantine-Radio-body"
+            >
+              <div
+                class="m_89c4f5e4 mantine-Radio-inner"
+                data-label-position="right"
+              >
+                <input
+                  class="mantine-focus-auto m_8a3dbb89 mantine-Radio-radio"
+                  data-with-error-styles="true"
+                  id="mantine-_r_q_"
+                  name="mantine-_r_f_"
+                  type="radio"
+                  value="text"
+                />
+                <svg
+                  aria-hidden="true"
+                  class="m_f3ed6b2b mantine-Radio-icon"
+                  fill="none"
+                  viewBox="0 0 5 5"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="2.5"
+                    cy="2.5"
+                    fill="currentColor"
+                    r="2.5"
+                  />
+                </svg>
+              </div>
+              <div
+                class="m_d3ea56bb mantine-Radio-labelWrapper"
+              >
+                <label
+                  class="m_8ee546b8 mantine-Radio-label"
+                  for="mantine-_r_q_"
+                >
+                  Enter manually
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="m_46b77525 mantine-InputWrapper-root mantine-Select-root"
+      data-size="sm"
+      style="margin-bottom: var(--mantine-spacing-xs);"
+    >
+      <div
+        class="m_6c018570 mantine-Input-wrapper mantine-Select-wrapper"
+        data-pointer="true"
+        data-size="sm"
+        data-variant="default"
+        data-with-right-section="true"
+        style="--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); --input-right-section-pointer-events: none;"
       >
         <input
-          aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="Font Family"
+          autocomplete="off"
+          class="m_8fb7ebe7 mantine-Input-input mantine-Select-input"
+          data-testid="font-family-select"
+          data-variant="default"
           id="fontFamily"
-          type="text"
+          readonly=""
+          role="combobox"
+          value="Roboto"
         />
-        <fieldset
-          aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+        <div
+          class="m_82577fc2 mantine-Input-section mantine-Select-section"
+          data-position="right"
         >
-          <legend
-            class="css-1nf2c5d-MuiNotchedOutlined-root"
+          <svg
+            class="m_2943220b mantine-ComboboxChevron-chevron"
+            data-combobox-chevron="true"
+            data-size="sm"
+            fill="none"
+            style="--combobox-chevron-size: var(--combobox-chevron-size-sm);"
+            viewBox="0 0 15 15"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <span
-              aria-hidden="true"
-              class="notranslate"
-            >
-              ​
-            </span>
-          </legend>
-        </fieldset>
+            <path
+              clip-rule="evenodd"
+              d="M4.93179 5.43179C4.75605 5.60753 4.75605 5.89245 4.93179 6.06819C5.10753 6.24392 5.39245 6.24392 5.56819 6.06819L7.49999 4.13638L9.43179 6.06819C9.60753 6.24392 9.89245 6.24392 10.0682 6.06819C10.2439 5.89245 10.2439 5.60753 10.0682 5.43179L7.81819 3.18179C7.73379 3.0974 7.61933 3.04999 7.49999 3.04999C7.38064 3.04999 7.26618 3.0974 7.18179 3.18179L4.93179 5.43179ZM10.0682 9.56819C10.2439 9.39245 10.2439 9.10753 10.0682 8.93179C9.89245 8.75606 9.60753 8.75606 9.43179 8.93179L7.49999 10.8636L5.56819 8.93179C5.39245 8.75606 5.10753 8.75606 4.93179 8.93179C4.75605 9.10753 4.75605 9.39245 4.93179 9.56819L7.18179 11.8182C7.35753 11.9939 7.64245 11.9939 7.81819 11.8182L10.0682 9.56819Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </div>
       </div>
     </div>
-    <h6
-      class="MuiTypography-root MuiTypography-subtitle2 MuiTypography-gutterBottom css-s0b3wc-MuiTypography-root"
-      id="monospace-font-family-label"
-    >
-      Monospace Font Family
-    </h6>
+    <input
+      type="hidden"
+      value="Roboto"
+    />
     <div
-      aria-labelledby="monospace-font-family-label"
-      class="MuiFormGroup-root MuiFormGroup-row MuiRadioGroup-root MuiRadioGroup-row css-1ew1ryv-MuiFormGroup-root"
-      role="radiogroup"
-    >
-      <label
-        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
-      >
-        <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1tpgjhd-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
-        >
-          <input
-            class="PrivateSwitchBase-input css-gjsmck-MuiSwitchBase-root"
-            name="monospace-font-input-mode-group"
-            type="radio"
-            value="select"
-          />
-          <span
-            class="css-9oxshb-MuiRadioButtonIcon-root"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-10fh2vq-MuiSvgIcon-root-MuiRadioButtonIcon-root"
-              data-testid="RadioButtonUncheckedIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-              />
-            </svg>
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-4reyio-MuiSvgIcon-root-MuiRadioButtonIcon-root"
-              data-testid="RadioButtonCheckedIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
-              />
-            </svg>
-          </span>
-        </span>
-        <span
-          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-1px98du-MuiTypography-root"
-        >
-          Select from list
-        </span>
-      </label>
-      <label
-        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
-      >
-        <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1tpgjhd-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
-        >
-          <input
-            class="PrivateSwitchBase-input css-gjsmck-MuiSwitchBase-root"
-            name="monospace-font-input-mode-group"
-            type="radio"
-            value="text"
-          />
-          <span
-            class="css-9oxshb-MuiRadioButtonIcon-root"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-10fh2vq-MuiSvgIcon-root-MuiRadioButtonIcon-root"
-              data-testid="RadioButtonUncheckedIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-              />
-            </svg>
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-4reyio-MuiSvgIcon-root-MuiRadioButtonIcon-root"
-              data-testid="RadioButtonCheckedIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
-              />
-            </svg>
-          </span>
-        </span>
-        <span
-          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-1px98du-MuiTypography-root"
-        >
-          Enter manually
-        </span>
-      </label>
-    </div>
-    <div
-      aria-labelledby="monospace-font-family-label"
-      class="MuiFormControl-root MuiFormControl-marginDense MuiFormControl-fullWidth MuiTextField-root css-2lrxdj-MuiFormControl-root-MuiTextField-root"
-      data-testid="monospace-font-family-input"
+      class="m_46b77525 mantine-InputWrapper-root mantine-RadioGroup-root"
+      style="margin-bottom: var(--mantine-spacing-xs);"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1iqcefa-MuiInputBase-root-MuiOutlinedInput-root"
+        class="m_8fdc1311 mantine-InputWrapper-label mantine-RadioGroup-label"
+        id="mantine-_r_19_-label"
       >
-        <input
-          aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
-          id="fontFamilyMonospace"
-          type="text"
-        />
-        <fieldset
-          aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+        Monospace Font Family
+      </div>
+      <div
+        aria-labelledby="mantine-_r_19_-label"
+        role="radiogroup"
+      >
+        <div
+          class="m_4081bf90 mantine-Group-root"
+          style="--group-gap: var(--mantine-spacing-lg); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"
         >
-          <legend
-            class="css-1nf2c5d-MuiNotchedOutlined-root"
+          <div
+            class="m_f3f1af94 mantine-Radio-root m_5f75b09e mantine-Radio-root"
+            data-checked="true"
+            data-label-position="right"
+            data-size="xs"
+            style="--radio-size: var(--radio-size-xs); --radio-color: var(--mantine-color-blue-filled); --radio-icon-size: var(--radio-icon-size-xs); --label-fz: var(--mantine-font-size-xs); --label-lh: var(--label-lh-xs);"
           >
-            <span
-              aria-hidden="true"
-              class="notranslate"
+            <div
+              class="m_5f6e695e mantine-Radio-body"
             >
-              ​
-            </span>
-          </legend>
-        </fieldset>
+              <div
+                class="m_89c4f5e4 mantine-Radio-inner"
+                data-label-position="right"
+              >
+                <input
+                  checked=""
+                  class="mantine-focus-auto m_8a3dbb89 mantine-Radio-radio"
+                  data-with-error-styles="true"
+                  id="mantine-_r_1d_"
+                  name="mantine-_r_18_"
+                  type="radio"
+                  value="select"
+                />
+                <svg
+                  aria-hidden="true"
+                  class="m_f3ed6b2b mantine-Radio-icon"
+                  fill="none"
+                  viewBox="0 0 5 5"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="2.5"
+                    cy="2.5"
+                    fill="currentColor"
+                    r="2.5"
+                  />
+                </svg>
+              </div>
+              <div
+                class="m_d3ea56bb mantine-Radio-labelWrapper"
+              >
+                <label
+                  class="m_8ee546b8 mantine-Radio-label"
+                  for="mantine-_r_1d_"
+                >
+                  Select from list
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="m_f3f1af94 mantine-Radio-root m_5f75b09e mantine-Radio-root"
+            data-label-position="right"
+            data-size="xs"
+            style="--radio-size: var(--radio-size-xs); --radio-color: var(--mantine-color-blue-filled); --radio-icon-size: var(--radio-icon-size-xs); --label-fz: var(--mantine-font-size-xs); --label-lh: var(--label-lh-xs);"
+          >
+            <div
+              class="m_5f6e695e mantine-Radio-body"
+            >
+              <div
+                class="m_89c4f5e4 mantine-Radio-inner"
+                data-label-position="right"
+              >
+                <input
+                  class="mantine-focus-auto m_8a3dbb89 mantine-Radio-radio"
+                  data-with-error-styles="true"
+                  id="mantine-_r_1j_"
+                  name="mantine-_r_18_"
+                  type="radio"
+                  value="text"
+                />
+                <svg
+                  aria-hidden="true"
+                  class="m_f3ed6b2b mantine-Radio-icon"
+                  fill="none"
+                  viewBox="0 0 5 5"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="2.5"
+                    cy="2.5"
+                    fill="currentColor"
+                    r="2.5"
+                  />
+                </svg>
+              </div>
+              <div
+                class="m_d3ea56bb mantine-Radio-labelWrapper"
+              >
+                <label
+                  class="m_8ee546b8 mantine-Radio-label"
+                  for="mantine-_r_1j_"
+                >
+                  Enter manually
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <div
+      class="m_46b77525 mantine-InputWrapper-root mantine-Select-root"
+      data-size="sm"
+      style="margin-bottom: var(--mantine-spacing-xs);"
+    >
+      <div
+        class="m_6c018570 mantine-Input-wrapper mantine-Select-wrapper"
+        data-pointer="true"
+        data-size="sm"
+        data-variant="default"
+        data-with-right-section="true"
+        style="--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); --input-right-section-pointer-events: none;"
+      >
+        <input
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="Monospace Font Family"
+          autocomplete="off"
+          class="m_8fb7ebe7 mantine-Input-input mantine-Select-input"
+          data-testid="monospace-font-family-select"
+          data-variant="default"
+          id="fontFamilyMonospace"
+          readonly=""
+          role="combobox"
+          value="monospace"
+        />
+        <div
+          class="m_82577fc2 mantine-Input-section mantine-Select-section"
+          data-position="right"
+        >
+          <svg
+            class="m_2943220b mantine-ComboboxChevron-chevron"
+            data-combobox-chevron="true"
+            data-size="sm"
+            fill="none"
+            style="--combobox-chevron-size: var(--combobox-chevron-size-sm);"
+            viewBox="0 0 15 15"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M4.93179 5.43179C4.75605 5.60753 4.75605 5.89245 4.93179 6.06819C5.10753 6.24392 5.39245 6.24392 5.56819 6.06819L7.49999 4.13638L9.43179 6.06819C9.60753 6.24392 9.89245 6.24392 10.0682 6.06819C10.2439 5.89245 10.2439 5.60753 10.0682 5.43179L7.81819 3.18179C7.73379 3.0974 7.61933 3.04999 7.49999 3.04999C7.38064 3.04999 7.26618 3.0974 7.18179 3.18179L4.93179 5.43179ZM10.0682 9.56819C10.2439 9.39245 10.2439 9.10753 10.0682 8.93179C9.89245 8.75606 9.60753 8.75606 9.43179 8.93179L7.49999 10.8636L5.56819 8.93179C5.39245 8.75606 5.10753 8.75606 4.93179 8.93179C4.75605 9.10753 4.75605 9.39245 4.93179 9.56819L7.18179 11.8182C7.35753 11.9939 7.64245 11.9939 7.81819 11.8182L10.0682 9.56819Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <input
+      type="hidden"
+      value="monospace"
+    />
   </div>
 </DocumentFragment>
 `;

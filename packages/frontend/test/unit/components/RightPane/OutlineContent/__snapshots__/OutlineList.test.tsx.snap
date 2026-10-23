@@ -2,35 +2,68 @@
 
 exports[`OutlineList should render correctly 1`] = `
 <DocumentFragment>
-  <ul
-    class="MuiList-root MuiList-padding MuiList-dense custom-scrollbar css-18l7s16-MuiList-root"
+  <div
+    class="custom-scrollbar m_d57069b5 mantine-ScrollArea-root"
+    style="height: calc(100vh - 108px); --sa-corner-width: 0px; --sa-corner-height: 0px; padding-inline: var(--mantine-spacing-sm);"
   >
-    <li
-      class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1s7t0kb-MuiListItem-root"
+    <div
+      class="m_c0783ff9 mantine-ScrollArea-viewport"
+      data-scrollarea-viewport="true"
+      data-scrollbars="xy"
+      style="overflow-x: scroll; overflow-y: scroll;"
     >
       <div
-        class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
+        class="m_b1336c6 mantine-ScrollArea-content"
       >
-        <span
-          class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-2wbpcv-MuiTypography-root"
+        <div
+          class="m_6d731127 mantine-Stack-root"
+          style="--stack-gap: 0rem; --stack-align: stretch; --stack-justify: flex-start;"
         >
-          Heading 1
-        </span>
+          <button
+            class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
+            style="padding: 2px var(--mantine-spacing-sm) 2px 16px; border-radius: var(--mantine-radius-sm); width: 100%;"
+            type="button"
+          >
+            <p
+              class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+              data-size="sm"
+              data-truncate="end"
+              style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm);"
+            >
+              Heading 1
+            </p>
+          </button>
+          <button
+            class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
+            style="padding: 2px var(--mantine-spacing-sm) 2px 32px; border-radius: var(--mantine-radius-sm); width: 100%;"
+            type="button"
+          >
+            <p
+              class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+              data-size="sm"
+              data-truncate="end"
+              style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm);"
+            >
+              Heading 2
+            </p>
+          </button>
+        </div>
       </div>
-    </li>
-    <li
-      class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1bz6dlg-MuiListItem-root"
-    >
-      <div
-        class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
-      >
-        <span
-          class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-2wbpcv-MuiTypography-root"
-        >
-          Heading 2
-        </span>
-      </div>
-    </li>
-  </ul>
+    </div>
+    <div
+      class="m_c44ba933 mantine-ScrollArea-scrollbar"
+      data-mantine-scrollbar="true"
+      data-orientation="horizontal"
+      data-state="hidden"
+      style="position: absolute; --sa-thumb-width: 18px;"
+    />
+    <div
+      class="m_c44ba933 mantine-ScrollArea-scrollbar"
+      data-mantine-scrollbar="true"
+      data-orientation="vertical"
+      data-state="hidden"
+      style="position: absolute; --sa-thumb-height: 18px;"
+    />
+  </div>
 </DocumentFragment>
 `;

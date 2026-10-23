@@ -1,14 +1,14 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { MantineProvider } from '@mantine/core';
 import { renderHook } from '@testing-library/react';
 import React from 'react';
 import { atomDark, coy, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useSyntaxHighlighterTheme } from '../../../src/hooks/useSyntaxHighlighterTheme';
 
 const createWrapper = (mode: 'light' | 'dark') => {
-  const theme = createTheme({ palette: { mode } });
-
   function ThemeWrapper({ children }: { children: React.ReactNode }) {
-    return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+    return (
+      <MantineProvider forceColorScheme={mode}>{children}</MantineProvider>
+    );
   }
 
   return ThemeWrapper;

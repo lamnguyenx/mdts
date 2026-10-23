@@ -1,9 +1,9 @@
-import { ArticleOutlined, FolderOutlined } from '@mui/icons-material';
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Stack, Text, UnstyledButton } from '@mantine/core';
+import { IconFileText, IconFolder } from '@tabler/icons-react';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { FileTreeItem } from '../../../store/slices/fileTreeSlice';
-import { RootState } from '../../../store/store';
+import type { FileTreeItem } from '../../../store/slices/fileTreeSlice';
+import type { RootState } from '../../../store/store';
 
 export interface FileTreeListProps {
   fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
@@ -12,11 +12,11 @@ export interface FileTreeListProps {
 
 export const FileTreeList: React.FC<FileTreeListProps> = ({ fileTree, handleItemClick }) => {
   return (
-    <List sx={{ mr: -2, ml: -2 }}>
+    <Stack gap={0}>
       {fileTree.map((item, index) => (
         <FileTreeListItem key={index} item={item} handleItemClick={handleItemClick} />
       ))}
-    </List>
+    </Stack>
   );
 };
 
@@ -29,7 +29,7 @@ const FileTreeListItem: React.FC<FileTreeListItemProps> = ({ item, handleItemCli
   const { currentPath } = useSelector((state: RootState) => state.history);
 
   const isDirectory = !('path' in item);
-  const name = isDirectory ? Object.keys(item)[0] : (item as FileTreeItem).path.split('/').pop();
+  const name = isDirectory ? Object.keys(item)[0] : (item as FileTreeItem).path.split('/').pop() ?? '';
   const itemPath = currentPath === '' ? name : `${currentPath}/${name}`;
 
   const handleClick = useCallback(() => {
@@ -37,11 +37,22 @@ const FileTreeListItem: React.FC<FileTreeListItemProps> = ({ item, handleItemCli
   }, [handleItemClick, itemPath, isDirectory]);
 
   return (
-    <ListItem key={itemPath} button={true} onClick={handleClick}>
-      <ListItemIcon sx={{ minWidth: '38px' }}>
-        {isDirectory ? <FolderOutlined color="primary" /> : <ArticleOutlined />}
-      </ListItemIcon>
-      <ListItemText primary={name} />
-    </ListItem>
+    <UnstyledButton
+      onClick={handleClick}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 'var(--mantine-spacing-xs)',
+        padding: '4px 8px',
+        borderRadius: 'var(--mantine-radius-sm)',
+      }}
+    >
+      {isDirectory ? (
+        <IconFolder size={20} color="var(--mantine-primary-color-filled)" />
+      ) : (
+        <IconFileText size={20} />
+      )}
+      <Text size="sm">{name}</Text>
+    </UnstyledButton>
   );
 };

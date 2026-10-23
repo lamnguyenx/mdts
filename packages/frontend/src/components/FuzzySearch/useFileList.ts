@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import type { RootState } from '../../store/store';
 
 interface FlatTreeItem {
   path: string;
@@ -19,7 +19,7 @@ export function getFlatFileList(
         const key = Object.keys(item)[0];
         const children = item[key];
         if (Array.isArray(children)) {
-          walk(children);
+          walk(children as (FlatTreeItem | { [key: string]: (FlatTreeItem | object)[] })[]);
         }
       }
     }

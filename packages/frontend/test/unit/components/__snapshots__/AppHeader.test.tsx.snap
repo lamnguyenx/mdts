@@ -3,49 +3,47 @@
 exports[`AppHeader renders correctly 1`] = `
 <DocumentFragment>
   <header
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-83mobe-MuiPaper-root-MuiAppBar-root"
-    style="--Paper-shadow: none;"
+    class=""
+    style="background-color: var(--app-paper); border-bottom: 1px solid var(--mantine-color-default-border); flex-shrink: 0; padding-inline: var(--mantine-spacing-sm); height: var(--app-header-height);"
   >
     <div
-      class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-1ygil4i-MuiToolbar-root"
+      class="m_4081bf90 mantine-Group-root"
+      style="--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: space-between; --group-wrap: nowrap; height: 100%;"
     >
       <div
-        class="MuiBox-root css-1xvvp3o"
+        class="m_4081bf90 mantine-Group-root"
+        style="--group-gap: calc(0.25rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"
       >
         <button
           aria-label="Top page"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-1w0p6kw-MuiButtonBase-root-MuiIconButton-root"
-          data-mui-internal-clone-element="true"
-          tabindex="0"
+          class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
+          style="height: 44px; display: flex; align-items: center;"
           type="button"
         >
-          <div
-            style="height: 56px; margin-top: -8px; margin-left: -16px;"
+          <svg
+            style="width: auto; height: 100%;"
+            viewBox="0 0 180 100"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              style="width: auto; height: 100%;"
-              viewBox="0 0 180 100"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <lineargradient
-                  id="grad"
-                  x1="0"
-                  x2="1"
-                  y1="0"
-                  y2="1"
-                >
-                  <stop
-                    offset="0%"
-                    stop-color="#1976d2"
-                  />
-                  <stop
-                    offset="100%"
-                    stop-color="#1976d2"
-                  />
-                </lineargradient>
-                <style>
-                  
+            <defs>
+              <lineargradient
+                id="grad"
+                x1="0"
+                x2="1"
+                y1="0"
+                y2="1"
+              >
+                <stop
+                  offset="0%"
+                  stop-color="var(--mantine-primary-color-filled)"
+                />
+                <stop
+                  offset="100%"
+                  stop-color="var(--mantine-primary-color-filled)"
+                />
+              </lineargradient>
+              <style>
+                
             .logo-text {
               font-family: 'Segoe UI', 'Arial', sans-serif;
               font-size: 42px;
@@ -57,123 +55,160 @@ exports[`AppHeader renders correctly 1`] = `
               fill: url(#grad);
             }
           
-                </style>
-              </defs>
-              <g
-                class="logo-icon"
-                transform="translate(10, 20)"
-              >
-                <path
-                  d="M5 25 L15 45"
-                  stroke="url(#grad)"
-                  stroke-width="2"
-                />
-                <path
-                  d="M25 25 L15 45"
-                  stroke="url(#grad)"
-                  stroke-width="2"
-                />
-                <rect
-                  height="10"
-                  rx="2"
-                  width="10"
-                  x="0"
-                  y="20"
-                />
-                <rect
-                  height="10"
-                  rx="2"
-                  width="10"
-                  x="20"
-                  y="20"
-                />
-                <rect
-                  height="10"
-                  rx="2"
-                  width="10"
-                  x="10"
-                  y="40"
-                />
-              </g>
-              <text
-                class="logo-text"
-                x="60"
-                y="70"
-              >
-                mdts
-              </text>
-            </svg>
-          </div>
+              </style>
+            </defs>
+            <g
+              class="logo-icon"
+              transform="translate(10, 20)"
+            >
+              <path
+                d="M5 25 L15 45"
+                stroke="url(#grad)"
+                stroke-width="2"
+              />
+              <path
+                d="M25 25 L15 45"
+                stroke="url(#grad)"
+                stroke-width="2"
+              />
+              <rect
+                height="10"
+                rx="2"
+                width="10"
+                x="0"
+                y="20"
+              />
+              <rect
+                height="10"
+                rx="2"
+                width="10"
+                x="20"
+                y="20"
+              />
+              <rect
+                height="10"
+                rx="2"
+                width="10"
+                x="10"
+                y="40"
+              />
+            </g>
+            <text
+              class="logo-text"
+              x="60"
+              y="70"
+            >
+              mdts
+            </text>
+          </svg>
         </button>
       </div>
-      <button
-        aria-label="Settings"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-1din4kw-MuiButtonBase-root-MuiIconButton-root"
-        data-mui-internal-clone-element="true"
-        tabindex="0"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-          data-testid="SettingsIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6"
-          />
-        </svg>
-      </button>
-      <button
-        aria-label="Search files (Ctrl+K)"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-1din4kw-MuiButtonBase-root-MuiIconButton-root"
-        data-mui-internal-clone-element="true"
-        tabindex="0"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-          data-testid="SearchIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
-          />
-        </svg>
-      </button>
-      <a
-        aria-label="GitHub Repository"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-1din4kw-MuiButtonBase-root-MuiIconButton-root"
-        data-mui-internal-clone-element="true"
-        href="https://github.com/unhappychoice/mdts"
-        rel="noopener"
-        tabindex="0"
-        target="_blank"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-          data-testid="GitHubIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2 2 0 01.64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 010-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 010 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0012 1.27"
-          />
-        </svg>
-      </a>
       <div
-        class="MuiBox-root css-gcae57"
+        class="m_4081bf90 mantine-Group-root"
+        style="--group-gap: calc(0.25rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"
       >
+        <button
+          aria-label="settings"
+          class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+          data-size="md"
+          data-variant="subtle"
+          style="--ai-size: var(--ai-size-md); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+          type="button"
+        >
+          <span
+            class="m_8d3afb97 mantine-ActionIcon-icon"
+          >
+            <svg
+              class="tabler-icon tabler-icon-settings"
+              fill="none"
+              height="20"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065"
+              />
+              <path
+                d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"
+              />
+            </svg>
+          </span>
+        </button>
+        <button
+          aria-label="search files"
+          class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+          data-size="md"
+          data-variant="subtle"
+          style="--ai-size: var(--ai-size-md); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+          type="button"
+        >
+          <span
+            class="m_8d3afb97 mantine-ActionIcon-icon"
+          >
+            <svg
+              class="tabler-icon tabler-icon-search"
+              fill="none"
+              height="20"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"
+              />
+              <path
+                d="M21 21l-6 -6"
+              />
+            </svg>
+          </span>
+        </button>
         <a
-          aria-label="Changelog"
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
-          data-mui-internal-clone-element="true"
+          aria-label="GitHub repository"
+          class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+          data-size="md"
+          data-variant="subtle"
+          href="https://github.com/unhappychoice/mdts"
+          rel="noopener"
+          style="--ai-size: var(--ai-size-md); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+          target="_blank"
+        >
+          <span
+            class="m_8d3afb97 mantine-ActionIcon-icon"
+          >
+            <svg
+              class="tabler-icon tabler-icon-brand-github"
+              fill="none"
+              height="20"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
+              />
+            </svg>
+          </span>
+        </a>
+        <a
+          class="mantine-focus-auto m_849cf0da m_b6d8b162 mantine-Text-root mantine-Anchor-root"
+          data-size="sm"
+          data-underline="hover"
           href="https://github.com/unhappychoice/mdts/blob/main/CHANGELOG.md"
           rel="noopener"
+          style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-family: var(--mantine-font-family-monospace);"
           target="_blank"
         >
           v

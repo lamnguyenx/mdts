@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import type { RootState } from '../../store/store';
 import DirectoryContent from './DirectoryContent/DirectoryContent';
 import MarkdownContent from './MarkdownContent/MarkdownContent';
-import { Box } from '@mui/material';
+import { Box } from '@mantine/core';
 import { setScrollPosition } from '../../store/slices/contentSlice';
 
 interface ContentProps {
@@ -36,19 +36,19 @@ const Content: React.FC<ContentProps> = ({ onFileSelect, onDirectorySelect, scro
 
   return (
     <Box
-      sx={{
+      style={{
         display: 'flex',
-        height: 'calc(100vh - 64px)',
+        height: 'calc(100vh - var(--app-header-height))',
         flexGrow: 1,
         minWidth: 0,
         justifyContent: 'center',
-        ...(contentMode === 'full' && { bgcolor: 'background.paper' }),
+        backgroundColor: contentMode === 'full' ? 'var(--app-paper)' : undefined,
       }}
     >
       <Box
         ref={scrollableRef}
         className="custom-scrollbar"
-        sx={{
+        style={{
           overflowY: 'scroll',
           overflowX: 'auto',
           width: '100%',

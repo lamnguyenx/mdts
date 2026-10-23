@@ -10,8 +10,8 @@ const mockStore = configureStore([]);
 describe('DirectoryContent', () => {
   let store;
   const mockFileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] = [
-    { 'folder1': [{ path: 'file1.md', status: ' ' }] },
-    { path: 'file2.txt', status: ' ' },
+    { 'folder1': [{ path: 'file1.md' }] },
+    { path: 'file2.txt' },
   ];
 
   beforeEach(() => {

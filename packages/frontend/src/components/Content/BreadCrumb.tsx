@@ -1,7 +1,7 @@
-import { Breadcrumbs, Link, Typography } from '@mui/material';
+import { Anchor, Breadcrumbs, Text } from '@mantine/core';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import type { RootState } from '../../store/store';
 
 const BreadCrumb: React.FC<BreadCrumbProps> = ({ onDirectorySelect }) => {
   const { currentPath } = useSelector((state: RootState) => state.history);
@@ -9,7 +9,7 @@ const BreadCrumb: React.FC<BreadCrumbProps> = ({ onDirectorySelect }) => {
   const pathSegments = currentPath ? currentPath.split('/').filter(segment => segment !== '') : [];
 
   return (
-    <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
+    <Breadcrumbs mb="sm" aria-label="breadcrumb">
       {pathSegments.map((segment, index) => {
         const isLast = index === pathSegments.length - 1;
         const path = pathSegments.slice(0, index + 1).join('/');
@@ -37,7 +37,7 @@ const BreadCrumbLink: React.FC<BreadCrumbLinkProps> = ({ path, segment, onDirect
     if (onDirectorySelect) onDirectorySelect(path);
   }, [path, onDirectorySelect]);
 
-  return <Link color="inherit" href="#" onClick={handleClick}>{segment}</Link>;
+  return <Anchor href="#" c="inherit" onClick={handleClick}>{segment}</Anchor>;
 };
 
 interface BreadCrumbTextProps {
@@ -45,7 +45,7 @@ interface BreadCrumbTextProps {
 }
 
 const BreadCrumbText: React.FC<BreadCrumbTextProps> = ({ segment }) =>
-  <Typography color="text.primary">{segment}</Typography>;
+  <Text c="var(--mantine-color-text)">{segment}</Text>;
 
 interface BreadCrumbProps {
   onDirectorySelect?: (directoryPath: string) => void;

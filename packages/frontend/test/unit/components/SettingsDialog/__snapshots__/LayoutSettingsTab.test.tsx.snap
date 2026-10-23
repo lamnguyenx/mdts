@@ -3,77 +3,136 @@
 exports[`LayoutSettingsTab should render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-19midj6"
+    class=""
+    style="padding: var(--mantine-spacing-xs);"
   >
-    <h6
-      class="MuiTypography-root MuiTypography-subtitle2 css-n2une3-MuiTypography-root"
+    <p
+      class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+      data-size="sm"
+      style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); margin-bottom: var(--mantine-spacing-sm); font-weight: 600;"
     >
       Content Width
-    </h6>
+    </p>
     <div
       aria-label="content width"
-      class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal MuiToggleButtonGroup-fullWidth css-zasv8g-MuiToggleButtonGroup-root"
-      role="group"
+      class="m_cf365364 mantine-SegmentedControl-root"
+      data-full-width="true"
+      data-initialized="true"
+      data-size="sm"
+      data-with-items-borders="true"
+      role="radiogroup"
+      style="--sc-shadow: var(--mantine-shadow-xs); --sc-padding: var(--sc-padding-sm); --sc-font-size: var(--mantine-font-size-sm); margin-bottom: var(--mantine-spacing-md);"
     >
-      <button
-        aria-label="full"
-        aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
-        tabindex="0"
-        type="button"
-        value="full"
+      <span
+        class="m_9e182ccd mantine-SegmentedControl-indicator m_96b553a6 mantine-FloatingIndicator-root"
+        style="--transition-duration: var(--sc-transition-duration); transform: translateY(0px) translateX(0px); width: 0px; height: 0px;"
+      />
+      <div
+        class="m_69686b9b mantine-SegmentedControl-control"
       >
-        Full
-      </button>
-      <button
-        aria-label="compact"
-        aria-pressed="true"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-lastButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
-        tabindex="-1"
-        type="button"
-        value="compact"
+        <input
+          class="m_1714d588 mantine-SegmentedControl-input"
+          data-focus-ring="auto"
+          id="mantine-_r_2_-full"
+          name="mantine-_r_2_"
+          type="radio"
+          value="full"
+        />
+        <label
+          class="m_1738fcb2 mantine-SegmentedControl-label"
+          for="mantine-_r_2_-full"
+        >
+          <span
+            class="m_78882f40 mantine-SegmentedControl-innerLabel"
+          >
+            Full
+          </span>
+        </label>
+      </div>
+      <div
+        class="m_69686b9b mantine-SegmentedControl-control"
+        data-active="true"
       >
-        Compact
-      </button>
+        <input
+          checked=""
+          class="m_1714d588 mantine-SegmentedControl-input"
+          data-focus-ring="auto"
+          id="mantine-_r_2_-compact"
+          name="mantine-_r_2_"
+          type="radio"
+          value="compact"
+        />
+        <label
+          class="m_1738fcb2 mantine-SegmentedControl-label"
+          data-active="true"
+          for="mantine-_r_2_-compact"
+        >
+          <span
+            class="m_78882f40 mantine-SegmentedControl-innerLabel"
+          >
+            Compact
+          </span>
+        </label>
+      </div>
     </div>
-    <h6
-      class="MuiTypography-root MuiTypography-subtitle2 css-poonyw-MuiTypography-root"
+    <p
+      class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+      data-size="sm"
+      style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); margin-bottom: var(--mantine-spacing-xs); font-weight: 600;"
     >
       Markdown
-    </h6>
-    <label
-      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+    </p>
+    <div
+      class="m_5f93f3bb mantine-Switch-root m_5f75b09e mantine-Switch-root"
+      data-checked="false"
+      data-label-position="right"
+      data-size="sm"
+      style="--switch-height: var(--switch-height-sm); --switch-width: var(--switch-width-sm); --switch-thumb-size: var(--switch-thumb-size-sm); --switch-label-font-size: var(--switch-label-font-size-sm); --switch-track-label-padding: var(--switch-track-label-padding-sm); --label-fz: var(--mantine-font-size-sm); --label-lh: var(--label-lh-sm);"
     >
-      <span
-        class="MuiSwitch-root MuiSwitch-sizeSmall css-fzgmul-MuiSwitch-root"
+      <label
+        class="m_5f6e695e mantine-Switch-body"
+        for="mantine-_r_9_"
       >
+        <input
+          class="m_926b4011 mantine-Switch-input"
+          data-checked="false"
+          id="mantine-_r_9_"
+          role="switch"
+          type="checkbox"
+        />
         <span
-          class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-1vhsptr-MuiButtonBase-root-MuiSwitchBase-root-MuiSwitch-switchBase"
+          aria-hidden="true"
+          class="m_9307d992 mantine-Switch-track"
+          data-label-position="right"
+          data-without-labels="true"
         >
-          <input
-            class="PrivateSwitchBase-input MuiSwitch-input css-gjsmck-MuiSwitchBase-root"
-            role="switch"
-            type="checkbox"
+          <span
+            class="m_93039a1d mantine-Switch-thumb"
+            data-reduce-motion="true"
+            data-with-thumb-indicator="true"
           />
           <span
-            class="MuiSwitch-thumb css-1mw77bv-MuiSwitch-thumb"
+            class="m_8277e082 mantine-Switch-trackLabel"
           />
         </span>
-        <span
-          class="MuiSwitch-track css-e02s9l-MuiSwitch-track"
-        />
-      </span>
-      <span
-        class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-1px98du-MuiTypography-root"
-      >
-        Enable soft line breaks
-      </span>
-    </label>
-    <span
-      class="MuiTypography-root MuiTypography-caption css-1jedjx8-MuiTypography-root"
+        <div
+          class="m_d3ea56bb mantine-Switch-labelWrapper"
+        >
+          <span
+            class="m_8ee546b8 mantine-Switch-label"
+          >
+            Enable soft line breaks
+          </span>
+        </div>
+      </label>
+    </div>
+    <p
+      class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+      data-size="xs"
+      style="--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); margin-top: calc(0.25rem * var(--mantine-scale)); color: var(--mantine-color-dimmed);"
     >
       Convert single line breaks to &lt;br&gt; elements
-    </span>
+    </p>
   </div>
 </DocumentFragment>
 `;

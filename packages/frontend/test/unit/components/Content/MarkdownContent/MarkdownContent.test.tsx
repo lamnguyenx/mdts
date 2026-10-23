@@ -20,28 +20,6 @@ jest.mock('../../../../../src/store/slices/contentSlice', () => {
   };
 });
 
-jest.mock('../../../../../src/store/slices/diffSlice', () => {
-  const createAbortableThunk = (type: string) => (path: string | null) => (dispatch: (action: unknown) => void) => {
-    dispatch({ type, payload: path });
-    return { abort: jest.fn() };
-  };
-
-  return {
-    ...jest.requireActual('../../../../../src/store/slices/diffSlice'),
-    fetchDiff: jest.fn(createAbortableThunk('diff/fetchDiff')),
-    fetchDiffPrev: jest.fn(createAbortableThunk('diff/fetchDiffPrev')),
-  };
-});
-
-const defaultDiffState = {
-  diff: '',
-  diffPrev: '',
-  diffLoading: false,
-  diffPrevLoading: false,
-  diffError: null,
-  diffPrevError: null,
-};
-
 describe('MarkdownContent', () => {
   let store;
 
@@ -52,10 +30,8 @@ describe('MarkdownContent', () => {
         loading: false,
         error: null,
       },
-      diff: defaultDiffState,
       fileTree: {
         loading: false,
-        isGitRepository: true,
       },
       history: {
         currentPath: '/',
@@ -79,10 +55,8 @@ describe('MarkdownContent', () => {
         loading: false,
         error: null,
       },
-      diff: defaultDiffState,
       fileTree: {
         loading: false,
-        isGitRepository: true,
       },
       history: {
         currentPath: null,
@@ -113,48 +87,6 @@ describe('MarkdownContent', () => {
     expect(screen.getByText('🎉 Welcome to mdts!')).toBeInTheDocument();
     expect(store.getActions()).toEqual([
       { type: 'content/fetchContent', payload: null },
-      { type: 'diff/fetchDiff', payload: null },
-    ]);
-  });
-
-  test('does not fetch diffs when the directory is not a git repository', async () => {
-    store = mockStore({
-      content: {
-        content: '# Test Markdown',
-        loading: false,
-        error: null,
-      },
-      diff: defaultDiffState,
-      fileTree: {
-        loading: false,
-        isGitRepository: false,
-      },
-      history: {
-        currentPath: '/path/to/test.md',
-        isDirectory: false,
-      },
-      appSetting: {
-        contentMode: 'compact',
-      },
-      config: {
-        fontFamily: 'Roboto',
-        fontFamilyMonospace: 'monospace',
-        fontSize: 14,
-      },
-    });
-
-    await act(async () => {
-      render(
-        <Provider store={store}>
-          <BrowserRouter>
-            <MarkdownContent scrollToId={null} />
-          </BrowserRouter>
-        </Provider>
-      );
-    });
-
-    expect(store.getActions()).toEqual([
-      { type: 'content/fetchContent', payload: '/path/to/test.md' },
     ]);
   });
 
@@ -165,10 +97,8 @@ describe('MarkdownContent', () => {
         loading: false,
         error: null,
       },
-      diff: defaultDiffState,
       fileTree: {
         loading: false,
-        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -205,10 +135,8 @@ describe('MarkdownContent', () => {
         loading: true,
         error: null,
       },
-      diff: defaultDiffState,
       fileTree: {
         loading: false,
-        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -243,10 +171,8 @@ describe('MarkdownContent', () => {
         loading: false,
         error: 'Failed to load content',
       },
-      diff: defaultDiffState,
       fileTree: {
         loading: false,
-        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -282,10 +208,8 @@ describe('MarkdownContent', () => {
         loading: false,
         error: null,
       },
-      diff: defaultDiffState,
       fileTree: {
         loading: false,
-        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -324,10 +248,8 @@ describe('MarkdownContent', () => {
         loading: false,
         error: null,
       },
-      diff: defaultDiffState,
       fileTree: {
         loading: false,
-        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -376,10 +298,8 @@ describe('MarkdownContent', () => {
         loading: false,
         error: null,
       },
-      diff: defaultDiffState,
       fileTree: {
         loading: false,
-        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -409,7 +329,7 @@ describe('MarkdownContent', () => {
     expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
   });
 
-  test('renders tag and category chips and fetches previous diff in diff-prev mode', async () => {
+  test('renders tag and category chips', async () => {
     const contentWithMetadata = [
       '---',
       'title: Release Notes',
@@ -429,10 +349,8 @@ describe('MarkdownContent', () => {
         loading: false,
         error: null,
       },
-      diff: defaultDiffState,
       fileTree: {
         loading: false,
-        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -451,7 +369,7 @@ describe('MarkdownContent', () => {
     await act(async () => {
       render(
         <Provider store={store}>
-          <MemoryRouter initialEntries={['/?tab=diff-prev']}>
+          <MemoryRouter initialEntries={['/']}>
             <MarkdownContent scrollToId={null} />
           </MemoryRouter>
         </Provider>
@@ -464,8 +382,6 @@ describe('MarkdownContent', () => {
     });
     expect(store.getActions()).toEqual([
       { type: 'content/fetchContent', payload: '/path/to/test.md' },
-      { type: 'diff/fetchDiff', payload: '/path/to/test.md' },
-      { type: 'diff/fetchDiffPrev', payload: '/path/to/test.md' },
     ]);
   });
 });

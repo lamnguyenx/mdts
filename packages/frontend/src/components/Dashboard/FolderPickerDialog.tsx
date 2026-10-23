@@ -1,22 +1,20 @@
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import {
   Box,
   Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  InputAdornment,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  TextField,
-  Typography,
-} from '@mui/material';
+  Center,
+  Group,
+  Loader,
+  Modal,
+  Stack,
+  Text,
+  TextInput,
+  UnstyledButton,
+} from '@mantine/core';
+import {
+  IconArrowUp,
+  IconFolder,
+  IconFolderOpen,
+} from '@tabler/icons-react';
 import React, { useCallback, useEffect, useState } from 'react';
 
 interface BrowseEntry {
@@ -43,19 +41,25 @@ interface DirectoryRowProps {
   onSelect: (path: string) => void;
 }
 
+const rowStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 'var(--mantine-spacing-sm)',
+  width: '100%',
+  padding: '8px 16px',
+  textAlign: 'left',
+};
+
 const DirectoryRow: React.FC<DirectoryRowProps> = ({ directory, onSelect }) => {
   const handleClick = useCallback(() => onSelect(directory.path), [directory.path, onSelect]);
 
   return (
-    <ListItemButton onClick={handleClick}>
-      <ListItemIcon sx={{ minWidth: 40 }}>
-        <FolderOutlinedIcon color="primary" fontSize="small" />
-      </ListItemIcon>
-      <ListItemText
-        primary={directory.name}
-        slotProps={{ primary: { noWrap: true } }}
-      />
-    </ListItemButton>
+    <UnstyledButton onClick={handleClick} style={rowStyle}>
+      <IconFolder size={16} color="var(--mantine-primary-color-filled)" />
+      <Text size="sm" truncate style={{ flex: 1 }}>
+        {directory.name}
+      </Text>
+    </UnstyledButton>
   );
 };
 
@@ -132,115 +136,108 @@ const FolderPickerDialog: React.FC<FolderPickerDialogProps> = ({
   }, [currentPath, onOpen]);
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle sx={{ pb: 1 }}>
-        Open a folder
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-          Pick any folder on this machine. It opens in its own workspace tab.
-        </Typography>
-      </DialogTitle>
+    <Modal
+      opened={open}
+      onClose={onClose}
+      size="md"
+      title={
+        <Box>
+          <Text fw={600}>Open a folder</Text>
+          <Text size="sm" c="dimmed" mt={2}>
+            Pick any folder on this machine. It opens in its own workspace tab.
+          </Text>
+        </Box>
+      }
+    >
+      <TextInput
+        autoFocus
+        label="Folder path"
+        value={pathInput}
+        onChange={handlePathInputChange}
+        onKeyDown={handleKeyDown}
+        placeholder="/home/you/project"
+        mt="xs"
+        rightSection={
+          <Button size="compact-xs" variant="subtle" onClick={handleGo} disabled={loading}>
+            Go
+          </Button>
+        }
+        rightSectionWidth={56}
+      />
 
-      <DialogContent>
-        <TextField
-          autoFocus
-          fullWidth
-          size="small"
-          label="Folder path"
-          value={pathInput}
-          onChange={handlePathInputChange}
-          onKeyDown={handleKeyDown}
-          placeholder="/home/you/project"
-          slotProps={{
-            input: {
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Button size="small" onClick={handleGo} disabled={loading}>
-                    Go
-                  </Button>
-                </InputAdornment>
-              ),
-            },
-          }}
-          sx={{ mt: 1 }}
-        />
+      <Text
+        size="xs"
+        c={error ? 'red' : 'dimmed'}
+        mt="sm"
+        style={{ minHeight: '1.2em', wordBreak: 'break-all' }}
+      >
+        {error || currentPath}
+      </Text>
 
-        <Typography
-          variant="caption"
-          color={error ? 'error.main' : 'text.secondary'}
-          sx={{ display: 'block', mt: 1.5, minHeight: '1.2em', wordBreak: 'break-all' }}
-        >
-          {error || currentPath}
-        </Typography>
+      <Box
+        mt="xs"
+        style={{
+          height: 300,
+          overflowY: 'auto',
+          border: '1px solid var(--mantine-color-default-border)',
+          borderRadius: 'var(--mantine-radius-sm)',
+          position: 'relative',
+        }}
+      >
+        {loading && (
+          <Center
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundColor: 'var(--app-paper)',
+              opacity: 0.75,
+              zIndex: 1,
+            }}
+          >
+            <Loader role="progressbar" size="sm" />
+          </Center>
+        )}
 
-        <Box
-          sx={{
-            mt: 1,
-            height: 300,
-            overflowY: 'auto',
-            border: 1,
-            borderColor: 'divider',
-            borderRadius: 2,
-            position: 'relative',
-          }}
-        >
-          {loading && (
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                bgcolor: 'background.paper',
-                opacity: 0.75,
-                zIndex: 1,
-              }}
-            >
-              <CircularProgress size={26} />
+        <Stack gap={0}>
+          {parentPath && (
+            <UnstyledButton onClick={handleParentClick} style={rowStyle}>
+              <IconArrowUp size={16} />
+              <Box style={{ flex: 1 }}>
+                <Text size="sm">..</Text>
+                <Text size="xs" c="dimmed">Parent folder</Text>
+              </Box>
+            </UnstyledButton>
+          )}
+
+          {!loading && directories.length === 0 && (
+            <Box px="md" py="2rem" style={{ textAlign: 'center' }}>
+              <Text size="sm" c="dimmed">
+                No subfolders here.
+              </Text>
             </Box>
           )}
 
-          <List dense disablePadding>
-            {parentPath && (
-              <ListItemButton onClick={handleParentClick}>
-                <ListItemIcon sx={{ minWidth: 40 }}>
-                  <ArrowUpwardIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary=".." secondary="Parent folder" />
-              </ListItemButton>
-            )}
+          {directories.map((directory) => (
+            <DirectoryRow
+              key={directory.path}
+              directory={directory}
+              onSelect={handleDirectorySelect}
+            />
+          ))}
+        </Stack>
+      </Box>
 
-            {!loading && directories.length === 0 && (
-              <Box sx={{ px: 2, py: 4, textAlign: 'center' }}>
-                <Typography variant="body2" color="text.secondary">
-                  No subfolders here.
-                </Typography>
-              </Box>
-            )}
-
-            {directories.map((directory) => (
-              <DirectoryRow
-                key={directory.path}
-                directory={directory}
-                onSelect={handleDirectorySelect}
-              />
-            ))}
-          </List>
-        </Box>
-      </DialogContent>
-
-      <DialogActions sx={{ px: 3, pb: 2.5 }}>
-        <Button onClick={onClose}>Cancel</Button>
+      <Group justify="flex-end" mt="lg">
+        <Button variant="default" onClick={onClose}>Cancel</Button>
         <Button
-          variant="contained"
-          startIcon={<FolderOpenIcon />}
+          leftSection={<IconFolderOpen size={18} />}
           disabled={!currentPath || loading}
           onClick={handleOpenCurrent}
         >
           Open this folder
         </Button>
-      </DialogActions>
-    </Dialog>
+      </Group>
+    </Modal>
   );
 };
 

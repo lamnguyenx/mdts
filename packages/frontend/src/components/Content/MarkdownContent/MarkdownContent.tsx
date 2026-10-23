@@ -1,13 +1,12 @@
-import { ArticleOutlined } from '@mui/icons-material';
-import { Box, Chip, Typography } from '@mui/material';
+import { Badge, Box, Group, Title } from '@mantine/core';
+import { IconFileText } from '@tabler/icons-react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFrontmatter } from '../../../hooks/useFrontmatter';
 import useIsMobile from '../../../hooks/useIsMobile';
 import { useViewMode } from '../../../hooks/useViewMode';
 import { fetchContent } from '../../../store/slices/contentSlice';
-import { fetchDiff, fetchDiffPrev } from '../../../store/slices/diffSlice';
-import { AppDispatch, RootState } from '../../../store/store';
+import type { AppDispatch, RootState } from '../../../store/store';
 import ErrorView from '../../ErrorView';
 import BreadCrumb from '../BreadCrumb';
 import MarkdownContentTabs from './MarkdownContentTabs';
@@ -24,7 +23,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   const { currentPath } = useSelector((state: RootState) => state.history);
   const { contentMode } = useSelector((state: RootState) => state.appSetting);
   const { content, loading: contentLoading, error } = useSelector((state: RootState) => state.content);
-  const { loading: fileTreeLoading, isGitRepository } = useSelector((state: RootState) => state.fileTree);
+  const { loading: fileTreeLoading } = useSelector((state: RootState) => state.fileTree);
   const { fontFamily } = useSelector((state: RootState) => state.config);
 
   const { frontmatter, markdownContent } = useFrontmatter(content);
@@ -38,26 +37,6 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
       request.abort();
     };
   }, [dispatch, currentPath]);
-
-  useEffect(() => {
-    if (!isGitRepository) {
-      return;
-    }
-    const request = dispatch(fetchDiff(currentPath));
-    return () => {
-      request.abort();
-    };
-  }, [dispatch, currentPath, isGitRepository]);
-
-  useEffect(() => {
-    if (viewMode !== 'diff-prev') {
-      return;
-    }
-    const request = dispatch(fetchDiffPrev(currentPath));
-    return () => {
-      request.abort();
-    };
-  }, [dispatch, currentPath, viewMode]);
 
   useEffect(() => {
     if (scrollToId) {
@@ -84,45 +63,47 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
 
   return (
     <Box
-      sx={{
-        width: '100%',
+      style={{
+        width: contentMode === 'compact' && !isMobile ? 800 : '100%',
         minWidth: 0,
-        minHeight: 'calc(100vh - 64px)',
-        m: 0,
-        p: isMobile ? 2 : 4,
-        bgcolor: 'background.paper',
-        ...(contentMode === 'compact' && !isMobile && {
-          width: '800px',
-          margin: '0 auto',
-          borderRight: '1px solid',
-          borderLeft: '1px solid',
-          borderColor: 'divider',
-        })
+        minHeight: 'calc(100vh - var(--app-header-height))',
+        margin: contentMode === 'compact' && !isMobile ? '0 auto' : 0,
+        padding: isMobile ? 'var(--mantine-spacing-sm)' : 'var(--mantine-spacing-lg)',
+        backgroundColor: 'var(--app-paper)',
+        borderLeft: contentMode === 'compact' && !isMobile
+          ? '1px solid var(--mantine-color-default-border)'
+          : undefined,
+        borderRight: contentMode === 'compact' && !isMobile
+          ? '1px solid var(--mantine-color-default-border)'
+          : undefined,
       }}
     >
       <BreadCrumb onDirectorySelect={onDirectorySelect} />
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-        <ArticleOutlined sx={{ mr: 2 }} fontSize={isMobile ? 'medium' : 'large'} />
-        <Typography variant={isMobile ? 'h5' : 'h4'} gutterBottom sx={{ mb: 0, wordBreak: 'break-word' }}>
+      <Group gap="xs" mb="sm" wrap="nowrap" align="center">
+        <IconFileText size={isMobile ? 24 : 32} />
+        <Title
+          order={isMobile ? 5 : 4}
+          style={{ margin: 0, wordBreak: 'break-word' }}
+        >
           {displayFileName}
-        </Typography>
-      </Box>
-      {frontmatter.tags && Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0 && (
-        <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+        </Title>
+      </Group>
+      {Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0 && (
+        <Group gap={4} mb="xs">
           {frontmatter.tags.map((tag) => (
-            <Chip key={tag} label={tag} size='small' />
+            <Badge key={String(tag)} size="sm" variant="light" tt="none">{String(tag)}</Badge>
           ))}
-        </Box>
+        </Group>
       )}
-      {frontmatter.categories && Array.isArray(frontmatter.categories) && frontmatter.categories.length > 0 && (
-        <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+      {Array.isArray(frontmatter.categories) && frontmatter.categories.length > 0 && (
+        <Group gap={4} mb="xs">
           {frontmatter.categories.map((category) => (
-            <Chip key={category} label={category} size='small' />
+            <Badge key={String(category)} size="sm" variant="outline" tt="none">{String(category)}</Badge>
           ))}
-        </Box>
+        </Group>
       )}
       <MarkdownContentTabs viewMode={viewMode} hasFrontmatter={hasFrontmatter} />
-      <Box sx={{ fontFamily: fontFamily }}>
+      <Box style={{ fontFamily }}>
         <MarkdownContentView
           loading={loading}
           viewMode={viewMode}

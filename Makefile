@@ -4,25 +4,25 @@
 all: install
 
 install: backend frontend
-	npm install -g .
+	bun install -g .
 
 # Install dependencies for both the root and the frontend package.
 deps:
-	npm install
-	cd packages/frontend && npm install
+	bun install
+	cd packages/frontend && bun install
 
 hotload: backend frontend
-	npm link
+	bun link
 
 frontend:
 	@if [ ! -d packages/frontend/node_modules ]; then \
 		echo "Installing frontend dependencies..."; \
-		cd packages/frontend && npm install; \
+		cd packages/frontend && bun install; \
 	fi
-	npm run build:frontend
+	bun run build:frontend
 
 backend:
-	npm run build
+	bun run build
 
 clean:
 	rm -rf dist

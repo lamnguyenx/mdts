@@ -5,5 +5,3 @@ jest.mock('../src/utils/logger', () => ({
     error: jest.fn(),
   },
 }));
-
-jest.mock('simple-git');

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { PrismAsyncLight } from 'react-syntax-highlighter';
 import { useSyntaxHighlighterTheme, useSyntaxHighlighterThemeMeta } from '../../../../hooks/useSyntaxHighlighterTheme';
-import { RootState } from '../../../../store/store';
+import type { RootState } from '../../../../store/store';
 import MermaidRenderer from './MermaidRenderer';
 import PlantUMLRenderer from './PlantUMLRenderer';
 

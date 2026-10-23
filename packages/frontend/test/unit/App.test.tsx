@@ -5,21 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import App from '../../src/App';
 import { createMockStore } from '../utils';
 
-jest.mock('@mui/material', () => ({
-  ...jest.requireActual('@mui/material'),
-  CssBaseline: () => null,
-  AppBar: ({ children, ...props }: { children: React.ReactNode }) => <div {...props}>{children}</div>,
-}));
-
-jest.mock('@mui/x-tree-view', () => ({
-  ...jest.requireActual('@mui/x-tree-view'),
-  SimpleTreeView: ({ children, ...props }: { children: React.ReactNode }) => (
-    <div data-testid="mock-simple-tree-view" {...props}>
-      {children}
-    </div>
-  ),
-}));
-
 jest.mock('../../src/api', () => ({
   ...jest.requireActual('../../src/api'),
   fetchData: jest.fn(() => Promise.resolve([])),

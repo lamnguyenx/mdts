@@ -43,7 +43,7 @@ describe('FileTreeHeader', () => {
         onCollapseAll={jest.fn()}
       />
     );
-    fireEvent.click(screen.getByTestId('ChevronLeftIcon'));
+    fireEvent.click(screen.getByLabelText('toggle file tree'));
     expect(onToggleMock).toHaveBeenCalled();
   });
 

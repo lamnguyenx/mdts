@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import { fetchContent } from '../store/slices/contentSlice';
 import { fetchFileTree } from '../store/slices/fileTreeSlice';
 import { fetchOutline } from '../store/slices/outlineSlice';
-import { AppDispatch } from '../store/store';
+import type { AppDispatch } from '../store/store';
 
-type Event = { type: 'reload-content' } | { type: 'reload-tree' };
+type Event = { type: 'reload-content' } | { type: 'reload-tree' } | { type: 'reload-page' };
 
 export const useWebSocket = (
   currentPath: string | null,
@@ -42,6 +42,8 @@ export const useWebSocket = (
         dispatch(fetchOutline(currentPathRef.current));
       } else if (message.type === 'reload-tree') {
         dispatch(fetchFileTree());
+      } else if (message.type === 'reload-page') {
+        window.location.reload();
       }
     };
 

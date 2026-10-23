@@ -4,18 +4,12 @@ import { FileTreeView } from '../../../../../src/components/LeftPane/FileTreeCon
 
 describe('FileTreeView', () => {
   const filteredFileTree = [
-    { path: 'file1.md', status: 'added' },
-    { 'dir1': [{ path: 'dir1/file2.md', status: 'modified' }] },
+    { path: 'file1.md' },
+    { 'dir1': [{ path: 'dir1/file2.md' }] },
   ];
   const expandedNodes = ['dir1'];
   const onFileSelect = jest.fn();
   const onExpandedItemsChange = jest.fn();
-  const getStatusColor = jest.fn((status) => {
-    if (status === 'added') return 'green';
-    if (status === 'modified') return 'blue';
-    return 'black';
-  });
-
   it('should render correctly', () => {
     const { asFragment } = render(
       <FileTreeView
@@ -24,7 +18,6 @@ describe('FileTreeView', () => {
         selectedFilePath="dir1/file2.md"
         onFileSelect={onFileSelect}
         onExpandedItemsChange={onExpandedItemsChange}
-        getStatusColor={getStatusColor}
       />
     );
     expect(asFragment()).toMatchSnapshot();
@@ -41,7 +34,6 @@ describe('FileTreeView', () => {
         selectedFilePath="dir1/file2.md"
         onFileSelect={onFileSelect}
         onExpandedItemsChange={onExpandedItemsChange}
-        getStatusColor={getStatusColor}
       />
     );
 

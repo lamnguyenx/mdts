@@ -1,4 +1,4 @@
-interface ThemePalette {
+export interface ThemePalette {
   primary: string;
   background: string;
   paper: string;

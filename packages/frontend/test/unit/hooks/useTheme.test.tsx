@@ -10,8 +10,13 @@ describe('useTheme', () => {
       writable: true,
       value: jest.fn().mockReturnValue({
         matches,
+        media: '(prefers-color-scheme: dark)',
+        onchange: null,
         addEventListener: jest.fn(),
         removeEventListener: jest.fn(),
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        dispatchEvent: jest.fn(),
       }),
     });
   };
@@ -21,9 +26,9 @@ describe('useTheme', () => {
     const { result } = renderHook(() => useTheme(), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
     });
-    expect(result.current.palette.mode).toBe('light');
-    expect(result.current.palette.background.default).toBe('#f5f7fa');
-    expect(result.current.palette.background.paper).toBe('#eef1f5');
+    expect(result.current.colorScheme).toBe('light');
+    expect(result.current.palette.background).toBe('#f5f7fa');
+    expect(result.current.palette.paper).toBe('#eef1f5');
   });
 
   test('should return a dark theme when darkMode is true', () => {
@@ -31,9 +36,9 @@ describe('useTheme', () => {
     const { result } = renderHook(() => useTheme(), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
     });
-    expect(result.current.palette.mode).toBe('dark');
-    expect(result.current.palette.background.default).toBe('#161819');
-    expect(result.current.palette.background.paper).toBe('#0f1214');
+    expect(result.current.colorScheme).toBe('dark');
+    expect(result.current.palette.background).toBe('#161819');
+    expect(result.current.palette.paper).toBe('#0f1214');
   });
 
   test('should return consistent primary colors regardless of mode', () => {
@@ -41,13 +46,15 @@ describe('useTheme', () => {
     const { result: lightThemeResult } = renderHook(() => useTheme(), {
       wrapper: ({ children }) => <Provider store={lightStore}>{children}</Provider>,
     });
-    expect(lightThemeResult.current.palette.primary.main).toBe('#1976d2');
+    expect(lightThemeResult.current.palette.primary).toBe('#1976d2');
+    expect(lightThemeResult.current.theme.colors?.app?.[6]).toBe('#1976d2');
 
     const darkStore = createMockStore({ appSetting: { darkMode: 'dark' } });
     const { result: darkThemeResult } = renderHook(() => useTheme(), {
       wrapper: ({ children }) => <Provider store={darkStore}>{children}</Provider>,
     });
-    expect(darkThemeResult.current.palette.primary.main).toBe('#1976d2');
+    expect(darkThemeResult.current.palette.primary).toBe('#1976d2');
+    expect(darkThemeResult.current.theme.colors?.app?.[6]).toBe('#1976d2');
   });
 
   test('should use the system dark preference when darkMode is auto', () => {
@@ -59,9 +66,9 @@ describe('useTheme', () => {
     const { result } = renderHook(() => useTheme(), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
     });
-    expect(result.current.palette.mode).toBe('dark');
-    expect(result.current.palette.background.default).toBe('#00251a');
-    expect(result.current.palette.background.paper).toBe('#012a4a');
+    expect(result.current.colorScheme).toBe('dark');
+    expect(result.current.palette.background).toBe('#00251a');
+    expect(result.current.palette.paper).toBe('#012a4a');
   });
 
   test('should fall back to the default light theme for an unknown theme id', () => {
@@ -73,8 +80,8 @@ describe('useTheme', () => {
     const { result } = renderHook(() => useTheme(), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
     });
-    expect(result.current.palette.mode).toBe('light');
-    expect(result.current.palette.background.default).toBe('#f5f7fa');
-    expect(result.current.palette.background.paper).toBe('#eef1f5');
+    expect(result.current.colorScheme).toBe('light');
+    expect(result.current.palette.background).toBe('#f5f7fa');
+    expect(result.current.palette.paper).toBe('#eef1f5');
   });
 });

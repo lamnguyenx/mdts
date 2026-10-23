@@ -12,10 +12,13 @@ Clone the repo and install dependencies:
 ```
 git clone https://github.com/unhappychoice/mdts.git
 cd mdts
-npm install
+bun install
 cd packages/frontend
-npm install
+bun install
 ```
+
+The project uses [Bun](https://bun.sh) for dependency management and builds. Jest is
+executed with Node.js, so Node 24+ must also be available.
 
 mdts is written in TypeScript. You'll find the source in `src/`, and tests in `test/`.
 
@@ -23,18 +26,18 @@ Handy commands:
 
 ### Run 
 ``` 
-npm run dev            # Watch mode for development
-npm run start          # Build and run
+bun run dev            # Watch mode for development
+bun run start          # Build and run
 ```
 
 ### Test and lint
 ```
-npm run watch          # Run tests and lints automatically
-npm run watch:frontend # Run tests and lints automatically
-npm run test           # Run tests
-npm run test:frontend  # Run frontend tests
-npm run lint           # Run lint and format check
-npm run lint:frontend  # Run frontend lint and format check
+bun run watch          # Run tests and lints automatically
+bun run watch:frontend # Run tests and lints automatically
+bun run test           # Run tests
+bun run test:frontend  # Run frontend tests
+bun run lint           # Run lint and format check
+bun run lint:frontend  # Run frontend lint and format check
 ```
 
 ## Contribution Guidelines
@@ -51,10 +54,10 @@ Before opening a PR:
 - Run lint and tests:
 
 ```
-npm run lint
-npm run lint:frontend
-npm test
-npm test:frontend
+bun run lint
+bun run lint:frontend
+bun run test
+bun run test:frontend
 ```
 
 - Keep changes minimal and focused. Small, clear PRs are easier to review.

@@ -17,17 +17,18 @@ export const createMockStore = (
     },
     fileTree: {
       fileTree: [
-        { path: 'test.md', status: ' ' },
-        { folder: [{ path: 'folder/subfile.md', status: 'M' }] },
+        { path: 'test.md' },
+        { folder: [{ path: 'folder/subfile.md' }] },
       ],
       filteredFileTree: [
-        { path: 'test.md', status: ' ' },
-        { folder: [{ path: 'folder/subfile.md', status: 'M' }] },
+        { path: 'test.md' },
+        { folder: [{ path: 'folder/subfile.md' }] },
       ],
       loading: false,
       error: null,
       searchQuery: '',
-      isGitRepository: true,
+      expandedNodes: [],
+      mountedDirectoryPath: '',
     },
     content: {
       content: '',
@@ -35,16 +36,6 @@ export const createMockStore = (
       error: null,
       scrollPosition: 0,
       latestRequestId: null,
-    },
-    diff: {
-      diff: '',
-      diffPrev: '',
-      diffLoading: false,
-      diffPrevLoading: false,
-      diffError: null,
-      diffPrevError: null,
-      latestDiffRequestId: null,
-      latestDiffPrevRequestId: null,
     },
     outline: {
       outline: [],
@@ -85,10 +76,6 @@ export const createMockStore = (
     content: {
       ...defaultState.content,
       ...(initialState.content || {}),
-    },
-    diff: {
-      ...defaultState.diff,
-      ...(initialState.diff || {}),
     },
     outline: {
       ...defaultState.outline,

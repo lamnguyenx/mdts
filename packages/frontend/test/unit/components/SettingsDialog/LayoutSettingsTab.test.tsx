@@ -27,7 +27,7 @@ describe('LayoutSettingsTab', () => {
       />
     );
 
-    fireEvent.click(screen.getByRole('button', { name: 'full' }));
+    fireEvent.click(screen.getByRole('radio', { name: 'Full' }));
 
     expect(handleToggleContentMode).toHaveBeenCalledWith('full');
   });
@@ -44,7 +44,7 @@ describe('LayoutSettingsTab', () => {
       />
     );
 
-    fireEvent.click(screen.getByRole('button', { name: 'compact' }));
+    fireEvent.click(screen.getByRole('radio', { name: 'Compact' }));
 
     expect(handleToggleContentMode).not.toHaveBeenCalled();
   });

@@ -41,46 +41,48 @@ docker compose build --pull
 The Compose service:
 
 - builds `mdts-bun:latest` from `oven/bun:latest`
-- adds `git` in `docker/Dockerfile`
-- copies the checkout into `/app` at startup
-- installs backend and frontend dependencies with Bun
-- builds the backend and frontend
-- runs `bun dist/index.js --host 0.0.0.0 --port 8521 --no-open`
+- mounts the checkout at `/app` (read/write)
+- installs backend and frontend dependencies with Bun on startup
+- watches backend sources with `bun --watch src/index.ts`
+- watches frontend sources with `webpack --watch`
+- serves on `0.0.0.0:8521`; code edits on the host hot reload without a rebuild
+
+## Hot Reload
+
+- `src/**` edits make `bun --watch` restart the backend in-place.
+- `packages/frontend/src/**` (and `public/`) edits make webpack rebuild
+  `dist/frontend/bundle.js`; the server broadcasts `reload-page` over the
+  livereload WebSocket and every open browser tab refreshes itself.
+- `node_modules` and `dist` are created inside the mounted checkout; both are
+  gitignored, so the working tree still commits cleanly.
+- `docker/entrypoint.sh` still provides the previous copy-and-build-once flow
+  (no source mount, no watch) if you prefer an isolated runtime: switch the
+  Compose `entrypoint` to `/entrypoint.sh`.
 
 The Compose service is published only on `127.0.0.1` by default. To expose it on
 the LAN, change the port mapping in `docker-compose.yml` deliberately; the folder
 picker can browse host files readable by the container user.
 
-## Why the Dockerfile Adds Git
-
-mdts uses `simple-git` for repository status and diff views. The `oven/bun` image
-does not include `git`, so without it `/api/filetree` returns:
-
-```text
-Error: Executable not found in $PATH: "git"
-```
-
-The Dockerfile installs only `git` on top of the upstream Bun image.
-
 ## Mounts and State
 
 | Mount | Behavior |
 | --- | --- |
-| `.:/src:ro` | Read-only checkout |
-| `/app` | Container-local copy used for installs and builds |
+| `.:/app` | The checkout itself, mounted read/write so watchers see host edits |
 | `./exp/bun-cache:/cache` | Bun package cache, persisted across containers |
 | `./exp/mdts-config:${HOME}/.config` | Writable mdts config and recent folders |
 | `${HOME}:${HOME}:ro` | Host home visible to the dashboard |
-| `./docker/entrypoint.sh:/entrypoint.sh:ro` | Startup script |
+| `./docker/entrypoint-dev.sh:/entrypoint-dev.sh:ro` | Hot-reload startup script |
+| `./docker/entrypoint.sh:/entrypoint.sh:ro` | Copy-and-build-once startup script (optional) |
 
-`./exp/` is ignored by git.
+`./exp/`, `node_modules/`, and `dist/` are ignored by git.
 
-### Source copy
+### Working tree
 
-The host checkout is never used as the build/install directory. The entrypoint
-copies `/src` to `/app`, excluding `node_modules`, `dist`, `coverage`, `.git`, and
-`exp`. This prevents Bun from rewriting lockfiles or creating build output in the
-host working tree.
+Installs and builds run directly inside the mounted checkout (`/app`), so
+`node_modules` and `dist` appear on the host. Watchers observe the same mount,
+which is what makes host edits hot reload. If you need the checkout untouched,
+switch the Compose `entrypoint` to `/entrypoint.sh`, which copies sources to a
+container-local directory instead.
 
 ### Home and config
 
@@ -148,8 +150,8 @@ The image has no `curl`, so the healthcheck uses Bun:
 bun -e "fetch('http://127.0.0.1:8521/api/folders/info')..."
 ```
 
-`start_period` is 120 seconds because the first startup includes dependency
-installation and both builds. Warm starts are typically much faster.
+`start_period` is 60 seconds: the first startup installs dependencies and builds
+the frontend once; warm starts skip the install if `node_modules` is present.
 
 ## Troubleshooting
 
@@ -161,19 +163,13 @@ Use another host port:
 MDTS_PORT=9000 docker compose up -d
 ```
 
-### File tree returns 500
+### File tree is empty
 
-Check the logs for a missing `git`:
+Check that the mounted home contains markdown files and that the container user can
+read them:
 
 ```bash
 docker compose logs mdts
-```
-
-Rebuild after pulling the Dockerfile changes:
-
-```bash
-docker compose build --pull
-docker compose up -d
 ```
 
 ### DNS failures during install
@@ -200,8 +196,21 @@ The mount target `$HOME/.config` must exist on the host.
 ### Host documents are missing from the picker
 
 Only `$HOME` is mounted. Paths outside the host home are not available unless a
-new bind mount is added. Paths inside the container (such as `/app`) are visible but
-contain the container's copy, not the host checkout.
+new bind mount is added. Paths inside the container (such as `/app`) are the
+mounted host checkout itself in hot-reload mode.
+
+### Backend edit did not restart the server
+
+Verify the edit changed file **content**, not just the timestamp — a bare
+`touch` does not reliably trigger `bun --watch`. Also check the watcher is
+running (`docker compose logs mdts | grep "Watching backend"`).
+
+### `error: Failed to enable File Watcher: EMFILE`
+
+The watcher ran out of file descriptors. The container works with the default
+soft limit (`ulimit -n` 1024), but very large checkouts or running
+`bun --watch` on the host may exceed it. Raise the limit or add a Compose
+`ulimits: { nofile: ... }` entry.
 
 ## Invariants
 
@@ -209,14 +218,17 @@ contain the container's copy, not the host checkout.
 - `docker compose up -d --build` reaches healthy.
 - `/api/folders/info` returns `daemon: true` and the host home path.
 - `/api/folders/browse?path=$HOME` lists host directories.
-- `/api/filetree?folder=...` works and reports `isGitRepository` correctly.
+- `/api/filetree?folder=...` returns the mounted folder's file tree.
 - `/api/markdown/...` serves markdown from the mounted home.
+- Editing a backend source file restarts the server without a container restart.
+- Editing a frontend source file rebuilds the bundle and reloads open tabs.
 - `./exp/bun-cache` and `./exp/mdts-config` persist across container recreation.
 - No `DNSResolveFailed` messages during dependency installation.
 
 ## Related Documents
 
-- [Implementation plan](../plans/2026/10/22/2026-10-22-docker-bun-compose.md)
+- [Implementation plan (hot reload, Mantine, Bun)](../plans/2026/10/23/2026-10-23-mantine-bun-hot-reload.md)
+- [Implementation plan (original Compose setup)](../plans/2026/10/22/2026-10-22-docker-bun-compose.md)
 - [Dashboard & Multi-folder Workspaces](./dashboard-workspaces.md)
 - [Advanced Configuration](../configuration.md)
 - [Troubleshooting](../troubleshooting.md)

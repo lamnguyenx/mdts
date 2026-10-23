@@ -4,6 +4,7 @@ module.exports = {
       displayName: 'test',
       preset: 'ts-jest',
       testEnvironment: 'node',
+      roots: ['<rootDir>/test', '<rootDir>/src'],
       testMatch: ['<rootDir>/test/**/?(*.)+(spec|test).ts'],
       transformIgnorePatterns: ['node_modules'],
       setupFilesAfterEnv: ['<rootDir>/test/setupTests.ts'],

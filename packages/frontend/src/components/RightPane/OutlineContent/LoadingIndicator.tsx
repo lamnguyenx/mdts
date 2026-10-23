@@ -1,8 +1,8 @@
-import { Box, CircularProgress } from '@mui/material';
+import { Center, Loader } from '@mantine/core';
 import React from 'react';
 
 export const LoadingIndicator: React.FC = () => (
-  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 132px)' }}>
-    <CircularProgress />
-  </Box>
+  <Center h="calc(100vh - 108px)">
+    <Loader role="progressbar" />
+  </Center>
 );

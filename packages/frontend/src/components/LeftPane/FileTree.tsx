@@ -1,4 +1,4 @@
-import { Box, Drawer, useTheme } from '@mui/material';
+import { Box, Drawer, useComputedColorScheme } from '@mantine/core';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useIsMobile from '../../hooks/useIsMobile';
@@ -6,12 +6,12 @@ import {
   ensureExpandedNodes,
   expandAllNodes,
   fetchFileTree,
-  FileTreeItem,
   getAncestorPaths,
   setExpandedNodes,
   setSearchQuery
 } from '../../store/slices/fileTreeSlice';
-import { AppDispatch, RootState } from '../../store/store';
+import type { FileTreeItem } from '../../store/slices/fileTreeSlice';
+import type { AppDispatch, RootState } from '../../store/store';
 import FileTreeContent from './FileTreeContent/FileTreeContent';
 import FileTreeHeader from './FileTreeHeader';
 import FileTreeSearch from './FileTreeSearch';
@@ -30,7 +30,7 @@ const FileTree: React.FC<FileTreeComponentProps> = ({
   selectedFilePath,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const theme = useTheme();
+  const colorScheme = useComputedColorScheme('light', { getInitialValueInEffect: false });
   const isMobile = useIsMobile();
   const {
     fileTree,
@@ -72,6 +72,7 @@ const FileTree: React.FC<FileTreeComponentProps> = ({
   }, [dispatch]);
 
   const handleExpandedItemsChange = useCallback((event: React.SyntheticEvent, itemIds: string[]) => {
+    void event;
     dispatch(setExpandedNodes(itemIds));
   }, [dispatch]);
 
@@ -90,7 +91,7 @@ const FileTree: React.FC<FileTreeComponentProps> = ({
             newExpanded.push(currentPath);
           }
           if (Array.isArray(value)) {
-            collectExpandedPaths(value, currentPath);
+            collectExpandedPaths(value as (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], currentPath);
           }
         }
       });
@@ -103,8 +104,8 @@ const FileTree: React.FC<FileTreeComponentProps> = ({
     dispatch(setExpandedNodes(newExpanded));
   }, [searchQuery, filteredFileTree, dispatch]);
 
-  const overlay = theme.palette.mode === 'dark' ? 'rgba(16, 16, 16, 0.01)' : 'rgba(192, 192, 192, 0.01)';
-  const background = `linear-gradient(135deg, ${overlay} 0%, ${theme.palette.background.paper} 100%)`;
+  const overlay = colorScheme === 'dark' ? 'rgba(16, 16, 16, 0.01)' : 'rgba(192, 192, 192, 0.01)';
+  const background = `linear-gradient(135deg, ${overlay} 0%, var(--app-paper) 100%)`;
 
   const handleFileSelectWithClose = useCallback((path: string) => {
     onFileSelect(path);
@@ -143,12 +144,19 @@ const FileTree: React.FC<FileTreeComponentProps> = ({
   if (isMobile) {
     return (
       <Drawer
-        variant="temporary"
-        anchor="left"
-        open={isOpen}
+        opened={isOpen}
         onClose={onToggle}
-        ModalProps={{ keepMounted: true }}
-        slotProps={{ paper: { sx: { width: '280px', bgcolor: 'background.paper', py: 2, borderRight: '1px solid', borderColor: 'divider' } } }}
+        position="left"
+        size={260}
+        withCloseButton={false}
+        keepMounted
+        padding="sm"
+        styles={{
+          content: {
+            backgroundColor: 'var(--app-paper)',
+            borderRight: '1px solid var(--mantine-color-default-border)',
+          },
+        }}
       >
         {panelContent}
       </Drawer>
@@ -156,19 +164,20 @@ const FileTree: React.FC<FileTreeComponentProps> = ({
   }
 
   return (
-    <Box sx={{
-      width: isOpen ? '300px' : '66px',
-      background,
-      py: 2,
-      borderRight: '1px solid',
-      borderColor: 'divider',
-      minHeight: '100%',
-      flexShrink: 0,
-    }}>
+    <Box
+      style={{
+        width: isOpen ? 260 : 56,
+        background,
+        paddingTop: 'var(--mantine-spacing-xs)',
+        paddingBottom: 'var(--mantine-spacing-xs)',
+        borderRight: '1px solid var(--mantine-color-default-border)',
+        minHeight: '100%',
+        flexShrink: 0,
+      }}
+    >
       {panelContent}
     </Box>
   );
 };
 
 export default FileTree;
-

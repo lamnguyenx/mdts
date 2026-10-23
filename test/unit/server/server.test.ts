@@ -75,8 +75,8 @@ describe('server.ts unit tests', () => {
       expect(res.body.mountedDirectoryPath).toEqual(firstFolder);
       expect(res.body.fileTree).toEqual(
         expect.arrayContaining([
-          { path: 'README.md', status: ' ' },
-          { nested: [{ path: 'nested/guide.md', status: ' ' }] },
+          { path: 'README.md' },
+          { nested: [{ path: 'nested/guide.md' }] },
         ]),
       );
     });
@@ -88,7 +88,7 @@ describe('server.ts unit tests', () => {
 
       expect(res.statusCode).toEqual(200);
       expect(res.body.mountedDirectoryPath).toEqual(secondFolder);
-      expect(res.body.fileTree).toEqual([{ path: 'other.md', status: ' ' }]);
+      expect(res.body.fileTree).toEqual([{ path: 'other.md' }]);
     });
 
     it('returns 400 when no folder is configured or requested', async () => {
@@ -267,7 +267,13 @@ describe('server.ts unit tests', () => {
 
       const { server } = await serve(options, port, '127.0.0.1');
 
-      expect(setupWatcher).toHaveBeenCalledWith(options, server, port, expect.anything());
+      expect(setupWatcher).toHaveBeenCalledWith(
+        options,
+        server,
+        port,
+        expect.anything(),
+        expect.stringMatching(/dist\/frontend[/\\]bundle\.js$/),
+      );
       await new Promise<void>((resolve) => server.close(() => resolve()));
     });
 

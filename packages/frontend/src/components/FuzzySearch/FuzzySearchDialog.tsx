@@ -1,20 +1,20 @@
-import SearchIcon from '@mui/icons-material/Search';
-import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import {
   Box,
-  Dialog,
-  InputAdornment,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  TextField,
-  Typography,
-} from '@mui/material';
+  Group,
+  Kbd,
+  Modal,
+  ScrollArea,
+  Stack,
+  Text,
+  TextInput,
+  UnstyledButton,
+} from '@mantine/core';
+import { IconFile, IconSearch } from '@tabler/icons-react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { folderUrl } from '../../api';
-import { filterAndSort, FuzzyMatchResult } from './fuzzy';
+import { filterAndSort } from './fuzzy';
+import type { FuzzyMatchResult } from './fuzzy';
 import { useFileList } from './useFileList';
 
 interface FuzzySearchDialogProps {
@@ -34,9 +34,16 @@ function highlightPath(path: string, positions: number[]): React.ReactNode {
       elements.push(path.slice(lastPos + 1, pos));
     }
     elements.push(
-      <Box component="mark" key={pos} sx={{ color: 'primary.main', bgcolor: 'transparent', fontWeight: 'bold' }}>
+      <mark
+        key={pos}
+        style={{
+          color: 'var(--mantine-primary-color-filled)',
+          backgroundColor: 'transparent',
+          fontWeight: 700,
+        }}
+      >
         {path[pos]}
-      </Box>
+      </mark>
     );
     lastPos = pos;
   }
@@ -74,22 +81,25 @@ const ResultItemInner: React.FC<ResultItemProps> = ({
   }, [onMouseEnter, index]);
 
   return (
-    <ListItemButton
-      selected={selected}
+    <UnstyledButton
+      aria-selected={selected}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
-      sx={{ py: 0.75 }}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 'var(--mantine-spacing-sm)',
+        width: '100%',
+        padding: '4px 12px',
+        backgroundColor: selected ? 'var(--mantine-primary-color-light)' : undefined,
+        textAlign: 'left',
+      }}
     >
-      <ListItemIcon sx={{ minWidth: 36 }}>
-        <InsertDriveFileOutlinedIcon fontSize="small" />
-      </ListItemIcon>
-      <ListItemText
-        primary={highlightPath(path, match.positions)}
-        slotProps={{
-          primary: { noWrap: true, sx: { fontSize: '0.875rem', fontFamily: 'monospace' } },
-        }}
-      />
-    </ListItemButton>
+      <IconFile size={16} style={{ flexShrink: 0 }} />
+      <Text size="sm" ff="monospace" truncate style={{ flex: 1 }}>
+        {highlightPath(path, match.positions)}
+      </Text>
+    </UnstyledButton>
   );
 };
 
@@ -100,7 +110,7 @@ const FuzzySearchDialog: React.FC<FuzzySearchDialogProps> = ({ open, onClose }) 
   const location = useLocation();
   const fileList = useFileList();
   const inputRef = useRef<HTMLInputElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -189,102 +199,86 @@ const FuzzySearchDialog: React.FC<FuzzySearchDialogProps> = ({ open, onClose }) 
   }, []);
 
   return (
-    <Dialog
-      open={open}
+    <Modal
+      opened={open}
       onClose={onClose}
-      maxWidth="md"
-      fullWidth
-      sx={{
-        '& .MuiDialog-container': {
-          alignItems: 'flex-start',
-          pt: '16vh',
+      size="lg"
+      yOffset="12vh"
+      withCloseButton={false}
+      styles={{
+        content: {
+          display: 'flex',
+          flexDirection: 'column',
+          maxHeight: '50vh',
+          overflow: 'hidden',
         },
-      }}
-      slotProps={{
-        backdrop: {
-          sx: { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
-        },
-        paper: {
-          sx: {
-            borderRadius: 2,
-            maxHeight: '60vh',
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
-          },
+        body: {
+          padding: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: 0,
         },
       }}
     >
-      <Box sx={{ p: 2, pb: 1 }}>
-        <TextField
-          inputRef={inputRef}
-          fullWidth
+      <Box p="md" pb="sm">
+        <TextInput
+          ref={inputRef}
           placeholder="Search files..."
+          aria-label="Search files"
           value={query}
           onChange={handleQueryChange}
           onKeyDown={handleKeyDown}
-          variant="outlined"
-          size="small"
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon color="action" />
-                </InputAdornment>
-              ),
-              sx: { fontSize: '0.95rem' },
-            },
-          }}
+          size="sm"
+          leftSection={<IconSearch size={16} />}
+          leftSectionWidth={36}
         />
       </Box>
 
-      <Box sx={{ flex: 1, overflowY: 'auto' }} className="custom-scrollbar">
-        {results.length === 0 ? (
-          <Box sx={{ px: 3, py: 4, textAlign: 'center' }}>
-            <Typography variant="body2" color="text.secondary">
-              {fileList.length === 0 ? 'No files available' : 'No matching files'}
-            </Typography>
-          </Box>
-        ) : (
-          <List ref={listRef} dense disablePadding>
-            {results.map((item, index) => (
-              <ResultItem
-                key={item.path}
-                path={item.path}
-                match={item.match}
-                selected={index === selectedIndex}
-                index={index}
-                onSelect={handleResultSelect}
-                onMouseEnter={handleResultMouseEnter}
-              />
-            ))}
-          </List>
-        )}
-      </Box>
+      <ScrollArea style={{ flex: 1, minHeight: 0 }} className="custom-scrollbar">
+        <Box ref={listRef}>
+          {results.length === 0 ? (
+            <Box px="lg" py="xl" style={{ textAlign: 'center' }}>
+              <Text size="sm" c="dimmed">
+                {fileList.length === 0 ? 'No files available' : 'No matching files'}
+              </Text>
+            </Box>
+          ) : (
+            <Stack gap={0}>
+              {results.map((item, index) => (
+                <ResultItem
+                  key={item.path}
+                  path={item.path}
+                  match={item.match}
+                  selected={index === selectedIndex}
+                  index={index}
+                  onSelect={handleResultSelect}
+                  onMouseEnter={handleResultMouseEnter}
+                />
+              ))}
+            </Stack>
+          )}
+        </Box>
+      </ScrollArea>
 
-      <Box
-        sx={{
-          px: 2,
-          py: 1,
-          borderTop: '1px solid',
-          borderColor: 'divider',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
+      <Group
+        px="md"
+        py="xs"
+        justify="space-between"
+        style={{ borderTop: '1px solid var(--mantine-color-default-border)' }}
       >
-        <Typography variant="caption" color="text.secondary">
+        <Text size="xs" c="dimmed">
           {results.length} of {fileList.length} files
-        </Typography>
-        <Typography variant="caption" color="text.secondary">
-          <Box component="span" sx={{ mx: 0.5, px: 0.5, py: 0.25, border: '1px solid', borderColor: 'divider', borderRadius: 0.5, fontSize: '0.7rem' }}>↑↓</Box>
-          navigate
-          <Box component="span" sx={{ mx: 0.5, px: 0.5, py: 0.25, border: '1px solid', borderColor: 'divider', borderRadius: 0.5, fontSize: '0.7rem' }}>enter</Box>
-          open
-          <Box component="span" sx={{ mx: 0.5, px: 0.5, py: 0.25, border: '1px solid', borderColor: 'divider', borderRadius: 0.5, fontSize: '0.7rem' }}>esc</Box>
-          close
-        </Typography>
-      </Box>
-    </Dialog>
+        </Text>
+        <Group gap={4}>
+          <Kbd>↑↓</Kbd>
+          <Text size="xs" c="dimmed">navigate</Text>
+          <Kbd>enter</Kbd>
+          <Text size="xs" c="dimmed">open</Text>
+          <Kbd>esc</Kbd>
+          <Text size="xs" c="dimmed">close</Text>
+        </Group>
+      </Group>
+    </Modal>
   );
 };
 

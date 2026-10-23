@@ -1,4 +1,5 @@
-import { useTheme } from '@mui/material';
+import { useComputedColorScheme } from '@mantine/core';
+import type { CSSProperties } from 'react';
 import {
   a11yDark,
   atomDark,
@@ -56,14 +57,14 @@ export const resolveSyntaxHighlighterThemeValue = (syntaxHighlighterTheme: strin
 };
 
 export const useSyntaxHighlighterThemeMeta = (syntaxHighlighterTheme: string): SyntaxHighlighterThemeMeta => {
-  const theme = useTheme();
-  const resolved = resolveSyntaxHighlighterThemeValue(syntaxHighlighterTheme, theme.palette.mode);
+  const colorScheme = useComputedColorScheme('light', { getInitialValueInEffect: false });
+  const resolved = resolveSyntaxHighlighterThemeValue(syntaxHighlighterTheme, colorScheme);
   return SYNTAX_HIGHLIGHTER_THEMES.find(t => t.value === resolved)
     ?? SYNTAX_HIGHLIGHTER_THEMES.find(t => t.value === 'atomDark')!;
 };
 
-export const useSyntaxHighlighterTheme = (syntaxHighlighterTheme: string): object => {
-  const theme = useTheme();
+export const useSyntaxHighlighterTheme = (syntaxHighlighterTheme: string): Record<string, CSSProperties> => {
+  const colorScheme = useComputedColorScheme('light', { getInitialValueInEffect: false });
 
   const themeMap: { [key: string]: object } = {
     coy,
@@ -111,6 +112,6 @@ export const useSyntaxHighlighterTheme = (syntaxHighlighterTheme: string): objec
     zTouch,
   };
 
-  const resolved = resolveSyntaxHighlighterThemeValue(syntaxHighlighterTheme, theme.palette.mode);
-  return themeMap[resolved] || atomDark;
+  const resolved = resolveSyntaxHighlighterThemeValue(syntaxHighlighterTheme, colorScheme);
+  return (themeMap[resolved] || atomDark) as Record<string, CSSProperties>;
 };

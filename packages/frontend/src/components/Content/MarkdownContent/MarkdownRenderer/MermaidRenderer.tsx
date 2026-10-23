@@ -1,49 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import mermaid from 'mermaid';
-import { useTheme } from '@mui/material';
+import { useComputedColorScheme } from '@mantine/core';
 import { useSelector } from 'react-redux';
-import { styled } from '@mui/material/styles';
-import { RootState } from '../../../../store/store';
+import type { RootState } from '../../../../store/store';
 
 interface MermaidProps {
   chart: string;
 }
 
 /**
- * Styled container that isolates mermaid SVG from global CSS pollution.
- *
- * Mermaid flowcharts render labels inside SVG <foreignObject> elements,
- * which contain standard HTML (e.g. <p>, <div>). These elements are
- * vulnerable to global typography styles (margins, line-height, etc.).
- *
- * We use scoped CSS via MUI styled() to reset only the elements inside
- * the mermaid wrapper, without affecting the rest of the page.
+ * Mermaid flowcharts render labels inside SVG <foreignObject> elements, which
+ * contain standard HTML (e.g. <p>, <div>). The `.mermaid-wrapper` rules in
+ * index.css isolate those elements from global typography styles.
  */
-const MermaidContainer = styled('div')({
-  overflow: 'visible',
-  maxWidth: '100%',
-  // Allow foreignObject content to overflow its boundary when mermaid's
-  // size calculation is slightly off.
-  '& foreignObject': {
-    overflow: 'visible',
-  },
-  // Reset global CSS pollution inside foreignObject (e.g. MUI CssBaseline,
-  // markdown typography) so that text metrics match what mermaid computed.
-  '& foreignObject p, & foreignObject div, & foreignObject span': {
-    margin: 0,
-    padding: 0,
-    lineHeight: 1.5,
-  },
-  // Slightly round the edge-label background rect for visual polish.
-  '& .edgeLabel .labelBkg': {
-    rx: 4,
-    ry: 4,
-  },
-});
-
 const MermaidRenderer: React.FC<MermaidProps> = ({ chart }) => {
   const [svg, setSvg] = useState<string | null>(null);
-  const theme = useTheme();
+  const colorScheme = useComputedColorScheme('light', { getInitialValueInEffect: false });
   const { fontFamily } = useSelector((state: RootState) => state.config);
 
   useEffect(() => {
@@ -60,7 +32,7 @@ const MermaidRenderer: React.FC<MermaidProps> = ({ chart }) => {
 
         mermaid.initialize({
           startOnLoad: false,
-          theme: theme.palette.mode === 'dark' ? 'dark' : 'neutral',
+          theme: colorScheme === 'dark' ? 'dark' : 'neutral',
           // Mermaid 12 switched the defaults to look: 'neo' and layout: 'elk'.
           // Pin the previous defaults so diagrams keep rendering as before, and
           // so the container CSS above keeps matching what mermaid measures.
@@ -84,14 +56,14 @@ const MermaidRenderer: React.FC<MermaidProps> = ({ chart }) => {
     };
 
     renderMermaid();
-  }, [chart, theme.palette.mode, fontFamily]);
+  }, [chart, colorScheme, fontFamily]);
 
   if (!svg) {
     return <pre><code>{chart}</code></pre>;
   }
 
   return (
-    <MermaidContainer
+    <div
       className="mermaid-wrapper"
       dangerouslySetInnerHTML={{ __html: svg }}
     />

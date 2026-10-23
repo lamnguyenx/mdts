@@ -3,27 +3,13 @@
 exports[`LoadingIndicator should render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-hehwu5"
+    class="m_4451eb3a mantine-Center-root"
+    style="height: calc(100vh - 148px);"
   >
     <span
-      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-1wxecgq-MuiCircularProgress-root"
+      class="m_b34414df m_5ae2e3c mantine-Loader-root"
       role="progressbar"
-      style="width: 40px; height: 40px;"
-    >
-      <svg
-        class="MuiCircularProgress-svg css-54pwck-MuiCircularProgress-svg"
-        viewBox="22 22 44 44"
-      >
-        <circle
-          class="MuiCircularProgress-circle css-19t5dcl-MuiCircularProgress-circle"
-          cx="44"
-          cy="44"
-          fill="none"
-          r="20.2"
-          stroke-width="3.6"
-        />
-      </svg>
-    </span>
+    />
   </div>
 </DocumentFragment>
 `;
