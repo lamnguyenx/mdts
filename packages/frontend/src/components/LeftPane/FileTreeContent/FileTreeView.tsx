@@ -81,16 +81,10 @@ export const FileTreeView: React.FC<FileTreeViewProps> = ({
         {...elementProps}
         gap={6}
         wrap="nowrap"
-        style={{
-          ...elementProps.style,
-          // Longhands only: Mantine indents nested nodes with
-          // `padding-inline-start: var(--label-offset)` from the label class.
-          // A `padding` shorthand here would reset it and flatten the tree.
-          paddingBlock: '1px',
-          paddingInlineEnd: 4,
-          borderRadius: 'var(--mantine-radius-sm)',
-          backgroundColor: selected ? 'var(--mantine-primary-color-light)' : undefined,
-        }}
+        py={1}
+        pe={4}
+        bdrs="sm"
+        bg={selected ? 'var(--mantine-primary-color-light)' : undefined}
       >
         {hasChildren ? (
           <IconFolder size={16} color="var(--mantine-primary-color-filled)" style={{ flexShrink: 0 }} />
@@ -143,14 +137,12 @@ export const FileTreeView: React.FC<FileTreeViewProps> = ({
   return (
     <Tree
       ref={treeRef}
-      className="custom-scrollbar"
       data={treeData}
       tree={tree}
       selectOnClick
       expandOnClick
       withLines
       levelOffset="md"
-      style={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto', height: 'calc(100vh - 148px)', paddingLeft: 'var(--mantine-spacing-sm)', paddingRight: 'var(--mantine-spacing-sm)', paddingBottom: 'var(--mantine-spacing-sm)' }}
       renderNode={renderNode}
     />
   );

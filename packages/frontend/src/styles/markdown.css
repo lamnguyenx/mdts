@@ -1,0 +1,223 @@
+/*
+ * Markdown prose styles. Colors and radii are driven entirely by Mantine
+ * CSS variables so the content follows the active color scheme and theme.
+ */
+.markdown-body {
+  h1 {
+    margin: 32px 0 16px;
+    padding-bottom: 12px;
+    font-weight: 500;
+    font-size: 1.857rem;
+    border-bottom: 1px solid var(--mantine-color-default-border);
+  }
+
+  h2 {
+    margin: 28px 0 14px;
+    padding-bottom: 8px;
+    font-weight: 500;
+    font-size: 1.571rem;
+    border-bottom: 1px solid var(--mantine-color-default-border);
+  }
+
+  h3 {
+    margin: 28px 0 14px;
+    padding-bottom: 8px;
+    font-size: 1.286rem;
+    font-weight: 500;
+  }
+
+  h4,
+  h5,
+  h6 {
+    margin: 28px 0 14px;
+    font-size: 1.143rem;
+    font-weight: 400;
+  }
+
+  p,
+  ul,
+  ol {
+    margin: 16px 0;
+    font-size: 0.875rem;
+    line-height: 1.65;
+
+    li {
+      ul,
+      ol {
+        margin: 8px 0 0;
+      }
+    }
+  }
+
+  ul,
+  ol {
+    padding-left: 20px;
+  }
+
+  li {
+    margin: 0 0 4px;
+  }
+
+  .contains-task-list {
+    list-style: none;
+    padding-left: 4px;
+  }
+
+  .task-list-item {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+
+    input[type='checkbox'] {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      border: 2px solid var(--mantine-color-default-border);
+      border-radius: var(--mantine-radius-xs);
+      cursor: default;
+      position: relative;
+      top: 2px;
+
+      &:checked {
+        background-color: var(--mantine-color-anchor);
+        border-color: var(--mantine-color-anchor);
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 3px;
+          top: 0;
+          width: 5px;
+          height: 9px;
+          border: solid #fff;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
+      }
+    }
+  }
+
+  hr {
+    margin: 32px 0;
+    border: 0;
+    border-bottom: 1px solid var(--mantine-color-default-border);
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .table-wrapper {
+    margin: 24px 0;
+  }
+
+  table {
+    width: 100%;
+    min-width: max-content;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+
+    thead {
+      text-align: left;
+    }
+
+    tr {
+      border-top: 1px solid var(--mantine-color-default-border);
+    }
+
+    td,
+    th {
+      padding: 6px 12px;
+      border: 1px solid var(--mantine-color-default-border);
+      min-width: 120px;
+      word-break: break-word;
+    }
+  }
+
+  pre {
+    padding: 0;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    border-radius: var(--mantine-radius-sm);
+    scrollbar-width: thin;
+    scrollbar-color: var(--mantine-color-dimmed) transparent;
+
+    code {
+      width: 100%;
+      margin: 0;
+      padding: 16px;
+      font-size: 0.875rem;
+      line-height: 1.8;
+      word-break: normal;
+      white-space: pre;
+      background: transparent;
+      border: 0;
+    }
+
+    .syntax-highlighter code {
+      padding: 0;
+    }
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mantine-color-dimmed) transparent;
+  }
+
+  pre:has(.syntax-highlighter) {
+    padding: 0;
+    background: transparent;
+  }
+
+  code {
+    display: inline-block;
+    padding: 0.1em 0.6em;
+    margin: 0;
+    font-size: 0.8em;
+    border-radius: var(--mantine-radius-xs);
+  }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 5px 16px;
+    font-size: 1rem;
+    color: var(--mantine-color-dimmed);
+    border-left: 3px solid var(--mantine-color-default-border);
+
+    blockquote {
+      margin: 12px 0;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  a {
+    color: var(--mantine-color-anchor);
+    transition: color 0.1s ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+      text-decoration: none;
+    }
+  }
+
+  .markdown-alert {
+    .markdown-alert-title {
+      margin-bottom: calc(var(--rehype-github-alerts-default-space) / 2);
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .katex {
+    position: relative;
+    font-size: 1.143rem;
+  }
+}

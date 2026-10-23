@@ -4,7 +4,7 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
 <DocumentFragment>
   <div
     class=""
-    style="width: 800px; min-width: 0; min-height: calc(100vh - var(--app-header-height)); margin: 0px auto; padding: var(--mantine-spacing-lg); background-color: var(--app-paper); border-left: 1px solid var(--mantine-color-default-border); border-right: 1px solid var(--mantine-color-default-border);"
+    style="margin-inline: auto; padding-inline: var(--mantine-spacing-lg); padding-block: var(--mantine-spacing-lg); width: 100%; max-width: calc(50rem * var(--mantine-scale));"
   >
     <div
       aria-label="breadcrumb"
@@ -12,56 +12,57 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
       style="margin-bottom: var(--mantine-spacing-sm);"
     />
     <div
-      class="m_4081bf90 mantine-Group-root"
-      style="--group-gap: var(--mantine-spacing-xs); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; margin-bottom: var(--mantine-spacing-sm);"
+      class="m_1b7284a3 mantine-Paper-root"
+      data-with-border="true"
+      style="--paper-radius: var(--mantine-radius-md); --paper-shadow: var(--mantine-shadow-sm); padding: var(--mantine-spacing-xl); background: var(--mantine-color-default);"
     >
-      <svg
-        class="tabler-icon tabler-icon-file-text"
-        fill="none"
-        height="32"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        width="32"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        class="m_4081bf90 mantine-Group-root"
+        style="--group-gap: var(--mantine-spacing-xs); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; margin-bottom: var(--mantine-spacing-sm);"
       >
-        <path
-          d="M14 3v4a1 1 0 0 0 1 1h4"
-        />
-        <path
-          d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"
-        />
-        <path
-          d="M9 9l1 0"
-        />
-        <path
-          d="M9 13l6 0"
-        />
-        <path
-          d="M9 17l6 0"
-        />
-      </svg>
-      <h4
-        class="m_8a5d1357 mantine-Title-root"
-        data-order="4"
-        style="--title-fw: var(--mantine-h4-font-weight); --title-lh: var(--mantine-h4-line-height); --title-fz: var(--mantine-h4-font-size); margin: 0px; word-break: break-word;"
-      >
-        🎉 Welcome to mdts!
-      </h4>
-    </div>
-    <div
-      class=""
-      style="margin-left: -24px; margin-right: -24px; padding-left: 16px; border-bottom: 1px solid var(--mantine-color-default-border);"
-    >
+        <svg
+          class="tabler-icon tabler-icon-file-text"
+          fill="none"
+          height="32"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14 3v4a1 1 0 0 0 1 1h4"
+          />
+          <path
+            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"
+          />
+          <path
+            d="M9 9l1 0"
+          />
+          <path
+            d="M9 13l6 0"
+          />
+          <path
+            d="M9 17l6 0"
+          />
+        </svg>
+        <h4
+          class="m_8a5d1357 mantine-Title-root"
+          data-order="4"
+          style="--title-fw: var(--mantine-h4-font-weight); --title-lh: var(--mantine-h4-line-height); --title-fz: var(--mantine-h4-font-size); word-break: break-word;"
+        >
+          🎉 Welcome to mdts!
+        </h4>
+      </div>
       <div
         aria-label="view mode tabs"
         class="m_89d60db1 mantine-Tabs-root"
         data-orientation="horizontal"
         data-variant="default"
         id="mantine-_r_5_"
-        style="--tabs-radius: var(--mantine-radius-default); --tabs-color: var(--mantine-color-blue-filled);"
+        style="--tabs-radius: var(--mantine-radius-default); --tabs-color: var(--mantine-color-blue-filled); margin-bottom: var(--mantine-spacing-md);"
       >
         <div
           aria-orientation="horizontal"
@@ -106,18 +107,18 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
           </button>
         </div>
       </div>
-    </div>
-    <div
-      class=""
-      style="font-family: Roboto;"
-    >
       <div
-        class="markdown-body"
-        style="padding-inline: 0rem; padding-block: var(--mantine-spacing-xs);"
+        class=""
+        style="font-family: Roboto;"
       >
         <div
-          data-testid="mock-react-markdown"
-        />
+          class="markdown-body"
+          style="padding-inline: 0rem; padding-block: var(--mantine-spacing-xs);"
+        >
+          <div
+            data-testid="mock-react-markdown"
+          />
+        </div>
       </div>
     </div>
   </div>

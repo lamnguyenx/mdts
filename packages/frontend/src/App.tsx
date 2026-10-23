@@ -24,7 +24,7 @@ interface ServerInfo {
 }
 
 const LoadingScreen: React.FC = () => (
-  <Center mih="100vh" bg="var(--app-background)">
+  <Center mih="100vh" bg="var(--mantine-color-body)">
     <Loader role="progressbar" />
   </Center>
 );

@@ -4,11 +4,13 @@ exports[`LoadingIndicator should render correctly 1`] = `
 <DocumentFragment>
   <div
     class="m_4451eb3a mantine-Center-root"
-    style="height: calc(100vh - 108px);"
+    style="padding-block: var(--mantine-spacing-xl);"
   >
     <span
       class="m_b34414df m_5ae2e3c mantine-Loader-root"
+      data-size="sm"
       role="progressbar"
+      style="--loader-size: var(--loader-size-sm);"
     />
   </div>
 </DocumentFragment>

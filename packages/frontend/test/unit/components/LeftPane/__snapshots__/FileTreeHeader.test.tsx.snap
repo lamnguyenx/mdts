@@ -3,15 +3,15 @@
 exports[`FileTreeHeader renders correctly when closed 1`] = `
 <DocumentFragment>
   <div
-    class=""
-    style="display: flex; justify-content: space-between; align-items: center; height: 30px; margin-bottom: var(--mantine-spacing-xs); padding-left: 4px; padding-right: 4px;"
+    class="m_4081bf90 mantine-Group-root"
+    style="--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: center; --group-wrap: wrap; margin-bottom: var(--mantine-spacing-xs);"
   >
     <button
       aria-label="toggle file tree"
       class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
       data-size="sm"
       data-variant="subtle"
-      style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; margin-left: 12px;"
+      style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
       type="button"
     >
       <span
@@ -43,15 +43,15 @@ exports[`FileTreeHeader renders correctly when open 1`] = `
 <DocumentFragment>
   <div
     class=""
-    style="display: flex; justify-content: space-between; align-items: center; height: 30px; margin-bottom: var(--mantine-spacing-xs); padding-left: var(--mantine-spacing-sm); padding-right: var(--mantine-spacing-sm);"
+    style="margin-bottom: var(--mantine-spacing-xs); padding-inline: var(--mantine-spacing-sm);"
   >
     <div
       class="m_4081bf90 mantine-Group-root"
-      style="--group-gap: calc(0.25rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; flex: 1 1 0%;"
+      style="--group-gap: calc(0.25rem * var(--mantine-scale)); --group-align: center; --group-justify: space-between; --group-wrap: nowrap;"
     >
       <p
         class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
-        style="flex: 1 1 0%; margin-left: var(--mantine-spacing-xs); font-weight: 600;"
+        style="flex: 1 1 0%; padding-left: var(--mantine-spacing-xs); font-weight: 600;"
       >
         File Tree
       </p>
@@ -119,36 +119,36 @@ exports[`FileTreeHeader renders correctly when open 1`] = `
           </svg>
         </span>
       </button>
-    </div>
-    <button
-      aria-label="toggle file tree"
-      class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
-      data-size="sm"
-      data-variant="subtle"
-      style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; margin-left: 0px;"
-      type="button"
-    >
-      <span
-        class="m_8d3afb97 mantine-ActionIcon-icon"
+      <button
+        aria-label="toggle file tree"
+        class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+        data-size="sm"
+        data-variant="subtle"
+        style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+        type="button"
       >
-        <svg
-          class="tabler-icon tabler-icon-chevron-left"
-          fill="none"
-          height="16"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="16"
-          xmlns="http://www.w3.org/2000/svg"
+        <span
+          class="m_8d3afb97 mantine-ActionIcon-icon"
         >
-          <path
-            d="M15 6l-6 6l6 6"
-          />
-        </svg>
-      </span>
-    </button>
+          <svg
+            class="tabler-icon tabler-icon-chevron-left"
+            fill="none"
+            height="16"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 6l-6 6l6 6"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
   </div>
 </DocumentFragment>
 `;

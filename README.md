@@ -37,7 +37,7 @@
 - 🔗 **Shareable Workspace URLs** – Every folder gets a `?folder=/path` URL
 - 🔄 **Live Reload** – Automatically refreshes on file changes  
 - 🧘 **Zero Setup** – No config, no install, no nonsense
-- 🎨 **Custom Themes** – 20+ beautiful application themes and syntax highlighting options
+- 🎨 **Custom Themes** – 20+ application themes applied natively across the whole Mantine UI (light & dark) plus syntax highlighting options
 
 
 ## 🚀 Quick Start
@@ -189,6 +189,13 @@ Development uses [Bun](https://bun.sh) for dependency management, builds, and
 script running (Jest itself still runs on Node.js 24+):
 `bun install`, `bun run dev`, `bun run test`. The included
 `docker-compose.yml` is a hot-reload dev environment for the checkout itself.
+
+The UI is built entirely on **Mantine 9** — `AppShell` for the application
+shell, Mantine color tokens for the 20+ palette themes, `ScrollArea` for
+scrolling, and Mantine components/style props throughout. See
+[Frontend on Mantine](docs/important/frontend-mantine.md) for the architecture
+invariants and the [styling revamp plan](docs/plans/2026/10/23/2026-10-23-mantine-native-styling.md)
+for the design rationale.
 
 ## Author
 

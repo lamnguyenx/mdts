@@ -1,22 +1,4 @@
-@import url('./styles/scrollbar.css');
-
-:root {
-  --app-header-height: 52px;
-  --scrollbar-thumb-color: #888;
-  --scrollbar-thumb-hover-color: #555;
-  --scrollbar-track-color: rgba(0, 0, 0, 0.05);
-}
-
-[data-mantine-color-scheme="dark"] {
-  --scrollbar-thumb-color: #555;
-  --scrollbar-thumb-hover-color: #888;
-  --scrollbar-track-color: rgba(255, 255, 255, 0.05);
-}
-
-body {
-  background: linear-gradient(180deg, var(--app-background) 0%, var(--app-paper) 100%);
-  background-attachment: fixed;
-}
+@import './styles/markdown.css';
 
 /* Mermaid isolates its SVG labels from the global typography styles. */
 .mermaid-wrapper {

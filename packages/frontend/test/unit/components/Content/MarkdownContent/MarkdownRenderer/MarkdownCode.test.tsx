@@ -76,6 +76,6 @@ describe('MarkdownCode', () => {
       </Provider>
     );
 
-    expect(screen.getByText('Loading PlantUML diagram...')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 });

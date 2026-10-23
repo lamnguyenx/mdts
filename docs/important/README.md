@@ -19,8 +19,9 @@ must not regress. Keep these documents current when the related system changes.
   `?folder=` workspaces, recent folders, folder-scoped APIs, and live reload.
 - [Docker on Bun](./docker.md) — Compose setup, hot-reload workflow, cache/state
   mounts, healthcheck, and host DNS prerequisites.
-- [Frontend on Mantine](./frontend-mantine.md) — provider/theme contracts and the
-  Tree `renderNode` rules that keep indentation and guide lines working.
+- [Frontend on Mantine](./frontend-mantine.md) — token-based theming, `AppShell`
+  layout, `ScrollArea` contracts, style-prop rules, snapshot policy, and the Tree
+  `renderNode` rules that keep indentation and guide lines working.
 
 ## Related Documentation
 

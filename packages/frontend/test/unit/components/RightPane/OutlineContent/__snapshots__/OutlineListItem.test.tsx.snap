@@ -4,7 +4,7 @@ exports[`OutlineListItem should render correctly 1`] = `
 <DocumentFragment>
   <button
     class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
-    style="padding: 2px var(--mantine-spacing-sm) 2px 16px; border-radius: var(--mantine-radius-sm); width: 100%;"
+    style="padding-block: calc(0.125rem * var(--mantine-scale)); padding-inline-end: var(--mantine-spacing-sm); padding-inline-start: calc(1rem * var(--mantine-scale)); width: 100%; border-radius: var(--mantine-radius-sm);"
     type="button"
   >
     <p

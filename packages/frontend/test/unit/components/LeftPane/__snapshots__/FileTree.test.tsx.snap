@@ -4,19 +4,19 @@ exports[`FileTree renders correctly 1`] = `
 <DocumentFragment>
   <div
     class=""
-    style="width: 260px; background: linear-gradient(135deg, rgba(192, 192, 192, 0.01) 0%, var(--app-paper) 100%); padding-top: var(--mantine-spacing-xs); padding-bottom: var(--mantine-spacing-xs); border-right: 1px solid var(--mantine-color-default-border); min-height: 100%; flex-shrink: 0;"
+    style="display: flex; flex-direction: column; height: 100%; min-width: 0; padding-block: var(--mantine-spacing-xs);"
   >
     <div
       class=""
-      style="display: flex; justify-content: space-between; align-items: center; height: 30px; margin-bottom: var(--mantine-spacing-xs); padding-left: var(--mantine-spacing-sm); padding-right: var(--mantine-spacing-sm);"
+      style="margin-bottom: var(--mantine-spacing-xs); padding-inline: var(--mantine-spacing-sm);"
     >
       <div
         class="m_4081bf90 mantine-Group-root"
-        style="--group-gap: calc(0.25rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; flex: 1 1 0%;"
+        style="--group-gap: calc(0.25rem * var(--mantine-scale)); --group-align: center; --group-justify: space-between; --group-wrap: nowrap;"
       >
         <p
           class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
-          style="flex: 1 1 0%; margin-left: var(--mantine-spacing-xs); font-weight: 600;"
+          style="flex: 1 1 0%; padding-left: var(--mantine-spacing-xs); font-weight: 600;"
         >
           File Tree
         </p>
@@ -84,36 +84,36 @@ exports[`FileTree renders correctly 1`] = `
             </svg>
           </span>
         </button>
-      </div>
-      <button
-        aria-label="toggle file tree"
-        class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
-        data-size="sm"
-        data-variant="subtle"
-        style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; margin-left: 0px;"
-        type="button"
-      >
-        <span
-          class="m_8d3afb97 mantine-ActionIcon-icon"
+        <button
+          aria-label="toggle file tree"
+          class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+          data-size="sm"
+          data-variant="subtle"
+          style="--ai-size: var(--ai-size-sm); --ai-bg: transparent; --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+          type="button"
         >
-          <svg
-            class="tabler-icon tabler-icon-chevron-left"
-            fill="none"
-            height="16"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
+          <span
+            class="m_8d3afb97 mantine-ActionIcon-icon"
           >
-            <path
-              d="M15 6l-6 6l6 6"
-            />
-          </svg>
-        </span>
-      </button>
+            <svg
+              class="tabler-icon tabler-icon-chevron-left"
+              fill="none"
+              height="16"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 6l-6 6l6 6"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
     </div>
     <div
       class=""
@@ -158,117 +158,133 @@ exports[`FileTree renders correctly 1`] = `
             aria-label="search files"
             class="m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"
             data-variant="default"
-            id="mantine-_r_h_"
+            id="mantine-_r_k_"
             placeholder="Search files..."
             value=""
           />
         </div>
       </div>
     </div>
-    <ul
-      aria-multiselectable="false"
-      class="custom-scrollbar m_f698e191 mantine-Tree-root"
-      data-tree-root="true"
-      data-with-lines="true"
-      role="tree"
-      style="--level-offset: var(--mantine-spacing-md); flex-grow: 1; max-width: 400px; overflow-y: auto; height: calc(100vh - 148px); padding-left: var(--mantine-spacing-sm); padding-right: var(--mantine-spacing-sm); padding-bottom: var(--mantine-spacing-sm);"
+    <div
+      class="m_d57069b5 mantine-ScrollArea-root"
+      style="flex-grow: 1; min-height: 0; --sa-corner-width: 0px; --sa-corner-height: 0px; padding-inline: var(--mantine-spacing-sm); padding-bottom: var(--mantine-spacing-sm);"
     >
-      <li
-        aria-selected="false"
-        class="m_f6970eb1 mantine-Tree-node"
-        data-level="1"
-        data-value="file3.js"
-        role="treeitem"
-        style="--label-offset: calc(var(--level-offset) * 0);"
-        tabindex="0"
+      <div
+        class="m_c0783ff9 mantine-ScrollArea-viewport"
+        data-scrollarea-viewport="true"
+        data-scrollbars="xy"
+        style="overflow-x: scroll; overflow-y: scroll;"
       >
         <div
-          class="m_dc283425 mantine-Tree-label m_4081bf90 mantine-Group-root"
-          data-value="file3.js"
-          style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: 1px; padding-inline-end: 4px; border-radius: var(--mantine-radius-sm);"
+          class="m_b1336c6 mantine-ScrollArea-content"
         >
-          <svg
-            class="tabler-icon tabler-icon-file-text"
-            fill="none"
-            height="16"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            style="flex-shrink: 0;"
-            viewBox="0 0 24 24"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
+          <ul
+            aria-multiselectable="false"
+            class="m_f698e191 mantine-Tree-root"
+            data-tree-root="true"
+            data-with-lines="true"
+            role="tree"
+            style="--level-offset: var(--mantine-spacing-md);"
           >
-            <path
-              d="M14 3v4a1 1 0 0 0 1 1h4"
-            />
-            <path
-              d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"
-            />
-            <path
-              d="M9 9l1 0"
-            />
-            <path
-              d="M9 13l6 0"
-            />
-            <path
-              d="M9 17l6 0"
-            />
-          </svg>
-          <p
-            class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
-            data-size="sm"
-            data-truncate="end"
-            style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); flex: 1 1 0%;"
-          >
-            file3.js
-          </p>
+            <li
+              aria-selected="false"
+              class="m_f6970eb1 mantine-Tree-node"
+              data-level="1"
+              data-value="file3.js"
+              role="treeitem"
+              style="--label-offset: calc(var(--level-offset) * 0);"
+              tabindex="0"
+            >
+              <div
+                class="m_dc283425 mantine-Tree-label m_4081bf90 mantine-Group-root"
+                data-value="file3.js"
+                style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: calc(0.0625rem * var(--mantine-scale)); padding-inline-end: calc(0.25rem * var(--mantine-scale)); border-radius: var(--mantine-radius-sm);"
+              >
+                <svg
+                  class="tabler-icon tabler-icon-file-text"
+                  fill="none"
+                  height="16"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  style="flex-shrink: 0;"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14 3v4a1 1 0 0 0 1 1h4"
+                  />
+                  <path
+                    d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"
+                  />
+                  <path
+                    d="M9 9l1 0"
+                  />
+                  <path
+                    d="M9 13l6 0"
+                  />
+                  <path
+                    d="M9 17l6 0"
+                  />
+                </svg>
+                <p
+                  class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+                  data-size="sm"
+                  data-truncate="end"
+                  style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); flex: 1 1 0%;"
+                >
+                  file3.js
+                </p>
+              </div>
+            </li>
+            <li
+              aria-expanded="false"
+              aria-selected="false"
+              class="m_f6970eb1 mantine-Tree-node"
+              data-level="1"
+              data-value="folder1"
+              role="treeitem"
+              style="--label-offset: calc(var(--level-offset) * 0);"
+              tabindex="-1"
+            >
+              <div
+                class="m_dc283425 mantine-Tree-label m_4081bf90 mantine-Group-root"
+                data-value="folder1"
+                style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: calc(0.0625rem * var(--mantine-scale)); padding-inline-end: calc(0.25rem * var(--mantine-scale)); border-radius: var(--mantine-radius-sm);"
+              >
+                <svg
+                  class="tabler-icon tabler-icon-folder"
+                  fill="none"
+                  height="16"
+                  stroke="var(--mantine-primary-color-filled)"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  style="flex-shrink: 0;"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"
+                  />
+                </svg>
+                <p
+                  class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+                  data-size="sm"
+                  data-truncate="end"
+                  style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); flex: 1 1 0%;"
+                >
+                  folder1
+                </p>
+              </div>
+            </li>
+          </ul>
         </div>
-      </li>
-      <li
-        aria-expanded="false"
-        aria-selected="false"
-        class="m_f6970eb1 mantine-Tree-node"
-        data-level="1"
-        data-value="folder1"
-        role="treeitem"
-        style="--label-offset: calc(var(--level-offset) * 0);"
-        tabindex="-1"
-      >
-        <div
-          class="m_dc283425 mantine-Tree-label m_4081bf90 mantine-Group-root"
-          data-value="folder1"
-          style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: 1px; padding-inline-end: 4px; border-radius: var(--mantine-radius-sm);"
-        >
-          <svg
-            class="tabler-icon tabler-icon-folder"
-            fill="none"
-            height="16"
-            stroke="var(--mantine-primary-color-filled)"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            style="flex-shrink: 0;"
-            viewBox="0 0 24 24"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"
-            />
-          </svg>
-          <p
-            class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
-            data-size="sm"
-            data-truncate="end"
-            style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); flex: 1 1 0%;"
-          >
-            folder1
-          </p>
-        </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

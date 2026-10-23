@@ -26,12 +26,10 @@ const renderThemeOption: SelectProps['renderOption'] = ({ option }) => {
       <Box
         w={20}
         h={20}
-        style={{
-          borderRadius: 4,
-          background: themeOption.swatch,
-          border: '1px solid var(--mantine-color-default-border)',
-          flexShrink: 0,
-        }}
+        bdrs={5}
+        bd="1px solid var(--mantine-color-default-border)"
+        bg={themeOption.swatch}
+        style={{ flexShrink: 0 }}
       />
       <Text size="sm">{themeOption.label}</Text>
     </Group>
@@ -46,12 +44,10 @@ const renderSyntaxThemeOption: SelectProps['renderOption'] = ({ option }) => {
         <Box
           w={20}
           h={20}
-          style={{
-            borderRadius: 4,
-            background: syntaxOption.color,
-            border: '1px solid var(--mantine-color-default-border)',
-            flexShrink: 0,
-          }}
+          bdrs={5}
+          bd="1px solid var(--mantine-color-default-border)"
+          bg={syntaxOption.color}
+          style={{ flexShrink: 0 }}
         />
       )}
       <Text size="sm">{syntaxOption.label}</Text>

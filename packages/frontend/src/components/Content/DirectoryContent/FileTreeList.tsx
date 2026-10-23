@@ -1,4 +1,4 @@
-import { Stack, Text, UnstyledButton } from '@mantine/core';
+import { Button, Stack, Text } from '@mantine/core';
 import { IconFileText, IconFolder } from '@tabler/icons-react';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
@@ -37,22 +37,20 @@ const FileTreeListItem: React.FC<FileTreeListItemProps> = ({ item, handleItemCli
   }, [handleItemClick, itemPath, isDirectory]);
 
   return (
-    <UnstyledButton
+    <Button
+      variant="subtle"
+      color="gray"
+      fullWidth
+      justify="flex-start"
+      leftSection={
+        isDirectory
+          ? <IconFolder size={18} color="var(--mantine-primary-color-filled)" />
+          : <IconFileText size={18} />
+      }
       onClick={handleClick}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--mantine-spacing-xs)',
-        padding: '4px 8px',
-        borderRadius: 'var(--mantine-radius-sm)',
-      }}
+      fw={400}
     >
-      {isDirectory ? (
-        <IconFolder size={20} color="var(--mantine-primary-color-filled)" />
-      ) : (
-        <IconFileText size={20} />
-      )}
-      <Text size="sm">{name}</Text>
-    </UnstyledButton>
+      <Text component="span" inherit truncate>{name}</Text>
+    </Button>
   );
 };

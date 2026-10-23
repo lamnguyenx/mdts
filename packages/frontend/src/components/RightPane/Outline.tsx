@@ -1,4 +1,4 @@
-import { Box, Drawer } from '@mantine/core';
+import { Box } from '@mantine/core';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useIsMobile from '../../hooks/useIsMobile';
@@ -31,9 +31,12 @@ const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onTogg
     if (isMobile) onToggle();
   }, [onItemClick, isMobile, onToggle]);
 
-  const panelContent = (
-    <>
-      <OutlineHeader isOpen={isMobile ? true : isOpen} onToggle={onToggle} />
+  return (
+    <Box
+      py="xs"
+      style={{ display: 'flex', flexDirection: 'column', height: '100%', minWidth: 0 }}
+    >
+      <OutlineHeader isOpen={isMobile || isOpen} onToggle={onToggle} />
       {(isMobile || isOpen) && (
         <OutlineContent
           outline={outline}
@@ -42,44 +45,6 @@ const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onTogg
           onItemClick={isMobile ? handleItemClickWithClose : onItemClick}
         />
       )}
-    </>
-  );
-
-  if (isMobile) {
-    return (
-      <Drawer
-        opened={isOpen}
-        onClose={onToggle}
-        position="right"
-        size={260}
-        withCloseButton={false}
-        keepMounted
-        padding="sm"
-        styles={{
-          content: {
-            backgroundColor: 'var(--app-paper)',
-            borderLeft: '1px solid var(--mantine-color-default-border)',
-          },
-        }}
-      >
-        {panelContent}
-      </Drawer>
-    );
-  }
-
-  return (
-    <Box
-      style={{
-        width: isOpen ? 260 : 56,
-        paddingTop: 'var(--mantine-spacing-xs)',
-        paddingBottom: 'var(--mantine-spacing-xs)',
-        backgroundColor: 'var(--app-paper)',
-        borderLeft: '1px solid var(--mantine-color-default-border)',
-        minHeight: '100%',
-        flexShrink: 0,
-      }}
-    >
-      {panelContent}
     </Box>
   );
 };

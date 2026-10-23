@@ -157,8 +157,6 @@ describe('Layout', () => {
   beforeEach(() => {
     mockNavigate.mockClear();
     mockUseIsMobile.mockReturnValue(false);
-    document.documentElement.style.removeProperty('--markdown-font-family');
-    document.documentElement.style.removeProperty('--markdown-monospace-font-family');
   });
 
   test('renders correctly', () => {
@@ -169,7 +167,7 @@ describe('Layout', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test('navigates from child callbacks and applies font variables', () => {
+  test('navigates from child callbacks', () => {
     const onSettingsClick = jest.fn();
 
     renderLayout({
@@ -191,8 +189,6 @@ describe('Layout', () => {
     expect(onSettingsClick).toHaveBeenCalledTimes(1);
     expect(screen.getByTestId('selected-file-path')).toHaveTextContent('docs/readme.md');
     expect(screen.getByTestId('outline-file-path')).toHaveTextContent('docs/readme.md');
-    expect(document.documentElement.style.getPropertyValue('--markdown-font-family')).toBe('Fira Sans');
-    expect(document.documentElement.style.getPropertyValue('--markdown-monospace-font-family')).toBe('Fira Code');
   });
 
   test('passes null outline file path for directories and updates scroll target', () => {

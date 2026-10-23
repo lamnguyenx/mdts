@@ -22,7 +22,6 @@ exports[`BreadCrumb renders breadcrumbs for a directory path 1`] = `
     </div>
     <p
       class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
-      style="color: var(--mantine-color-text);"
     >
       subfolder
     </p>
@@ -65,7 +64,6 @@ exports[`BreadCrumb renders breadcrumbs for a file path 1`] = `
     </div>
     <p
       class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
-      style="color: var(--mantine-color-text);"
     >
       file.md
     </p>

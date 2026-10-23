@@ -3,8 +3,8 @@
 exports[`OutlineList should render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="custom-scrollbar m_d57069b5 mantine-ScrollArea-root"
-    style="height: calc(100vh - 108px); --sa-corner-width: 0px; --sa-corner-height: 0px; padding-inline: var(--mantine-spacing-sm);"
+    class="m_d57069b5 mantine-ScrollArea-root"
+    style="flex-grow: 1; min-height: 0; --sa-corner-width: 0px; --sa-corner-height: 0px; padding-inline: var(--mantine-spacing-sm); padding-bottom: var(--mantine-spacing-sm);"
   >
     <div
       class="m_c0783ff9 mantine-ScrollArea-viewport"
@@ -21,7 +21,7 @@ exports[`OutlineList should render correctly 1`] = `
         >
           <button
             class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
-            style="padding: 2px var(--mantine-spacing-sm) 2px 16px; border-radius: var(--mantine-radius-sm); width: 100%;"
+            style="padding-block: calc(0.125rem * var(--mantine-scale)); padding-inline-end: var(--mantine-spacing-sm); padding-inline-start: calc(1rem * var(--mantine-scale)); width: 100%; border-radius: var(--mantine-radius-sm);"
             type="button"
           >
             <p
@@ -35,7 +35,7 @@ exports[`OutlineList should render correctly 1`] = `
           </button>
           <button
             class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
-            style="padding: 2px var(--mantine-spacing-sm) 2px 32px; border-radius: var(--mantine-radius-sm); width: 100%;"
+            style="padding-block: calc(0.125rem * var(--mantine-scale)); padding-inline-end: var(--mantine-spacing-sm); padding-inline-start: calc(2rem * var(--mantine-scale)); width: 100%; border-radius: var(--mantine-radius-sm);"
             type="button"
           >
             <p
@@ -50,20 +50,6 @@ exports[`OutlineList should render correctly 1`] = `
         </div>
       </div>
     </div>
-    <div
-      class="m_c44ba933 mantine-ScrollArea-scrollbar"
-      data-mantine-scrollbar="true"
-      data-orientation="horizontal"
-      data-state="hidden"
-      style="position: absolute; --sa-thumb-width: 18px;"
-    />
-    <div
-      class="m_c44ba933 mantine-ScrollArea-scrollbar"
-      data-mantine-scrollbar="true"
-      data-orientation="vertical"
-      data-state="hidden"
-      style="position: absolute; --sa-thumb-height: 18px;"
-    />
   </div>
 </DocumentFragment>
 `;

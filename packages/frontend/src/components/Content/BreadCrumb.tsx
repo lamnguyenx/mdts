@@ -45,7 +45,7 @@ interface BreadCrumbTextProps {
 }
 
 const BreadCrumbText: React.FC<BreadCrumbTextProps> = ({ segment }) =>
-  <Text c="var(--mantine-color-text)">{segment}</Text>;
+  <Text>{segment}</Text>;
 
 interface BreadCrumbProps {
   onDirectorySelect?: (directoryPath: string) => void;

@@ -72,6 +72,10 @@ describe('OutlineContent', () => {
       />
     );
     const subheadingItem = screen.getByText('Subheading 1').closest('button');
-    expect(subheadingItem).toHaveStyle('padding: 2px var(--mantine-spacing-sm) 2px 32px');
+    expect(subheadingItem).toHaveStyle({
+      paddingBlock: 'calc(0.125rem * var(--mantine-scale))',
+      paddingInlineStart: 'calc(2rem * var(--mantine-scale))',
+      paddingInlineEnd: 'var(--mantine-spacing-sm)',
+    });
   });
 });

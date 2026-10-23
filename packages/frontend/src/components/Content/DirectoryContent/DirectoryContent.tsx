@@ -1,4 +1,4 @@
-import { Box, Center, Divider, Group, Loader, Title } from '@mantine/core';
+import { Box, Center, Divider, Group, Loader, Paper, Title } from '@mantine/core';
 import { IconFolder } from '@tabler/icons-react';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
@@ -21,6 +21,7 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
     (state: RootState) => state.fileTree,
   );
   const isMobile = useIsMobile();
+  const isCard = contentMode === 'compact' && !isMobile;
 
   const fileTree = selectFilteredFileTree(fullFileTree, currentPath ?? '');
   const displayPath = currentPath || mountedDirectoryPath;
@@ -38,34 +39,31 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
   }
 
   return (
-    <Box
-      style={{
-        width: contentMode === 'compact' && !isMobile ? 800 : '100%',
-        minHeight: 'calc(100vh - var(--app-header-height))',
-        margin: contentMode === 'compact' && !isMobile ? '0 auto' : 0,
-        padding: isMobile ? 'var(--mantine-spacing-sm)' : 'var(--mantine-spacing-lg)',
-        backgroundColor: 'var(--app-paper)',
-      }}
-    >
+    <Box maw={isCard ? 800 : '100%'} mx="auto" w="100%" px={isMobile ? 'sm' : 'lg'} py="lg">
       <BreadCrumb onDirectorySelect={onDirectorySelect} />
-      <Group gap="xs" mb="sm" wrap="nowrap" align="center">
-        <IconFolder size={isMobile ? 24 : 32} color="var(--mantine-primary-color-filled)" />
-        <Title
-          order={isMobile ? 5 : 4}
-          style={{ margin: 0, wordBreak: 'break-word' }}
-        >
-          {displayPath}
-        </Title>
-      </Group>
-      <Divider mb="md" />
-      {loading && (
-        <Center h={200}>
-          <Loader role="progressbar" />
-        </Center>
-      )}
-      <Box mt="md">
-        <FileTreeList fileTree={fileTree} handleItemClick={handleItemClick} />
-      </Box>
+      <Paper
+        shadow={isCard ? 'sm' : undefined}
+        radius={isCard ? 'md' : 0}
+        withBorder={isCard}
+        p={isMobile ? 'sm' : 'xl'}
+        bg={isCard ? 'var(--mantine-color-default)' : 'transparent'}
+      >
+        <Group gap="xs" mb="sm" wrap="nowrap" align="center">
+          <IconFolder size={isMobile ? 24 : 32} color="var(--mantine-primary-color-filled)" />
+          <Title order={isMobile ? 5 : 4} style={{ wordBreak: 'break-word' }}>
+            {displayPath}
+          </Title>
+        </Group>
+        <Divider mb="md" />
+        {loading && (
+          <Center h={200}>
+            <Loader role="progressbar" />
+          </Center>
+        )}
+        <Box mt="md">
+          <FileTreeList fileTree={fileTree} handleItemClick={handleItemClick} />
+        </Box>
+      </Paper>
     </Box>
   );
 };

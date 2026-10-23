@@ -3,59 +3,54 @@
 exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
 <DocumentFragment>
   <div
-    class=""
-    style="margin-left: -24px; margin-right: -24px; padding-left: 16px; border-bottom: 1px solid var(--mantine-color-default-border);"
+    aria-label="view mode tabs"
+    class="m_89d60db1 mantine-Tabs-root"
+    data-orientation="horizontal"
+    data-variant="default"
+    id="mantine-_r_0_"
+    style="--tabs-radius: var(--mantine-radius-default); --tabs-color: var(--mantine-color-blue-filled); margin-bottom: var(--mantine-spacing-md);"
   >
     <div
-      aria-label="view mode tabs"
-      class="m_89d60db1 mantine-Tabs-root"
+      aria-orientation="horizontal"
+      class="m_576c9d4 m_89d33d6d mantine-Tabs-list"
       data-orientation="horizontal"
       data-variant="default"
-      id="mantine-_r_1_"
-      style="--tabs-radius: var(--mantine-radius-default); --tabs-color: var(--mantine-color-blue-filled);"
+      role="tablist"
+      style="flex-wrap: nowrap; overflow-x: auto;"
     >
-      <div
-        aria-orientation="horizontal"
-        class="m_576c9d4 m_89d33d6d mantine-Tabs-list"
+      <button
+        aria-selected="true"
+        class="mantine-focus-auto m_539e827b m_4ec4dce6 mantine-Tabs-tab m_87cf2631 mantine-UnstyledButton-root"
+        data-active="true"
         data-orientation="horizontal"
         data-variant="default"
-        role="tablist"
-        style="flex-wrap: nowrap; overflow-x: auto;"
+        id="mantine-_r_0_-tab-preview"
+        role="tab"
+        tabindex="0"
+        type="button"
       >
-        <button
-          aria-selected="true"
-          class="mantine-focus-auto m_539e827b m_4ec4dce6 mantine-Tabs-tab m_87cf2631 mantine-UnstyledButton-root"
-          data-active="true"
-          data-orientation="horizontal"
-          data-variant="default"
-          id="mantine-_r_1_-tab-preview"
-          role="tab"
-          tabindex="0"
-          type="button"
+        <span
+          class="m_42bbd1ae mantine-Tabs-tabLabel"
         >
-          <span
-            class="m_42bbd1ae mantine-Tabs-tabLabel"
-          >
-            Preview
-          </span>
-        </button>
-        <button
-          aria-selected="false"
-          class="mantine-focus-auto m_539e827b m_4ec4dce6 mantine-Tabs-tab m_87cf2631 mantine-UnstyledButton-root"
-          data-orientation="horizontal"
-          data-variant="default"
-          id="mantine-_r_1_-tab-raw"
-          role="tab"
-          tabindex="-1"
-          type="button"
+          Preview
+        </span>
+      </button>
+      <button
+        aria-selected="false"
+        class="mantine-focus-auto m_539e827b m_4ec4dce6 mantine-Tabs-tab m_87cf2631 mantine-UnstyledButton-root"
+        data-orientation="horizontal"
+        data-variant="default"
+        id="mantine-_r_0_-tab-raw"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="m_42bbd1ae mantine-Tabs-tabLabel"
         >
-          <span
-            class="m_42bbd1ae mantine-Tabs-tabLabel"
-          >
-            Raw
-          </span>
-        </button>
-      </div>
+          Raw
+        </span>
+      </button>
     </div>
   </div>
 </DocumentFragment>

@@ -7,74 +7,108 @@ exports[`FileTreeList renders correctly with files and folders 1`] = `
     style="--stack-gap: 0rem; --stack-align: stretch; --stack-justify: flex-start;"
   >
     <button
-      class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
-      style="display: flex; align-items: center; gap: var(--mantine-spacing-xs); padding: 4px 8px; border-radius: var(--mantine-radius-sm);"
+      class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root"
+      data-block="true"
+      data-variant="subtle"
+      data-with-left-section="true"
+      justify="flex-start"
+      style="--button-justify: flex-start; --button-bg: transparent; --button-hover: var(--mantine-color-gray-light-hover); --button-color: var(--mantine-color-gray-light-color); --button-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; font-weight: 400;"
       type="button"
     >
-      <svg
-        class="tabler-icon tabler-icon-folder"
-        fill="none"
-        height="20"
-        stroke="var(--mantine-primary-color-filled)"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        width="20"
-        xmlns="http://www.w3.org/2000/svg"
+      <span
+        class="m_80f1301b mantine-Button-inner"
       >
-        <path
-          d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"
-        />
-      </svg>
-      <p
-        class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
-        data-size="sm"
-        style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm);"
-      >
-        folder1
-      </p>
+        <span
+          class="m_a74036a mantine-Button-section"
+          data-position="left"
+        >
+          <svg
+            class="tabler-icon tabler-icon-folder"
+            fill="none"
+            height="18"
+            stroke="var(--mantine-primary-color-filled)"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="18"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"
+            />
+          </svg>
+        </span>
+        <span
+          class="m_811560b9 mantine-Button-label"
+        >
+          <span
+            class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+            data-inherit="true"
+            data-truncate="end"
+          >
+            folder1
+          </span>
+        </span>
+      </span>
     </button>
     <button
-      class="mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
-      style="display: flex; align-items: center; gap: var(--mantine-spacing-xs); padding: 4px 8px; border-radius: var(--mantine-radius-sm);"
+      class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root"
+      data-block="true"
+      data-variant="subtle"
+      data-with-left-section="true"
+      justify="flex-start"
+      style="--button-justify: flex-start; --button-bg: transparent; --button-hover: var(--mantine-color-gray-light-hover); --button-color: var(--mantine-color-gray-light-color); --button-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; font-weight: 400;"
       type="button"
     >
-      <svg
-        class="tabler-icon tabler-icon-file-text"
-        fill="none"
-        height="20"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        width="20"
-        xmlns="http://www.w3.org/2000/svg"
+      <span
+        class="m_80f1301b mantine-Button-inner"
       >
-        <path
-          d="M14 3v4a1 1 0 0 0 1 1h4"
-        />
-        <path
-          d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"
-        />
-        <path
-          d="M9 9l1 0"
-        />
-        <path
-          d="M9 13l6 0"
-        />
-        <path
-          d="M9 17l6 0"
-        />
-      </svg>
-      <p
-        class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
-        data-size="sm"
-        style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm);"
-      >
-        file2.txt
-      </p>
+        <span
+          class="m_a74036a mantine-Button-section"
+          data-position="left"
+        >
+          <svg
+            class="tabler-icon tabler-icon-file-text"
+            fill="none"
+            height="18"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="18"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14 3v4a1 1 0 0 0 1 1h4"
+            />
+            <path
+              d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"
+            />
+            <path
+              d="M9 9l1 0"
+            />
+            <path
+              d="M9 13l6 0"
+            />
+            <path
+              d="M9 17l6 0"
+            />
+          </svg>
+        </span>
+        <span
+          class="m_811560b9 mantine-Button-label"
+        >
+          <span
+            class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+            data-inherit="true"
+            data-truncate="end"
+          >
+            file2.txt
+          </span>
+        </span>
+      </span>
     </button>
   </div>
 </DocumentFragment>

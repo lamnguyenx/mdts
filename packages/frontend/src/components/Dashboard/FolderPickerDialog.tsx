@@ -1,10 +1,12 @@
 import {
   Box,
   Button,
-  Center,
+  Flex,
   Group,
-  Loader,
+  LoadingOverlay,
   Modal,
+  Paper,
+  ScrollArea,
   Stack,
   Text,
   TextInput,
@@ -41,25 +43,25 @@ interface DirectoryRowProps {
   onSelect: (path: string) => void;
 }
 
-const rowStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 'var(--mantine-spacing-sm)',
-  width: '100%',
-  padding: '8px 16px',
-  textAlign: 'left',
-};
-
 const DirectoryRow: React.FC<DirectoryRowProps> = ({ directory, onSelect }) => {
   const handleClick = useCallback(() => onSelect(directory.path), [directory.path, onSelect]);
 
   return (
-    <UnstyledButton onClick={handleClick} style={rowStyle}>
+    <Flex
+      component={UnstyledButton}
+      onClick={handleClick}
+      align="center"
+      gap="sm"
+      w="100%"
+      px="md"
+      py={8}
+      style={{ textAlign: 'left' }}
+    >
       <IconFolder size={16} color="var(--mantine-primary-color-filled)" />
       <Text size="sm" truncate style={{ flex: 1 }}>
         {directory.name}
       </Text>
-    </UnstyledButton>
+    </Flex>
   );
 };
 
@@ -174,58 +176,52 @@ const FolderPickerDialog: React.FC<FolderPickerDialogProps> = ({
         {error || currentPath}
       </Text>
 
-      <Box
-        mt="xs"
-        style={{
-          height: 300,
-          overflowY: 'auto',
-          border: '1px solid var(--mantine-color-default-border)',
-          borderRadius: 'var(--mantine-radius-sm)',
-          position: 'relative',
-        }}
-      >
-        {loading && (
-          <Center
-            style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundColor: 'var(--app-paper)',
-              opacity: 0.75,
-              zIndex: 1,
-            }}
-          >
-            <Loader role="progressbar" size="sm" />
-          </Center>
-        )}
+      <Paper withBorder pos="relative" h={300} mt="xs">
+        <LoadingOverlay
+          visible={loading}
+          zIndex={1}
+          overlayProps={{ radius: 'sm', blur: 0 }}
+        />
 
-        <Stack gap={0}>
-          {parentPath && (
-            <UnstyledButton onClick={handleParentClick} style={rowStyle}>
-              <IconArrowUp size={16} />
-              <Box style={{ flex: 1 }}>
-                <Text size="sm">..</Text>
-                <Text size="xs" c="dimmed">Parent folder</Text>
+        <ScrollArea h="100%" type="hover">
+          <Stack gap={0}>
+            {parentPath && (
+              <Flex
+                component={UnstyledButton}
+                onClick={handleParentClick}
+                align="center"
+                gap="sm"
+                w="100%"
+                px="md"
+                py={8}
+                style={{ textAlign: 'left' }}
+              >
+                <IconArrowUp size={16} />
+                <Box style={{ flex: 1 }}>
+                  <Text size="sm">..</Text>
+                  <Text size="xs" c="dimmed">Parent folder</Text>
+                </Box>
+              </Flex>
+            )}
+
+            {!loading && directories.length === 0 && (
+              <Box px="md" py="2rem" style={{ textAlign: 'center' }}>
+                <Text size="sm" c="dimmed">
+                  No subfolders here.
+                </Text>
               </Box>
-            </UnstyledButton>
-          )}
+            )}
 
-          {!loading && directories.length === 0 && (
-            <Box px="md" py="2rem" style={{ textAlign: 'center' }}>
-              <Text size="sm" c="dimmed">
-                No subfolders here.
-              </Text>
-            </Box>
-          )}
-
-          {directories.map((directory) => (
-            <DirectoryRow
-              key={directory.path}
-              directory={directory}
-              onSelect={handleDirectorySelect}
-            />
-          ))}
-        </Stack>
-      </Box>
+            {directories.map((directory) => (
+              <DirectoryRow
+                key={directory.path}
+                directory={directory}
+                onSelect={handleDirectorySelect}
+              />
+            ))}
+          </Stack>
+        </ScrollArea>
+      </Paper>
 
       <Group justify="flex-end" mt="lg">
         <Button variant="default" onClick={onClose}>Cancel</Button>

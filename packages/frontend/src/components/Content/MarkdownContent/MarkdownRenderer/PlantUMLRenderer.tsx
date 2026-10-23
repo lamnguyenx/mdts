@@ -1,3 +1,4 @@
+import { Alert, Box, Center, Code, Loader } from '@mantine/core';
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../store/store';
@@ -59,22 +60,32 @@ const PlantUMLRenderer: React.FC<PlantUMLProps> = ({ chart }) => {
 
   if (error) {
     return (
-      <div style={{ color: 'red', padding: '8px', border: '1px solid red', borderRadius: '4px' }}>
-        <strong>PlantUML Error:</strong> {error}
-        <pre><code>{chart}</code></pre>
-      </div>
+      <Alert color="red" variant="light" title="PlantUML Error" my="sm">
+        {error}
+        <Box mt="xs" ff="monospace" fz="xs">
+          <Code block>{chart}</Code>
+        </Box>
+      </Alert>
     );
   }
 
   if (isLoading) {
-    return <div>Loading PlantUML diagram...</div>;
+    return (
+      <Center py="md">
+        <Loader role="progressbar" size="sm" />
+      </Center>
+    );
   }
 
   if (!svg) {
-    return <pre><code>{chart}</code></pre>;
+    return (
+      <Box my="sm">
+        <Code block>{chart}</Code>
+      </Box>
+    );
   }
 
-  return <div ref={containerRef} style={{ maxWidth: '100%' }} />;
+  return <Box ref={containerRef} maw="100%" my="sm" />;
 };
 
 export default PlantUMLRenderer;

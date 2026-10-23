@@ -1,5 +1,7 @@
 import {
   Box,
+  Divider,
+  Flex,
   Group,
   Kbd,
   Modal,
@@ -34,16 +36,16 @@ function highlightPath(path: string, positions: number[]): React.ReactNode {
       elements.push(path.slice(lastPos + 1, pos));
     }
     elements.push(
-      <mark
+      <Text
         key={pos}
-        style={{
-          color: 'var(--mantine-primary-color-filled)',
-          backgroundColor: 'transparent',
-          fontWeight: 700,
-        }}
+        component="mark"
+        inherit
+        c="var(--mantine-primary-color-filled)"
+        bg="transparent"
+        fw={700}
       >
         {path[pos]}
-      </mark>
+      </Text>
     );
     lastPos = pos;
   }
@@ -81,25 +83,24 @@ const ResultItemInner: React.FC<ResultItemProps> = ({
   }, [onMouseEnter, index]);
 
   return (
-    <UnstyledButton
+    <Flex
+      component={UnstyledButton}
       aria-selected={selected}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--mantine-spacing-sm)',
-        width: '100%',
-        padding: '4px 12px',
-        backgroundColor: selected ? 'var(--mantine-primary-color-light)' : undefined,
-        textAlign: 'left',
-      }}
+      align="center"
+      gap="sm"
+      w="100%"
+      px="md"
+      py={4}
+      bg={selected ? 'var(--mantine-primary-color-light)' : undefined}
+      style={{ textAlign: 'left' }}
     >
       <IconFile size={16} style={{ flexShrink: 0 }} />
       <Text size="sm" ff="monospace" truncate style={{ flex: 1 }}>
         {highlightPath(path, match.positions)}
       </Text>
-    </UnstyledButton>
+    </Flex>
   );
 };
 
@@ -234,7 +235,7 @@ const FuzzySearchDialog: React.FC<FuzzySearchDialogProps> = ({ open, onClose }) 
         />
       </Box>
 
-      <ScrollArea style={{ flex: 1, minHeight: 0 }} className="custom-scrollbar">
+      <ScrollArea flex={1} style={{ minHeight: 0 }}>
         <Box ref={listRef}>
           {results.length === 0 ? (
             <Box px="lg" py="xl" style={{ textAlign: 'center' }}>
@@ -260,12 +261,9 @@ const FuzzySearchDialog: React.FC<FuzzySearchDialogProps> = ({ open, onClose }) 
         </Box>
       </ScrollArea>
 
-      <Group
-        px="md"
-        py="xs"
-        justify="space-between"
-        style={{ borderTop: '1px solid var(--mantine-color-default-border)' }}
-      >
+      <Divider />
+
+      <Group px="md" py="xs" justify="space-between">
         <Text size="xs" c="dimmed">
           {results.length} of {fileList.length} files
         </Text>

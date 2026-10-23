@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Tabs } from '@mantine/core';
+import { Button, Divider, Group, Modal, ScrollArea, Tabs } from '@mantine/core';
 import React, { useCallback, useState } from 'react';
 import useIsMobile from '../../hooks/useIsMobile';
 import { useSettingsForm } from '../../hooks/useSettingsForm';
@@ -55,6 +55,11 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ open, onClose }) => {
     setSelectedTab(value);
   }, []);
 
+  const panelProps = {
+    p: 'md',
+    style: { flexGrow: 1, minHeight: 0 },
+  } as const;
+
   return (
     <Modal
       opened={open}
@@ -78,78 +83,62 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ open, onClose }) => {
         value={selectedTab}
         onChange={handleSelectTab}
         orientation={isMobile ? 'horizontal' : 'vertical'}
-        style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}
+        display="flex"
+        style={{
+          flex: 1,
+          minHeight: 0,
+          flexDirection: isMobile ? 'column' : 'row',
+        }}
       >
-        <Tabs.List
-          style={{
-            flexShrink: 0,
-            minWidth: isMobile ? undefined : 160,
-            padding: isMobile ? undefined : '8px 0',
-            borderRight: isMobile ? undefined : '1px solid var(--mantine-color-default-border)',
-            borderBottom: isMobile ? '1px solid var(--mantine-color-default-border)' : undefined,
-          }}
-        >
-          <Tabs.Tab value="layout">Layout</Tabs.Tab>
-          <Tabs.Tab value="color-scheme">Color Scheme</Tabs.Tab>
-          <Tabs.Tab value="font">Font</Tabs.Tab>
+        <Tabs.List w={isMobile ? undefined : 180} px={isMobile ? 'sm' : 'xs'} py={isMobile ? 'xs' : 'sm'}>
+          <Tabs.Tab value="layout" ta={isMobile ? 'center' : 'left'}>Layout</Tabs.Tab>
+          <Tabs.Tab value="color-scheme" ta={isMobile ? 'center' : 'left'}>Color Scheme</Tabs.Tab>
+          <Tabs.Tab value="font" ta={isMobile ? 'center' : 'left'}>Font</Tabs.Tab>
         </Tabs.List>
 
-        <Tabs.Panel
-          value="layout"
-          p="md"
-          style={{ flex: 1, overflowY: 'auto' }}
-          className="custom-scrollbar"
-        >
-          <LayoutSettingsTab
-            contentMode={contentMode}
-            enableBreaks={enableBreaks}
-            handleToggleContentMode={handleToggleContentMode}
-            setEnableBreaks={setEnableBreaks}
-          />
+        <Tabs.Panel value="layout" {...panelProps}>
+          <ScrollArea h="100%" type="hover">
+            <LayoutSettingsTab
+              contentMode={contentMode}
+              enableBreaks={enableBreaks}
+              handleToggleContentMode={handleToggleContentMode}
+              setEnableBreaks={setEnableBreaks}
+            />
+          </ScrollArea>
         </Tabs.Panel>
-        <Tabs.Panel
-          value="color-scheme"
-          p="md"
-          style={{ flex: 1, overflowY: 'auto' }}
-          className="custom-scrollbar"
-        >
-          <ColorSchemeSettingsTab
-            darkMode={darkMode}
-            theme={themeType}
-            syntaxHighlighterTheme={syntaxHighlighterTheme}
-            handleToggleDarkMode={handleToggleDarkMode}
-            handleToggleTheme={handleToggleTheme}
-            setSyntaxHighlighterTheme={setSyntaxHighlighterTheme}
-          />
+        <Tabs.Panel value="color-scheme" {...panelProps}>
+          <ScrollArea h="100%" type="hover">
+            <ColorSchemeSettingsTab
+              darkMode={darkMode}
+              theme={themeType}
+              syntaxHighlighterTheme={syntaxHighlighterTheme}
+              handleToggleDarkMode={handleToggleDarkMode}
+              handleToggleTheme={handleToggleTheme}
+              setSyntaxHighlighterTheme={setSyntaxHighlighterTheme}
+            />
+          </ScrollArea>
         </Tabs.Panel>
-        <Tabs.Panel
-          value="font"
-          p="md"
-          style={{ flex: 1, overflowY: 'auto' }}
-          className="custom-scrollbar"
-        >
-          <FontSettingsTab
-            fontSize={fontSize}
-            fontFamily={fontFamily}
-            fontFamilyMonospace={fontFamilyMonospace}
-            fontInputMode={fontInputMode}
-            fontInputModeMonospace={fontInputModeMonospace}
-            setFontSize={setFontSize}
-            setFontFamily={setFontFamily}
-            setFontFamilyMonospace={setFontFamilyMonospace}
-            handleFontInputModeChange={handleFontInputModeChange}
-            handleFontInputModeMonospaceChange={handleFontInputModeMonospaceChange}
-          />
+        <Tabs.Panel value="font" {...panelProps}>
+          <ScrollArea h="100%" type="hover">
+            <FontSettingsTab
+              fontSize={fontSize}
+              fontFamily={fontFamily}
+              fontFamilyMonospace={fontFamilyMonospace}
+              fontInputMode={fontInputMode}
+              fontInputModeMonospace={fontInputModeMonospace}
+              setFontSize={setFontSize}
+              setFontFamily={setFontFamily}
+              setFontFamilyMonospace={setFontFamilyMonospace}
+              handleFontInputModeChange={handleFontInputModeChange}
+              handleFontInputModeMonospaceChange={handleFontInputModeMonospaceChange}
+            />
+          </ScrollArea>
         </Tabs.Panel>
       </Tabs>
 
-      <Group
-        px="md"
-        py="sm"
-        justify="flex-end"
-        gap="sm"
-        style={{ borderTop: '1px solid var(--mantine-color-default-border)', flexShrink: 0 }}
-      >
+      <Divider />
+
+      <Group px="md" py="sm" justify="flex-end" gap="sm" style={{ flexShrink: 0 }}>
         <Button
           onClick={handleReset}
           size="compact-sm"

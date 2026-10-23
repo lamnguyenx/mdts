@@ -1,4 +1,4 @@
-import { Box, Drawer, useComputedColorScheme } from '@mantine/core';
+import { Box } from '@mantine/core';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useIsMobile from '../../hooks/useIsMobile';
@@ -30,7 +30,6 @@ const FileTree: React.FC<FileTreeComponentProps> = ({
   selectedFilePath,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const colorScheme = useComputedColorScheme('light', { getInitialValueInEffect: false });
   const isMobile = useIsMobile();
   const {
     fileTree,
@@ -104,18 +103,18 @@ const FileTree: React.FC<FileTreeComponentProps> = ({
     dispatch(setExpandedNodes(newExpanded));
   }, [searchQuery, filteredFileTree, dispatch]);
 
-  const overlay = colorScheme === 'dark' ? 'rgba(16, 16, 16, 0.01)' : 'rgba(192, 192, 192, 0.01)';
-  const background = `linear-gradient(135deg, ${overlay} 0%, var(--app-paper) 100%)`;
-
   const handleFileSelectWithClose = useCallback((path: string) => {
     onFileSelect(path);
     if (isMobile) onToggle();
   }, [onFileSelect, isMobile, onToggle]);
 
-  const panelContent = (
-    <>
+  return (
+    <Box
+      py="xs"
+      style={{ display: 'flex', flexDirection: 'column', height: '100%', minWidth: 0 }}
+    >
       <FileTreeHeader
-        isOpen={isMobile ? true : isOpen}
+        isOpen={isMobile || isOpen}
         onToggle={onToggle}
         onExpandAllClick={handleExpandAllClick}
         onCollapseAll={handleCollapseAll}
@@ -138,44 +137,6 @@ const FileTree: React.FC<FileTreeComponentProps> = ({
           onExpandedItemsChange={handleExpandedItemsChange}
         />
       )}
-    </>
-  );
-
-  if (isMobile) {
-    return (
-      <Drawer
-        opened={isOpen}
-        onClose={onToggle}
-        position="left"
-        size={260}
-        withCloseButton={false}
-        keepMounted
-        padding="sm"
-        styles={{
-          content: {
-            backgroundColor: 'var(--app-paper)',
-            borderRight: '1px solid var(--mantine-color-default-border)',
-          },
-        }}
-      >
-        {panelContent}
-      </Drawer>
-    );
-  }
-
-  return (
-    <Box
-      style={{
-        width: isOpen ? 260 : 56,
-        background,
-        paddingTop: 'var(--mantine-spacing-xs)',
-        paddingBottom: 'var(--mantine-spacing-xs)',
-        borderRight: '1px solid var(--mantine-color-default-border)',
-        minHeight: '100%',
-        flexShrink: 0,
-      }}
-    >
-      {panelContent}
     </Box>
   );
 };

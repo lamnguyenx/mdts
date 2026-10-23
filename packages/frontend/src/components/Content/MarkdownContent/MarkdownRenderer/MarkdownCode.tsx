@@ -1,3 +1,4 @@
+import { Code } from '@mantine/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { PrismAsyncLight } from 'react-syntax-highlighter';
@@ -39,18 +40,15 @@ const MarkdownCode: React.FC<MarkdownCodeProps> = ({ inline, className, children
       {String(children).replace(/\n$/, '')}
     </PrismAsyncLight>
   ) : (
-    <code
+    <Code
       {...props}
       className={className}
-      style={{
-        color: syntaxHighlighterThemeMeta.type === 'light' ? 'rgba(0, 0, 0, .87)' : '#fff',
-        fontFamily: fontFamilyMonospace,
-        backgroundColor: syntaxHighlighterThemeMeta.color,
-        borderRadius: '4px',
-      }}
+      ff={fontFamilyMonospace}
+      bg={syntaxHighlighterThemeMeta.color}
+      c={syntaxHighlighterThemeMeta.type === 'light' ? '#000c' : '#fff'}
     >
       {children}
-    </code>
+    </Code>
   );
 };
 

@@ -11,7 +11,9 @@ exports[`MarkdownCode should render code block correctly 1`] = `
 exports[`MarkdownCode should render inline code correctly 1`] = `
 <DocumentFragment>
   <code
-    style="color: rgb(255, 255, 255); font-family: monospace; background-color: rgb(29, 31, 33); border-radius: 4px;"
+    class="m_b183c0a2 mantine-Code-root"
+    dir="ltr"
+    style="background: rgb(29, 31, 33); color: rgb(255, 255, 255); font-family: var(--mantine-font-family-monospace);"
   >
     console.log("hello");
   </code>

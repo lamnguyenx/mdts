@@ -15,14 +15,11 @@ export const OutlineListItem: React.FC<OutlineListItemProps> = ({ item, onItemCl
   return (
     <UnstyledButton
       onClick={handleClick}
-      style={{
-        paddingLeft: `${item.level * 16}px`,
-        paddingRight: 'var(--mantine-spacing-sm)',
-        paddingTop: 2,
-        paddingBottom: 2,
-        borderRadius: 'var(--mantine-radius-sm)',
-        width: '100%',
-      }}
+      ps={item.level * 16}
+      pe="sm"
+      py={2}
+      bdrs="sm"
+      w="100%"
     >
       <Text size="sm" truncate>{item.content}</Text>
     </UnstyledButton>

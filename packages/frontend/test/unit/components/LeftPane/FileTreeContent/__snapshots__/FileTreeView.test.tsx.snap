@@ -4,11 +4,11 @@ exports[`FileTreeView should render correctly 1`] = `
 <DocumentFragment>
   <ul
     aria-multiselectable="false"
-    class="custom-scrollbar m_f698e191 mantine-Tree-root"
+    class="m_f698e191 mantine-Tree-root"
     data-tree-root="true"
     data-with-lines="true"
     role="tree"
-    style="--level-offset: var(--mantine-spacing-md); flex-grow: 1; max-width: 400px; overflow-y: auto; height: calc(100vh - 148px); padding-left: var(--mantine-spacing-sm); padding-right: var(--mantine-spacing-sm); padding-bottom: var(--mantine-spacing-sm);"
+    style="--level-offset: var(--mantine-spacing-md);"
   >
     <li
       aria-selected="false"
@@ -22,7 +22,7 @@ exports[`FileTreeView should render correctly 1`] = `
       <div
         class="m_dc283425 mantine-Tree-label m_4081bf90 mantine-Group-root"
         data-value="file1.md"
-        style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: 1px; padding-inline-end: 4px; border-radius: var(--mantine-radius-sm);"
+        style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: calc(0.0625rem * var(--mantine-scale)); padding-inline-end: calc(0.25rem * var(--mantine-scale)); border-radius: var(--mantine-radius-sm);"
       >
         <svg
           class="tabler-icon tabler-icon-file-text"
@@ -76,7 +76,7 @@ exports[`FileTreeView should render correctly 1`] = `
       <div
         class="m_dc283425 mantine-Tree-label m_4081bf90 mantine-Group-root"
         data-value="dir1"
-        style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: 1px; padding-inline-end: 4px; border-radius: var(--mantine-radius-sm);"
+        style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: calc(0.0625rem * var(--mantine-scale)); padding-inline-end: calc(0.25rem * var(--mantine-scale)); border-radius: var(--mantine-radius-sm);"
       >
         <svg
           class="tabler-icon tabler-icon-folder"
@@ -123,7 +123,7 @@ exports[`FileTreeView should render correctly 1`] = `
             class="m_dc283425 mantine-Tree-label m_4081bf90 mantine-Group-root"
             data-selected="true"
             data-value="dir1/file2.md"
-            style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: 1px; padding-inline-end: 4px; border-radius: var(--mantine-radius-sm); background-color: var(--mantine-primary-color-light);"
+            style="--group-gap: calc(0.375rem * var(--mantine-scale)); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap; padding-block: calc(0.0625rem * var(--mantine-scale)); padding-inline-end: calc(0.25rem * var(--mantine-scale)); background: var(--mantine-primary-color-light); border-radius: var(--mantine-radius-sm);"
           >
             <svg
               class="tabler-icon tabler-icon-file-text"

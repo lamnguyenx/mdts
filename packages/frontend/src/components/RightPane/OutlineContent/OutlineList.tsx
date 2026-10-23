@@ -9,12 +9,7 @@ interface OutlineListProps {
 }
 
 export const OutlineList: React.FC<OutlineListProps> = ({ outline, onItemClick }) => (
-  <ScrollArea
-    type="auto"
-    className="custom-scrollbar"
-    style={{ height: 'calc(100vh - 108px)' }}
-    px="sm"
-  >
+  <ScrollArea type="hover" px="sm" pb="sm" style={{ flexGrow: 1, minHeight: 0 }}>
     <Stack gap={0}>
       {outline.map((item) => (
         <OutlineListItem key={item.id} item={item} onItemClick={onItemClick} />

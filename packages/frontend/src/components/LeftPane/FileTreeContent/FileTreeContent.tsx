@@ -1,3 +1,4 @@
+import { Box, ScrollArea } from '@mantine/core';
 import React from 'react';
 import ErrorView from '../../ErrorView';
 import { FileTreeView } from './FileTreeView';
@@ -23,17 +24,25 @@ const FileTreeContent: React.FC<FileTreeContentProps> = ({
   onFileSelect,
   onExpandedItemsChange,
 }) => {
-  if (loading && !(filteredFileTree && filteredFileTree.length > 0)) return <LoadingIndicator />;
+  if (loading && !(filteredFileTree && filteredFileTree.length > 0)) {
+    return (
+      <Box px="sm" py="md" style={{ flexGrow: 1 }}>
+        <LoadingIndicator />
+      </Box>
+    );
+  }
   if (error) return <ErrorView error={error} />;
 
   return (
-    <FileTreeView
-      filteredFileTree={filteredFileTree}
-      expandedNodes={expandedNodes}
-      selectedFilePath={selectedFilePath}
-      onFileSelect={onFileSelect}
-      onExpandedItemsChange={onExpandedItemsChange}
-    />
+    <ScrollArea type="hover" px="sm" pb="sm" style={{ flexGrow: 1, minHeight: 0 }}>
+      <FileTreeView
+        filteredFileTree={filteredFileTree}
+        expandedNodes={expandedNodes}
+        selectedFilePath={selectedFilePath}
+        onFileSelect={onFileSelect}
+        onExpandedItemsChange={onExpandedItemsChange}
+      />
+    </ScrollArea>
   );
 };
 

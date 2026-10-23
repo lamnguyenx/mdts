@@ -74,7 +74,7 @@ describe('PlantUMLRenderer', () => {
       </Provider>
     );
 
-    expect(screen.getByText('Loading PlantUML diagram...')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
   it('should show error state when generation fails', () => {
@@ -104,7 +104,7 @@ describe('PlantUMLRenderer', () => {
       </Provider>
     );
 
-    expect(screen.getByText('PlantUML Error:')).toBeInTheDocument();
+    expect(screen.getByText('PlantUML Error')).toBeInTheDocument();
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
     expect(screen.getByText(/A --> B/)).toBeInTheDocument();
   });

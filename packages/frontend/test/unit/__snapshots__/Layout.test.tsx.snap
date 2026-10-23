@@ -2,31 +2,46 @@
 
 exports[`Layout renders correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="m_8bffd616 mantine-Flex-root __m__-_r_0_"
-    style="flex-direction: column; height: 100vh;"
+  <style
+    data-mantine-styles="inline"
   >
-    <div>
-      <button>
-        header-file-select
-      </button>
-      <button>
-        settings
-      </button>
-      <button
-        aria-label="toggle file tree"
-      >
-        toggle file tree
-      </button>
-      <button
-        aria-label="toggle outline"
-      >
-        toggle outline
-      </button>
-    </div>
-    <main
-      class=""
-      style="flex-grow: 1; display: flex; overflow-y: hidden; height: 100%;"
+    :root{--app-shell-navbar-width:calc(16.25rem * var(--mantine-scale));--app-shell-navbar-offset:calc(16.25rem * var(--mantine-scale));--app-shell-aside-width:calc(16.25rem * var(--mantine-scale));--app-shell-aside-offset:calc(16.25rem * var(--mantine-scale));--app-shell-header-height:calc(3.25rem * var(--mantine-scale));--app-shell-header-offset:calc(3.25rem * var(--mantine-scale));--app-shell-padding:0px;}@media(max-width: 62em){:root{--app-shell-navbar-offset:0px;--app-shell-navbar-width:100%;--app-shell-aside-width:100%;--app-shell-aside-offset:0px;}}
+  </style>
+  <div
+    class="m_89ab340 mantine-AppShell-root"
+    data-mode="fixed"
+    data-resizing="true"
+    id="mantine-_r_0_"
+    style="--app-shell-transition-duration: 200ms; --app-shell-transition-timing-function: ease;"
+  >
+    <header
+      class="m_3b16f56b mantine-AppShell-header right-scroll-bar-position"
+      data-with-border="true"
+      style="--app-shell-header-z-index: 100;"
+    >
+      <div>
+        <button>
+          header-file-select
+        </button>
+        <button>
+          settings
+        </button>
+        <button
+          aria-label="toggle file tree"
+        >
+          toggle file tree
+        </button>
+        <button
+          aria-label="toggle outline"
+        >
+          toggle outline
+        </button>
+      </div>
+    </header>
+    <nav
+      class="m_45252eee mantine-AppShell-navbar"
+      data-with-border="true"
+      style="transition-property: transform, top, height, width; --app-shell-navbar-z-index: calc(100 + 1);"
     >
       <div>
         <div
@@ -43,6 +58,11 @@ exports[`Layout renders correctly 1`] = `
           tree-file-select
         </button>
       </div>
+    </nav>
+    <main
+      class="m_8983817 mantine-AppShell-main"
+      style="height: 100dvh; overflow: hidden; display: flex; flex-direction: column; background: rgb(13, 16, 18);"
+    >
       <div>
         <div
           data-testid="content-scroll-id"
@@ -56,6 +76,12 @@ exports[`Layout renders correctly 1`] = `
           content-directory-select
         </button>
       </div>
+    </main>
+    <aside
+      class="m_9cdde9a mantine-AppShell-aside right-scroll-bar-position"
+      data-with-border="true"
+      style="transition-property: transform, top, height, width; --app-shell-aside-z-index: calc(100 + 1);"
+    >
       <div>
         <div
           data-testid="outline-file-path"
@@ -71,7 +97,7 @@ exports[`Layout renders correctly 1`] = `
           outline-item-click
         </button>
       </div>
-    </main>
+    </aside>
   </div>
 </DocumentFragment>
 `;
